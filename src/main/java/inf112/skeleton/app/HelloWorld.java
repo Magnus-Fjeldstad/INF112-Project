@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,7 +21,11 @@ public class HelloWorld implements ApplicationListener {
 	private Sound bellSound;
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
-	private float dx = 1, dy = 1;
+
+	// Added background and fireball texture
+	private Texture backgroundImage;
+	private Texture fireballImage;
+	private float spriteRotation = 0; // Initialize with default rotation
 
 	@Override
 	public void create() {
@@ -28,6 +35,10 @@ public class HelloWorld implements ApplicationListener {
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		spriteImage = new Texture(Gdx.files.internal("obligator.png"));
+		// Background image
+		backgroundImage = new Texture(Gdx.files.internal("prem.jpg"));
+		fireballImage = new Texture(Gdx.files.internal("fireball.png"));
+
 		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
 		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
 		Gdx.graphics.setForegroundFPS(60);
@@ -50,14 +61,21 @@ public class HelloWorld implements ApplicationListener {
 		bellSound.dispose();
 	}
 
+	private ArrayList<Rectangle> fireballs = new ArrayList<>();
+
 	@Override
 	public void render() {
 		// Called when the application should draw a new frame (many times per second).
 
 		// This is a minimal example – don't write your application this way!
 
-		// Start with a blank screen
-		ScreenUtils.clear(Color.WHITE);
+		// Draw the background image first
+		batch.begin();
+		batch.draw(backgroundImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
+
+		// Handle input events
+		handleInput();
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
@@ -65,21 +83,20 @@ public class HelloWorld implements ApplicationListener {
 		batch.draw(spriteImage, spriteRect.x, spriteRect.y, spriteRect.width, spriteRect.height);
 		batch.end();
 
-		// Move the alligator a bit. You normally shouldn't mix rendering with logic in
-		// this way. (Also, movement should probably be based on *time*, not on how
-		// often we update the graphics!)
-		Rectangle.tmp.set(spriteRect);
-		Rectangle.tmp.x += dx;
-		Rectangle.tmp2.set(spriteRect);
-		Rectangle.tmp2.y += dy;
-		if (screenRect.contains(Rectangle.tmp))
-			spriteRect.x += dx;
-		else
-			dx = -dx;
-		if (screenRect.contains(Rectangle.tmp2))
-			spriteRect.y += dy;
-		else
-			dy = -dy;
+		// Move the sprite
+		moveSprite();
+		spriteRotation = MathUtils.atan2(1, 1) * MathUtils.radiansToDegrees;
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			shootFireball();
+		}
+
+		// Render fireballs
+		batch.begin();
+		for (Rectangle fireball : fireballs) {
+			batch.draw(fireballImage, fireball.x, fireball.y);
+		}
+		batch.end();
 
 		// Don't handle input this way – use event handlers!
 		if (Gdx.input.justTouched()) { // check for mouse click
@@ -88,6 +105,46 @@ public class HelloWorld implements ApplicationListener {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { // check for key press
 			Gdx.app.exit();
 		}
+	}
+
+	private void handleInput() {
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			spriteRect.x -= 1;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			spriteRect.x += 1;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+			spriteRect.y += 1;
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+			spriteRect.y -= 1;
+		}
+	}
+
+	private void shootFireball() {
+		Rectangle fireball = new Rectangle();
+		fireball.setSize(fireballImage.getWidth(), fireballImage.getHeight());
+		fireball.setPosition(
+				spriteRect.x + spriteRect.width / 2 - fireballImage.getWidth() / 2,
+				spriteRect.y + spriteRect.height / 2 - fireballImage.getHeight() / 2);
+		fireballs.add(fireball);
+
+		// Determine fireball direction based on sprite direction (you may need to
+		// adjust these values)
+		float fireballSpeed = 5;
+		float dx = MathUtils.cosDeg(spriteRotation) * fireballSpeed;
+		float dy = MathUtils.sinDeg(spriteRotation) * fireballSpeed;
+
+		// Move the fireball in the determined direction
+		fireball.x += dx;
+		fireball.y += dy;
+	}
+
+	private void moveSprite() {
+		// Clamp sprite within screen bounds
+		spriteRect.x = Math.max(0, Math.min(screenRect.width - spriteRect.width, spriteRect.x));
+		spriteRect.y = Math.max(0, Math.min(screenRect.height - spriteRect.height, spriteRect.y));
 	}
 
 	@Override
