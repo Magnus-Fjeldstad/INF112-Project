@@ -22,11 +22,10 @@ public class HelloWorld implements ApplicationListener {
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
 
-	//Added background and fireball texture
+	// Added background and fireball texture
 	private Texture backgroundImage;
 	private Texture fireballImage;
 	private float spriteRotation = 0; // Initialize with default rotation
-
 
 	@Override
 	public void create() {
@@ -36,7 +35,7 @@ public class HelloWorld implements ApplicationListener {
 		font = new BitmapFont();
 		font.setColor(Color.RED);
 		spriteImage = new Texture(Gdx.files.internal("obligator.png"));
-		//Background image
+		// Background image
 		backgroundImage = new Texture(Gdx.files.internal("prem.jpg"));
 		fireballImage = new Texture(Gdx.files.internal("fireball.png"));
 
@@ -61,18 +60,19 @@ public class HelloWorld implements ApplicationListener {
 		spriteImage.dispose();
 		bellSound.dispose();
 	}
+
 	private ArrayList<Rectangle> fireballs = new ArrayList<>();
+
 	@Override
 	public void render() {
 		// Called when the application should draw a new frame (many times per second).
 
 		// This is a minimal example – don't write your application this way!
 
-
 		// Draw the background image first
-        batch.begin();
-        batch.draw(backgroundImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+		batch.begin();
+		batch.draw(backgroundImage, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
 
 		// Handle input events
 		handleInput();
@@ -87,11 +87,10 @@ public class HelloWorld implements ApplicationListener {
 		moveSprite();
 		spriteRotation = MathUtils.atan2(1, 1) * MathUtils.radiansToDegrees;
 
-
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			shootFireball();
 		}
-	
+
 		// Render fireballs
 		batch.begin();
 		for (Rectangle fireball : fireballs) {
@@ -122,24 +121,25 @@ public class HelloWorld implements ApplicationListener {
 			spriteRect.y -= 1;
 		}
 	}
+
 	private void shootFireball() {
-    Rectangle fireball = new Rectangle();
-    fireball.setSize(fireballImage.getWidth(), fireballImage.getHeight());
-    fireball.setPosition(
-            spriteRect.x + spriteRect.width / 2 - fireballImage.getWidth() / 2,
-            spriteRect.y + spriteRect.height / 2 - fireballImage.getHeight() / 2
-    );
-    fireballs.add(fireball);
+		Rectangle fireball = new Rectangle();
+		fireball.setSize(fireballImage.getWidth(), fireballImage.getHeight());
+		fireball.setPosition(
+				spriteRect.x + spriteRect.width / 2 - fireballImage.getWidth() / 2,
+				spriteRect.y + spriteRect.height / 2 - fireballImage.getHeight() / 2);
+		fireballs.add(fireball);
 
-    // Determine fireball direction based on sprite direction (you may need to adjust these values)
-    float fireballSpeed = 5;
-	float dx = MathUtils.cosDeg(spriteRotation) * fireballSpeed;
-	float dy = MathUtils.sinDeg(spriteRotation) * fireballSpeed;
+		// Determine fireball direction based on sprite direction (you may need to
+		// adjust these values)
+		float fireballSpeed = 5;
+		float dx = MathUtils.cosDeg(spriteRotation) * fireballSpeed;
+		float dy = MathUtils.sinDeg(spriteRotation) * fireballSpeed;
 
-    // Move the fireball in the determined direction
-    fireball.x += dx;
-    fireball.y += dy;
-}
+		// Move the fireball in the determined direction
+		fireball.x += dx;
+		fireball.y += dy;
+	}
 
 	private void moveSprite() {
 		// Clamp sprite within screen bounds
