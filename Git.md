@@ -1,5 +1,9 @@
 # Git kommandoer
 
-Lag ny branch: `git checkout -b Navn-På-Branch`
+Lag ny branch og bytt til den: `git checkout -b <branch-name>`
 
 Sjekk hvilken branch du er på `git branch`
+
+Bytt branch `git checkout <branch-name>`
+
+Hent endringer fra main i repo: `git pull origin main`
