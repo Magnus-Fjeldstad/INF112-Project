@@ -5,7 +5,7 @@
 Jens Brown Eriksen: Documentation Manager, 
 Magnus Fjeldstad: Level Designer, 
 Johannes Helleve: Git Manager, 
-Brage Hogstad: Developer, 
+Brage Hogstad: Tester, 
 Lyder Samnøy: Game Designer, 
 Henrik Tennebekk: Framework Manager, 
 
