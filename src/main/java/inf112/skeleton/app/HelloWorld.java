@@ -14,11 +14,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
+
 public class HelloWorld implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
 	private Texture spriteImage;
-	private Sound bellSound;
+	private Sound fireBallSound;
 	private Rectangle spriteRect;
 	private Rectangle screenRect = new Rectangle();
 
@@ -26,6 +27,7 @@ public class HelloWorld implements ApplicationListener {
 	private Texture backgroundImage;
 	private Texture fireballImage;
 	private float spriteRotation = 0; // Initialize with default rotation
+
 
 	@Override
 	public void create() {
@@ -40,7 +42,7 @@ public class HelloWorld implements ApplicationListener {
 		fireballImage = new Texture(Gdx.files.internal("fireball.png"));
 
 		spriteRect = new Rectangle(1, 1, spriteImage.getWidth() / 2, spriteImage.getHeight() / 2);
-		bellSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
+		fireBallSound = Gdx.audio.newSound(Gdx.files.internal("explosion.ogg"));
 		Gdx.graphics.setForegroundFPS(60);
 	}
 
@@ -58,7 +60,7 @@ public class HelloWorld implements ApplicationListener {
 		batch.dispose();
 		font.dispose();
 		spriteImage.dispose();
-		bellSound.dispose();
+		fireBallSound.dispose();
 	}
 
 	private ArrayList<Rectangle> fireballs = new ArrayList<>();
@@ -88,6 +90,7 @@ public class HelloWorld implements ApplicationListener {
 		spriteRotation = MathUtils.atan2(1, 1) * MathUtils.radiansToDegrees;
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			fireBallSound.play();
 			shootFireball();
 		}
 
@@ -100,7 +103,7 @@ public class HelloWorld implements ApplicationListener {
 
 		// Don't handle input this way – use event handlers!
 		if (Gdx.input.justTouched()) { // check for mouse click
-			bellSound.play();
+			fireBallSound.play();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) { // check for key press
 			Gdx.app.exit();
