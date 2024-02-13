@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.Texture;
 
+
 public class HelloWorld implements ApplicationListener {
 	private SpriteBatch batch;
 	private BitmapFont font;
@@ -26,6 +27,7 @@ public class HelloWorld implements ApplicationListener {
 	private Texture backgroundImage;
 	private Texture fireballImage;
 	private float spriteRotation = 0; // Initialize with default rotation
+
 
 	@Override
 	public void create() {
