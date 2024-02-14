@@ -1,4 +1,4 @@
-package inf112.skeleton.enteties;
+package inf112.skeleton.app.enteties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
