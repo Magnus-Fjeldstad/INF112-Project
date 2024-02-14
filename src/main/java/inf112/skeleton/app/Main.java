@@ -8,7 +8,6 @@ import inf112.skeleton.app.tiledMapGame.TiledMapGame;
 public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
-        cfg.setTitle("hello-world");
         cfg.setWindowedMode(480, 480);
 
         new Lwjgl3Application(new TiledMapGame(), cfg);
