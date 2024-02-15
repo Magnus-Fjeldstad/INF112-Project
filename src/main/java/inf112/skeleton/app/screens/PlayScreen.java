@@ -95,6 +95,11 @@ public class PlayScreen implements Screen {
             player.b2body.applyLinearImpulse(new Vector2(-0.1f, 0), player.b2body.getWorldCenter(), true);
     }
 
+    /**
+     * Updated the game
+     * @param dt is the games "clock" the game updates based on the 
+     * deltatime
+     */
     public void update (float dt) {
         handleInput(dt);
 
