@@ -142,3 +142,17 @@ Som spiller ønsker jeg å få en sluttskjerm som spør om jeg vil starte spille
 
 ### 3. Madeline, 17 år, nettopp kommet inn i en goth-fase, hun har nettopp brukt alle konfirmasjonspengene på å kjøpe en ny datamaskin og vil ha et spill som er mørkt og dystert.
 
+
+### A5 
+Oppsummering av Prosjekt: Høytek Nightfall: Survivors Saga Deluxe Edition
+I løpet av de innledende fasene av utviklingen av "Høytek Nightfall: Survivors Saga Deluxe Edition", har teamet vårt gjennomført en rekke planleggings- og organisasjonsaktiviteter for å legge et solid fundament for prosjektet. Til tross for at vi er i en tidlig fase og ikke har begynt kodingsarbeidet ennå, har vi oppnådd betydelige fremskritt i å forme prosjektets retning og struktur.
+
+Hva Gikk Bra:
+
+• Teamorganisering: Vi har effektivt fordelt roller innen teamet, noe som har sikret at alle medlemmer har klare ansvarsområder. Dette har bidratt til å fremme en følelse av eierskap og ansvarlighet blant teammedlemmene.
+• Konseptutvikling: Klarheten i spillkonseptet og den generelle entusiasmen rundt spillideen har vært høy. Dette har lagt grunnlaget for en felles visjon for spillet, noe som er avgjørende for motivasjonen og samarbeidet videre i prosjektet.
+• Kommunikasjon: Bruken av Discord som vår hoved kommunikasjonskanal har vist seg å være effektiv for å opprettholde jevn og åpen dialog blant teammedlemmene. VI har i tillegg laget en chat på Messenger, der vi planlegger møter, og sier i fra dersom man ikke kan møte, eller kommer for seint. Dette ble lagd, ettersom vi syntes slik informasjon egner seg bedre for en annen plattform enn discord.
+
+Hva har vært vanskelig:
+
+Git: Vi har ønsket å sette en god struktur for hvordan vi som gruppe skal bruke Gitlab. Vi ser på dette som en veldig verdifull plattform, som er nødvendig for alle og en hver å sette seg dypt inn i. Ved så sette en god struktur og skape forståelse av denne plattform tidlig i prosessen, vil det kunne forhindre mange framtidig problemer, og skape et bedre samarbeid. Vi har prøvd oss mye fram og tilbake for å forstå hvordan vi skal bruke dette verktøyet, og føler etter mye tid at vi har alle fått en dypere forståelse av Git. 
