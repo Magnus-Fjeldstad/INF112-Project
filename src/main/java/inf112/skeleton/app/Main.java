@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setForegroundFPS(60);
-		cfg.setTitle("Mario Bros");
-        new Lwjgl3Application(new MarioBros(), cfg);
+		cfg.setTitle("GAME-TEST");
+        new Lwjgl3Application(new GameTest(), cfg);
     }
 }

@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import inf112.skeleton.app.screens.PlayScreen;
 
-public class MarioBros extends Game {
+public class GameTest extends Game {
 	public SpriteBatch batch;
 
 	public static final int V_Width = 400;
