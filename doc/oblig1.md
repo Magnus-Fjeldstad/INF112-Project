@@ -2,7 +2,7 @@
 **Team:** *Høytek Nightfall: Survivors Saga Delux Edition* – *Johannes Helleve, Magnus Fjeldstad, Brage Hogstad, Jens Brown Eriksen, Lyder Samnøy, Henrik Tennebekk*...
 
 
-### A1 
+### A1:
 
 Se på README.md
 
@@ -26,8 +26,8 @@ Elementet som mangler i vår versjon er følelsen av "randomness" der du f.eks. 
 ...
 
 
-#### A3 
- Prosjektmetodikken som i våre øyne egner seg best er en blanding av Scrum og Kanban, altså Scrumban. Som et team har vi avtalt å møtes minst 2 ganger i uken. Til hver "sprint" som vi vil vare 2-3 uker vil et team-medlem bli utnevt **Scrumban Master**. Scrumban Masteren vil være ansvarlig for å oppdatere Kanban-tavlen ved å ha klar og tydelig kommunikasjon med hvert eneste medlem i teamet. Både ved start og slutt på en oppgave skal Scrumban Masteren bli informert. Derav vil Scrumban Masteren kunne ha klar oversikt over hvor langt i arbeidsprosessen hvert medlem er til en hver tid.
+### A3: 
+ Prosjektmetodikken som i våre øyne egner seg best er en blanding av Scrum og Kanban, altså Scrumban. Som et team har vi avtalt å møtes minst 2 ganger i uken. Til hver "sprint" som vi vil vare 1-2 uker vil et team-medlem bli utnevt **Scrumban Master**. Scrumban Masteren vil være ansvarlig for å oppdatere Kanban-tavlen ved å ha klar og tydelig kommunikasjon med hvert eneste medlem i teamet. Både ved start og slutt på en oppgave skal Scrumban Masteren bli informert. Derav vil Scrumban Masteren kunne ha klar oversikt over hvor langt i arbeidsprosessen hvert medlem er til en hver tid.
 
 Det er flere ting som er viktige å tenke på ved bruken av Scrumban. Først å fremst må lengden på en sprint være i samsvar med arbeidsmengden. På toppen av dette igjen er det lurt å i tillegg prioritere rekkefølge på oppgaver i tilfelle problemer oppstår. Dersom man jobber med arbeidoppgaver utenfor sprintens plan vil det være meningsløst å benytte seg av prosjektmetodikken. Det er derfor viktig at alle overholder sine plikter i forhold til arbeidsoppgaver og tydelig dokumentasjon.
 
@@ -76,9 +76,7 @@ Som spiller ønsker jeg å forstå strukturen av terrenget som vegger/hull/power
 
 2. Spilleren kan ikke gå gjennom vegger.
 
-3. Spilleren skal miste liv om de går i hull.
-
-4. Spilleren kan plukke opp power ups.
+3. Spilleren kan plukke opp power ups.
 
 
 
@@ -127,20 +125,6 @@ Som spiller ønsker jeg å få en sluttskjerm som spør om jeg vil starte spille
 2. Spilleren får poengsummen for denne runden.
 
 
-
-### 1. Kai Ronny, 14 år, spiller aktivt videospill, har ikke så mange venner på skolen, faren hans lider av alkoholisme noe som gjør det litt tøft i heimen. 
-
-1. Kai Ronny vil ha et spill som er funksjonelt.
-
-2. Kai Ronny vil ha et spill som er underholdende og engasjerende, samt at det er en utfordring som gir han mestringsfølelse.
-
-
-
-### 2. Sandra Borch, 35 år, nettopp gjort en tabbe på jobben og trenger en pause, hun tror videospill kan bli en god distraksjon fra virkligheten. 
-
-
-
-### 3. Madeline, 17 år, nettopp kommet inn i en goth-fase, hun har nettopp brukt alle konfirmasjonspengene på å kjøpe en ny datamaskin og vil ha et spill som er mørkt og dystert.
 
 
 ### A5 
