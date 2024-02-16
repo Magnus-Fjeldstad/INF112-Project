@@ -125,7 +125,8 @@ Som spiller ønsker jeg å få en sluttskjerm som spør om jeg vil starte spille
 2. Spilleren får poengsummen for denne runden.
 
 
-
+### A4
+Laget et simpelt skjellet av et spill. Man kan flytte på den svarte sirkelen ved bruk av piltastene. Kameraet følger "spilleren" og mappet blir renderet ved bruk av libgdx sin OrthoganolTiledMapRenderer. Mappet er laget i Tiled.
 
 ### A5 
 Oppsummering av Prosjekt: Høytek Nightfall: Survivors Saga Deluxe Edition

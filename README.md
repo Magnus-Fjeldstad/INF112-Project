@@ -18,7 +18,7 @@ Run by running the Main file.
 Requires Java 21 or later.
 
 ## Known Issues
-Fireball is stuck, it should be moving in an upwards direction.
+
 ...
 
 ## Credits
