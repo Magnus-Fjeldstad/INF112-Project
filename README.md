@@ -22,8 +22,5 @@ Fireball is stuck, it should be moving in an upwards direction.
 ...
 
 ## Credits
-Fireball image from "https://www.vecteezy.com/png/12629336-fire-flames-explosion"
-Prem table image from "https://www.google.com/url?sa=i&url=https%3A%2F%2Fenglishlifeinfo.com%2Fenglish-premier-league-table-2019-2020%2F&psig=AOvVaw13e2Qb4IuIuOies1MBg7Px&ust=1707827773539000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOC1meT1pYQDFQAAAAAdAAAAABAE"
-
-
+tileset_gutter.png er hentet fra "https://www.spriters-resource.com/fullview/52571/" og editet ned til en mindre versjon av "Magnus Fjeldstad"
 ...
