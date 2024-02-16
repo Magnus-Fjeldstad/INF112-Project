@@ -14,7 +14,7 @@ Høytek Nightfall Survivors is an action-packed survival game that challenges pl
 
 ## Running
 Compile with `mvn package`.
-Run with `finn ut`.
+Run by running the Main file.
 Requires Java 21 or later.
 
 ## Known Issues
