@@ -22,5 +22,5 @@ Fireball is stuck, it should be moving in an upwards direction.
 ...
 
 ## Credits
-
+tileset_gutter.png er hentet fra "https://www.spriters-resource.com/fullview/52571/" og editet ned til en mindre versjon av "Magnus Fjeldstad"
 ...

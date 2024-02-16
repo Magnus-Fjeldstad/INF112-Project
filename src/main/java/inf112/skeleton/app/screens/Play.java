@@ -38,6 +38,11 @@ public class Play implements Screen {
     @Override
     public void render(float delta) {
         handleInput(delta);
+        
+        //Updated the gameCam to follow the sprite
+        gameCam.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
+        gameCam.update();
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
