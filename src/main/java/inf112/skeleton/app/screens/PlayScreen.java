@@ -114,6 +114,7 @@ public class PlayScreen implements Screen {
         // Limit maximum velocity
         float vx = MathUtils.clamp(player.b2body.getLinearVelocity().x, -maxSpeed, maxSpeed);
         float vy = MathUtils.clamp(player.b2body.getLinearVelocity().y, -maxSpeed, maxSpeed);
+        
         player.b2body.setLinearVelocity(vx, vy);
     }
 
