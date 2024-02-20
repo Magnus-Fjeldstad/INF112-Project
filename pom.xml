@@ -60,12 +60,13 @@
 			<artifactId>gdx</artifactId>
 			<version>${libgdx.version}</version>
 		</dependency>
+
 		<dependency>
 		    <groupId>com.badlogicgames.gdx</groupId>
 		    <artifactId>gdx-box2d</artifactId>
 		    <version>${libgdx.version}</version>
 		</dependency>
-
+		
 		<!-- Platform-specific libraries -->
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
@@ -79,7 +80,6 @@
 		    <version>${libgdx.version}</version>
 			<classifier>natives-desktop</classifier>
 		</dependency>
-
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx-backend-lwjgl3</artifactId>
@@ -106,7 +106,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
-		</dependency>
+		</dependency>	
 	</dependencies>
 	<build>
 		<plugins>
