@@ -1,5 +1,6 @@
 package inf112.skeleton.app.sprites;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -14,10 +15,10 @@ public class PlayerModel extends Sprite{
 
     public PlayerModel (World world) {
         this.world = world;
-        defineMario();
+        definePlayer();
     }
 
-    public void defineMario() {
+    public void definePlayer() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / GameTest.PPM, 32 / GameTest.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -26,9 +27,9 @@ public class PlayerModel extends Sprite{
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(5 / GameTest.PPM);
+        
 
         fdef.shape = shape; 
         b2body.createFixture(fdef);
     }
 }   
-
