@@ -12,10 +12,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameTest;
+import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
+import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.tools.B2WorldCreator;
 
@@ -40,6 +43,12 @@ public class PlayScreen implements Screen {
     // Sprites
     private PlayerModel player;
 
+    // Variables for keyhandler
+    private KeyHandler keyHandler;
+
+    // Array of fireballs
+    private Array<Fireball> fireballs;
+
     public PlayScreen(GameTest game) {
         this.game = game;
         // Create cam to follow the player
@@ -59,52 +68,25 @@ public class PlayScreen implements Screen {
 
         // Creates the "world" and adds gravity
         world = new World(new Vector2(0, 0), true);
+
         b2dr = new Box2DDebugRenderer();
 
         // Creates the B2 world: The physics
         new B2WorldCreator(world, map);
 
         // Creates the player
-        player = new PlayerModel(world);
+        player = new PlayerModel(world, 100, 4, 5);
+
+        // Creates a KeyHandler for he player
+        keyHandler = new KeyHandler(player, this);
+
+        // Creates an array of fireballs
+        fireballs = new Array<Fireball>();
+
     }
 
     @Override
     public void show() {
-    }
-
-    // Movement Control
-    // TODO move to a different Class
-    public void handleInput(float dt) {
-        float force = 6f; // Adjust the force based on your game's physics scale
-        float stopForce = 5f; // Adjust the stop force as needed
-        float maxSpeed = 2f; // Adjust the maximum speed as needed
-
-        // Apply forces based on input
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            player.b2body.applyForceToCenter(0, force, true);
-        else if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            player.b2body.applyForceToCenter(0, -force, true);
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            player.b2body.applyForceToCenter(force, 0, true);
-        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            player.b2body.applyForceToCenter(-force, 0, true);
-
-        // Apply stopping force when keys are released
-        if (!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            float vy = player.b2body.getLinearVelocity().y;
-            player.b2body.applyForceToCenter(0, -vy * stopForce, true);
-        }
-        if (!Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            float vx = player.b2body.getLinearVelocity().x;
-            player.b2body.applyForceToCenter(-vx * stopForce, 0, true);
-        }
-
-        // Limit maximum velocity
-        float vx = MathUtils.clamp(player.b2body.getLinearVelocity().x, -maxSpeed, maxSpeed);
-        float vy = MathUtils.clamp(player.b2body.getLinearVelocity().y, -maxSpeed, maxSpeed);
-        
-        player.b2body.setLinearVelocity(vx, vy);
     }
 
     /**
@@ -114,7 +96,7 @@ public class PlayScreen implements Screen {
      *           deltatime
      */
     public void update(float dt) {
-        handleInput(dt);
+        keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
 
@@ -135,10 +117,24 @@ public class PlayScreen implements Screen {
 
         renderer.render();
 
+        game.batch.setProjectionMatrix(gamecam.combined);
+        game.batch.begin(); 
+
+        for (Fireball fireball : fireballs) {
+            fireball.draw(game.batch);
+        }
+
+        game.batch.end(); 
+
         b2dr.render(world, gamecam.combined);
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+    }
+
+    public void createFireball() {
+        Fireball newFireball = new Fireball(player, world);
+        fireballs.add(newFireball);
     }
 
     @Override
