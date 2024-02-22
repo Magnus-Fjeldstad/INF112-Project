@@ -14,9 +14,11 @@ import inf112.skeleton.app.GameTest;
  */
 public class Fireball extends GameEntity {
 
-    private static final int DEFAULT_HEALTH = 1;
-    private static final float DEFAULT_SPEED = 2f;
     private static final int DEFAULT_ATTACK_DAMAGE = 10;
+
+    public static final short CATEGORY_PLAYER = 0x0001; // 0001 in binary
+    public static final short CATEGORY_FIREBALL = 0x0002; // 0010 in binary
+    public static final short CATEGORY_OTHER = 0x0004; // 0100 in binary
 
     private Texture texture;
     private PlayerModel player;
@@ -24,21 +26,20 @@ public class Fireball extends GameEntity {
     /**
      * Constructor for the Fireball.
      *
-     * @param world The game world this fireball belongs to.
+     * @param world  The game world this fireball belongs to.
      * @param startX The starting X position (center of the player).
      * @param startY The starting Y position (center of the player).
      */
     public Fireball(PlayerModel player, World world) {
-        super(world, DEFAULT_HEALTH, DEFAULT_SPEED, DEFAULT_ATTACK_DAMAGE);
+        super(world, 0, 0, DEFAULT_ATTACK_DAMAGE);
         texture = new Texture("blackCircle.png");
 
         this.player = player;
-    
-        setPosition(player.b2body.getPosition().x, player.b2body.getPosition().y); 
-        
+
+        setPosition(player.b2body.getPosition().x, player.b2body.getPosition().y);
+
         defineEntity();
     }
-    
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture, player.b2body.getPosition().x, player.b2body.getPosition().y);
@@ -47,10 +48,7 @@ public class Fireball extends GameEntity {
     @Override
     protected void defineEntity() {
         BodyDef bdef = new BodyDef();
-
-        bdef.position.set(getX(), getY()); // Use initial position
-        System.out.println("bdef fireball:" + getX() + getY());
-        
+        bdef.position.set(getX(), getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -59,9 +57,9 @@ public class Fireball extends GameEntity {
         shape.setRadius(2 / GameTest.PPM);
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+        fdef.filter.categoryBits = 2; // Fireball category
+        fdef.filter.maskBits = 1; // Collide with walls only
 
-        // Set initial upward movement
-        b2body.setLinearVelocity(0, movementSpeed);
+        b2body.createFixture(fdef);
     }
 }

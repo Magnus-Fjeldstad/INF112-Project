@@ -1,6 +1,7 @@
 package inf112.skeleton.app.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -34,6 +35,8 @@ public abstract class GameEntity extends Sprite {
      * Abstract method to define the entity.
      */
     protected abstract void defineEntity();
+
+
 
     // Getters and setters for health, movement speed, and attack damage can be added as needed.
 }

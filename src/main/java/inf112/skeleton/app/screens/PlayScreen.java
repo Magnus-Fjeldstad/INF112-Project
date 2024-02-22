@@ -1,14 +1,12 @@
 package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,6 +19,8 @@ import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.tools.B2WorldCreator;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 
 public class PlayScreen implements Screen {
 
@@ -104,6 +104,8 @@ public class PlayScreen implements Screen {
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
 
+        setCrosshairCursor();
+
         gamecam.update();
         renderer.setView(gamecam);
     }
@@ -132,9 +134,25 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
     }
 
-    public void createFireball() {
+
+    /**
+     * 
+     * @param direction spawns a fireball at the players center
+     * and directs it in the direction of the players cursor
+     */
+    public void createFireball(Vector2 direction) {
         Fireball newFireball = new Fireball(player, world);
+
+        newFireball.b2body.setLinearVelocity(direction);
         fireballs.add(newFireball);
+    }
+
+    public OrthographicCamera getGamecam() {
+        return this.gamecam;
+    }
+
+    private void setCrosshairCursor() {
+        Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
 
     @Override
