@@ -31,8 +31,8 @@ public class B2WorldCreator {
             shape.setAsBox(rect.getWidth() / 2 / GameTest.PPM, rect.getHeight() / 2 / GameTest.PPM);
             fdef.shape = shape;
             
-            fdef.filter.categoryBits = 1; // Wall category
-            fdef.filter.maskBits = 3; // Collide with players and fireballs
+            fdef.filter.categoryBits = GameTest.CATEGORY_PLAYER; // Wall category
+            fdef.filter.maskBits = GameTest.CATEGORY_OTHER; // Collide with players and fireballs
             body.createFixture(fdef);
         }
     }

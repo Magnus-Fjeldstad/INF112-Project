@@ -41,8 +41,8 @@ public class PlayerModel extends GameEntity {
 
         fdef.shape = shape;
         
-        fdef.filter.categoryBits = 1; // Player category
-        fdef.filter.maskBits = 1; // Collide with walls only
+        fdef.filter.categoryBits = GameTest.CATEGORY_PLAYER; // Player category
+        fdef.filter.maskBits = GameTest.CATEGORY_PLAYER; // Collide with walls only
 
         b2body.createFixture(fdef);
     }
