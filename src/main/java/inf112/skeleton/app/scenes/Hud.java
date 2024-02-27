@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.skeleton.app.GameTest;
+import inf112.skeleton.app.GameCreate;
 
 public class Hud implements Disposable{
     public Stage stage;
@@ -32,7 +32,7 @@ public class Hud implements Disposable{
         timeCount = 0;
         score = 0;
 
-        viewport = new FitViewport(GameTest.V_Width, GameTest.V_Height, new OrthographicCamera());
+        viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         Table table = new Table();

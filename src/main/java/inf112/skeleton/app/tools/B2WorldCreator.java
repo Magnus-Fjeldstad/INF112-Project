@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import inf112.skeleton.app.GameTest;
+import inf112.skeleton.app.GameCreate;
 
 public class B2WorldCreator {
     public B2WorldCreator(World world, TiledMap map) {
@@ -23,16 +23,16 @@ public class B2WorldCreator {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameTest.PPM,
-                    (rect.getY() + rect.getHeight() / 2) / GameTest.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameCreate.PPM,
+                    (rect.getY() + rect.getHeight() / 2) / GameCreate.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth() / 2 / GameTest.PPM, rect.getHeight() / 2 / GameTest.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / GameCreate.PPM, rect.getHeight() / 2 / GameCreate.PPM);
             fdef.shape = shape;
             
-            fdef.filter.categoryBits = 1; // Wall category
-            fdef.filter.maskBits = 3; // Collide with players and fireballs
+            fdef.filter.categoryBits = GameCreate.CATEGORY_WALLS; 
+            fdef.filter.maskBits = GameCreate.CATEGORY_FIRBALL | GameCreate.CATEGORY_PLAYER;
             body.createFixture(fdef);
         }
     }

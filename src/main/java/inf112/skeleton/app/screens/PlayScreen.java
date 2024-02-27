@@ -11,9 +11,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.skeleton.app.GameTest;
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.sprites.Fireball;
@@ -23,7 +24,7 @@ import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 
 public class PlayScreen implements Screen {
 
-    private GameTest game;
+    private GameCreate game;
 
     // Gamecam + HUD variables
     private OrthographicCamera gamecam;
@@ -48,13 +49,13 @@ public class PlayScreen implements Screen {
     // Array of fireballs
     private Array<Fireball> fireballs;
 
-    public PlayScreen(GameTest game) {
+    public PlayScreen(GameCreate game) {
         this.game = game;
         // Create cam to follow the player
         gamecam = new OrthographicCamera();
 
         // create a FitViewPort mantain virtual asprect ratio
-        gamePort = new FitViewport(GameTest.V_Width / GameTest.PPM, GameTest.V_Height / GameTest.PPM, gamecam);
+        gamePort = new FitViewport(GameCreate.V_Width / GameCreate.PPM, GameCreate.V_Height / GameCreate.PPM, gamecam);
 
         // create our game HUD
         hud = new Hud(game.batch);
@@ -62,7 +63,7 @@ public class PlayScreen implements Screen {
         // Map Loader/ MapRenderer
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("map1.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / GameTest.PPM);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / GameCreate.PPM);
         gamecam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 
         // Creates the "world" and adds gravity
@@ -107,6 +108,7 @@ public class PlayScreen implements Screen {
 
         gamecam.update();
         renderer.setView(gamecam);
+        
     }
 
     @Override
@@ -141,10 +143,10 @@ public class PlayScreen implements Screen {
      */
     public void createFireball(Vector2 direction) {
         Fireball newFireball = new Fireball(player, world);
-
-        newFireball.b2body.setLinearVelocity(direction);
+        newFireball.setLinearVelocity(direction); 
         fireballs.add(newFireball);
     }
+    
 
     public OrthographicCamera getGamecam() {
         return this.gamecam;
@@ -153,6 +155,7 @@ public class PlayScreen implements Screen {
     private void setCrosshairCursor() {
         Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
+
 
     @Override
     public void resize(int width, int height) {
