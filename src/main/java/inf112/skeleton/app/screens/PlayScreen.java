@@ -19,7 +19,6 @@ import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.tools.B2WorldCreator;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 
 public class PlayScreen implements Screen {
