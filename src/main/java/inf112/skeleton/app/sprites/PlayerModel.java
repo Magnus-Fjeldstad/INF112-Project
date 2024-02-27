@@ -11,6 +11,7 @@ import inf112.skeleton.app.GameTest;
  */
 public class PlayerModel extends GameEntity {
 
+    //Variables for collision between fireball, PlayerModel and B2World
     public static final short CATEGORY_PLAYER = 0x0001; // 0001 in binary
     public static final short CATEGORY_FIREBALL = 0x0002; // 0010 in binary
     public static final short CATEGORY_OTHER = 0x0004; // 0100 in binary
