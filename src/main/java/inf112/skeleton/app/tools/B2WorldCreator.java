@@ -12,65 +12,28 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameTest;
 
 public class B2WorldCreator {
-    public B2WorldCreator (World world, TiledMap map) {
+    public B2WorldCreator(World world, TiledMap map) {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        //Create object for ground
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        // Create object for ground
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/GameTest.PPM, (rect.getY() + rect.getHeight()/2)/GameTest.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / GameTest.PPM,
+                    (rect.getY() + rect.getHeight() / 2) / GameTest.PPM);
 
             body = world.createBody(bdef);
 
-            shape.setAsBox(rect.getWidth()/2 /GameTest.PPM, rect.getHeight()/2 /GameTest.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / GameTest.PPM, rect.getHeight() / 2 / GameTest.PPM);
             fdef.shape = shape;
+            
+            fdef.filter.categoryBits = 1; // Wall category
+            fdef.filter.maskBits = 3; // Collide with players and fireballs
             body.createFixture(fdef);
         }
-        // //Create object for pipe
-        // for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-        //     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-        //     bdef.type = BodyDef.BodyType.StaticBody;
-        //     bdef.position.set((rect.getX()+rect.getWidth()/2)/MarioBros.PPM, (rect.getY() + rect.getHeight()/2)/MarioBros.PPM);
-
-        //     body = world.createBody(bdef);
-
-        //     shape.setAsBox(rect.getWidth()/2 /MarioBros.PPM, rect.getHeight()/2 /MarioBros.PPM);
-        //     fdef.shape = shape;
-        //     body.createFixture(fdef);
-        // }
-
-        // //Create object for brick
-        // for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
-        //     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-        //     bdef.type = BodyDef.BodyType.StaticBody;
-        //     bdef.position.set((rect.getX()+rect.getWidth()/2)/MarioBros.PPM, (rect.getY() + rect.getHeight()/2)/MarioBros.PPM);
-
-        //     body = world.createBody(bdef);
-
-        //     shape.setAsBox(rect.getWidth()/2 /MarioBros.PPM, rect.getHeight()/2 /MarioBros.PPM);
-        //     fdef.shape = shape;
-        //     body.createFixture(fdef);
-        // }
-
-        // //create object for coin
-        // for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
-        //     Rectangle rect = ((RectangleMapObject) object).getRectangle();
-
-        //     bdef.type = BodyDef.BodyType.StaticBody;
-        //     bdef.position.set((rect.getX()+rect.getWidth()/2)/MarioBros.PPM, (rect.getY() + rect.getHeight()/2)/MarioBros.PPM);
-
-        //     body = world.createBody(bdef);
-
-        //     shape.setAsBox(rect.getWidth()/2 /MarioBros.PPM, rect.getHeight()/2 /MarioBros.PPM);
-        //     fdef.shape = shape;
-        //     body.createFixture(fdef);
-        // }
     }
 }
