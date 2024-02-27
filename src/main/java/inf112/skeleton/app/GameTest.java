@@ -1,11 +1,7 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class GameTest extends Game {
