@@ -16,10 +16,6 @@ public class Fireball extends GameEntity {
 
     private static final int DEFAULT_ATTACK_DAMAGE = 10;
 
-    public static final short CATEGORY_PLAYER = 0x0001; // 0001 in binary
-    public static final short CATEGORY_FIREBALL = 0x0002; // 0010 in binary
-    public static final short CATEGORY_OTHER = 0x0004; // 0100 in binary
-
     private Texture texture;
     private PlayerModel player;
 
@@ -57,8 +53,8 @@ public class Fireball extends GameEntity {
         shape.setRadius(2 / GameTest.PPM);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = 2; // Fireball category
-        fdef.filter.maskBits = 1; // Collide with walls only
+        fdef.filter.categoryBits = GameTest.CATEGORY_FIREBALL; // Fireball category
+        fdef.filter.maskBits = GameTest.CATEGORY_PLAYER; // Collide with walls only
 
         b2body.createFixture(fdef);
     }
