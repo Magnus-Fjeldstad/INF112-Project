@@ -17,10 +17,6 @@ public class GameCreate extends Game {
 	public static final int V_Height = 208;
 	public static final float PPM = 100;
 
-
-	public static final short CATEGORY_PLAYER = 1; 
-    public static final short CATEGORY_FIREBALL = 2;
-    public static final short CATEGORY_OTHER = 3; 
 	
 	@Override
 	public void create () {
