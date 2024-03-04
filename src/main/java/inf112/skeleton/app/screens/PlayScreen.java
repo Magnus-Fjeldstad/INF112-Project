@@ -19,10 +19,13 @@ import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
+import inf112.skeleton.app.sprites.enemies.Enemy1;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class PlayScreen implements Screen {
+    private TextureAtlas atlas;
 
     private GameCreate game;
 
@@ -50,6 +53,8 @@ public class PlayScreen implements Screen {
     private Array<Fireball> fireballs;
 
     public PlayScreen(GameCreate game) {
+        atlas = new TextureAtlas("Player_and_enemy.atlas");
+
         this.game = game;
         // Create cam to follow the player
         gamecam = new OrthographicCamera();
@@ -72,10 +77,10 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
         // Creates the B2 world: The physics
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(this);
 
         // Creates the player
-        player = new PlayerModel(world, 100, 4, 5);
+        player = new PlayerModel(this, 100, 4, 5);
 
         // Creates a KeyHandler for he player
         keyHandler = new KeyHandler(player, this);
@@ -100,6 +105,9 @@ public class PlayScreen implements Screen {
 
         world.step(1 / 60f, 6, 2);
 
+        //Updated the player sprites position
+        player.update(dt);
+
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
@@ -108,7 +116,7 @@ public class PlayScreen implements Screen {
 
         gamecam.update();
         renderer.setView(gamecam);
-        
+
     }
 
     @Override
@@ -120,42 +128,53 @@ public class PlayScreen implements Screen {
 
         renderer.render();
 
+        // debug lines for Box2d
+        b2dr.render(world, gamecam.combined);
+
         game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin(); 
+        game.batch.begin();
+        player.draw(game.batch);
 
         for (Fireball fireball : fireballs) {
             fireball.draw(game.batch);
         }
 
-        game.batch.end(); 
-
-        b2dr.render(world, gamecam.combined);
+        game.batch.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
 
-
     /**
      * 
      * @param direction spawns a fireball at the players center
-     * and directs it in the direction of the players cursor
+     *                  and directs it in the direction of the players cursor
      */
     public void createFireball(Vector2 direction) {
-        Fireball newFireball = new Fireball(player, world, player.getAttackDamage());
-        newFireball.setLinearVelocity(direction); 
+        Fireball newFireball = new Fireball(player, this, player.getAttackDamage());
+        newFireball.setLinearVelocity(direction);
         fireballs.add(newFireball);
     }
-    
 
     public OrthographicCamera getGamecam() {
         return this.gamecam;
+    }
+
+    public World getWorld() {
+        return this.world;
+    }
+
+    public TiledMap getMap() {
+        return this.map;
     }
 
     private void setCrosshairCursor() {
         Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
 
+    public TextureAtlas getAtlas() {
+        return atlas;
+    }
 
     @Override
     public void resize(int width, int height) {

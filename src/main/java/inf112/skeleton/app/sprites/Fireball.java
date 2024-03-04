@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import inf112.skeleton.app.GameCreate;
+import inf112.skeleton.app.screens.PlayScreen;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -16,15 +17,16 @@ public class Fireball {
 
     private Texture texture;
     private PlayerModel player;
+    private PlayScreen screen;
     private World world;
     private Body b2body;
     private float x, y;
 
     public int damage;
 
-    public Fireball(PlayerModel player, World world, int damage) {
+    public Fireball(PlayerModel player, PlayScreen screen, int damage) {
         this.player = player;
-        this.world = world;
+        this.world = screen.getWorld();
         this.damage = player.getAttackDamage();
 
         this.texture = new Texture("blackCircle.png");
