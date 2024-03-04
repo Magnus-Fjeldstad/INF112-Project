@@ -20,9 +20,12 @@ public class Fireball {
     private Body b2body;
     private float x, y;
 
-    public Fireball(PlayerModel player, World world) {
+    public int damage;
+
+    public Fireball(PlayerModel player, World world, int damage) {
         this.player = player;
         this.world = world;
+        this.damage = player.getAttackDamage();
 
         this.texture = new Texture("blackCircle.png");
 

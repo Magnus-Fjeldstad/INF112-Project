@@ -1,5 +1,6 @@
 package inf112.skeleton.app.sprites;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -9,21 +10,25 @@ import inf112.skeleton.app.GameCreate;
 /**
  * Class representing the player in the game.
  */
-public class PlayerModel extends GameEntity {
 
-    /**
-     * Constructor for PlayerModel.
-     * @param world         The game world this player belongs to.
-     * @param health        Initial health of the player.
-     * @param movementSpeed Movement speed of the player.
-     * @param attackDamage  Attack damage of the player.
-     */
+public class PlayerModel{
+
+    public World world;
+    public Body b2body;
+
+    public int health;
+    public float movementSpeed;
+    public int attackDamage;
 
     public PlayerModel(World world, int health, float movementSpeed, int attackDamage) {
-        super(world, health, movementSpeed, attackDamage);
+        this.world = world;
+        this.health = health;
+        this.movementSpeed = movementSpeed;
+        this.attackDamage = attackDamage;
+        defineEntity();
     }
 
-    @Override
+
     protected void defineEntity() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / GameCreate.PPM, 32 / GameCreate.PPM);
@@ -42,11 +47,28 @@ public class PlayerModel extends GameEntity {
         b2body.createFixture(fdef);
     }
 
+   
+    public int getHealth() {
+        return this.health;
+    }
+
+    public void setHealth(int deltaHealth){
+        this.health += deltaHealth;
+    }
+    
     public float getSpeed() {
         return this.movementSpeed;
     }
 
-    public void setSpeed(float addSpeed) {
-        this.movementSpeed += addSpeed;
+    public void setSpeed(float deltaSpeed) {
+        this.movementSpeed += deltaSpeed;
+    }
+
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+
+    public void setAttack(int deltaAttackDamage) {
+        this.attackDamage += deltaAttackDamage;
     }
 }

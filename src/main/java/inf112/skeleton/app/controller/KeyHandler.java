@@ -60,7 +60,7 @@ public class KeyHandler {
         }
 
         
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT )|| Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             // Get the cursor position in screen coordinates
             Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         

@@ -142,7 +142,7 @@ public class PlayScreen implements Screen {
      * and directs it in the direction of the players cursor
      */
     public void createFireball(Vector2 direction) {
-        Fireball newFireball = new Fireball(player, world);
+        Fireball newFireball = new Fireball(player, world, player.getAttackDamage());
         newFireball.setLinearVelocity(direction); 
         fireballs.add(newFireball);
     }
