@@ -1,4 +1,4 @@
-package inf112.skeleton.app.sprites.Enemies;
+package inf112.skeleton.app.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.BodyDef;
