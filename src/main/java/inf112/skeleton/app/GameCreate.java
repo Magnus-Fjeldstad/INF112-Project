@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class GameCreate extends Game {

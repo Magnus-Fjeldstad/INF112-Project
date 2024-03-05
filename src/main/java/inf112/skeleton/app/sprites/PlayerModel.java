@@ -41,7 +41,7 @@ public class PlayerModel extends Sprite {
 
     // Sets the size of the sprite
     private int frameWidth = 32; // Width of each frame
-    private int frameHeight = 35; // Height of each frame
+    private int frameHeight = 36; // Height of each frame
     private int padding = 16; // Padding between characters
 
     private float stateTimer;
@@ -117,19 +117,19 @@ public class PlayerModel extends Sprite {
         switch (currentState) {
             case UP:
                 region = playerRunUp.getKeyFrame(stateTimer, true);
-                previousState = State.UP; 
+                previousState = State.UP;
                 break;
             case DOWN:
                 region = playerRunDown.getKeyFrame(stateTimer, true);
-                previousState = State.DOWN; 
+                previousState = State.DOWN;
                 break;
             case LEFT:
                 region = playerRunLeft.getKeyFrame(stateTimer, true);
-                previousState = State.LEFT; 
+                previousState = State.LEFT;
                 break;
             case RIGHT:
                 region = playerRunRight.getKeyFrame(stateTimer, true);
-                previousState = State.RIGHT; 
+                previousState = State.RIGHT;
                 break;
             case STANDING:
                 // Choose the standing still frame based on the previousState
@@ -152,11 +152,7 @@ public class PlayerModel extends Sprite {
                 break;
         }
 
-        if (currentState != State.STANDING) {
-            stateTimer += dt;
-        } else {
-            stateTimer = 0;
-        }
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
 
         return region;
     }
@@ -164,9 +160,16 @@ public class PlayerModel extends Sprite {
     public State getState() {
         float xVelocity = b2body.getLinearVelocity().x;
         float yVelocity = b2body.getLinearVelocity().y;
-        boolean movingHorizontally = Math.abs(xVelocity) > Math.abs(yVelocity);
+        float velocityThreshold = 0.1f; // Define a suitable threshold for your game
 
-        if (movingHorizontally) {
+        boolean isMovingHorizontally = Math.abs(xVelocity) > Math.abs(yVelocity);
+        boolean isMoving = Math.abs(xVelocity) > velocityThreshold || Math.abs(yVelocity) > velocityThreshold;
+
+        if (!isMoving) {
+            return State.STANDING;
+        }
+
+        if (isMovingHorizontally) {
             if (xVelocity > 0) {
                 return State.RIGHT;
             } else if (xVelocity < 0) {

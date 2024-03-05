@@ -16,11 +16,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
-import inf112.skeleton.app.scenes.Hud;
+import inf112.skeleton.app.tools.B2WorldCreator;
+import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
-import inf112.skeleton.app.sprites.enemies.Enemy1;
-import inf112.skeleton.app.tools.B2WorldCreator;
+import inf112.skeleton.app.sprites.Enemies.Enemy1;
+import inf112.skeleton.app.scenes.Hud;
+
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -87,6 +89,8 @@ public class PlayScreen implements Screen {
 
         // Creates an array of fireballs
         fireballs = new Array<Fireball>();
+
+        world.setContactListener(new WorldContactListener());
 
     }
 
