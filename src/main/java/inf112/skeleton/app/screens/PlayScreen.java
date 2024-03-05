@@ -93,7 +93,10 @@ public class PlayScreen implements Screen {
 
         enemies = new Array<AbstractEnemy>();
         enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
+
+        world.setContactListener(new WorldContactListener());
     }
+
 
     @Override
     public void show() {
