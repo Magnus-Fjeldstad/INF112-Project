@@ -1,0 +1,7 @@
+Player_and_enemy.png
+size:128,512
+repeat:none
+MainGuy
+bounds:2,119,124,144
+SkeletonEnemy
+bounds:2,2,46,115
