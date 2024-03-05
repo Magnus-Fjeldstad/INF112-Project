@@ -11,19 +11,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
+import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-//import inf112.skeleton.app.sprites.enemies.Enemy1;
 import inf112.skeleton.app.sprites.enemies.RedEnemy;
-import inf112.skeleton.app.tools.B2WorldCreator;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -96,7 +94,10 @@ public class PlayScreen implements Screen {
 
         enemies = new Array<AbstractEnemy>();
         enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
+
+        world.setContactListener(new WorldContactListener());
     }
+
 
     @Override
     public void show() {
