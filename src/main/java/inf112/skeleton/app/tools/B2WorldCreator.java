@@ -38,7 +38,7 @@ public class B2WorldCreator {
             fdef.shape = shape;
             
             fdef.filter.categoryBits = GameCreate.CATEGORY_WALLS; 
-            fdef.filter.maskBits = GameCreate.CATEGORY_FIRBALL | GameCreate.CATEGORY_PLAYER;
+            fdef.filter.maskBits = GameCreate.CATEGORY_FIRBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
             body.createFixture(fdef);
         }
     }

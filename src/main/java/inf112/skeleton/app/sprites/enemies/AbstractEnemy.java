@@ -1,6 +1,7 @@
 package inf112.skeleton.app.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,16 +17,16 @@ public abstract class AbstractEnemy extends Sprite  {
     public int attackDamage;
     public float movementSpeed;
 
-    public AbstractEnemy(PlayScreen screen, float x, float y, int health, float movementSpeed, int attackDamage){
+    public AbstractEnemy(PlayScreen screen, float startingX, float startingY, int health, float movementSpeed, int attackDamage, TextureAtlas.AtlasRegion region) {
+        super(region); // Initialize the Sprite with the given region
         this.world = screen.getWorld();
         this.screen = screen;
-        setPosition(x, y);
+        setPosition(startingX, startingY);
         defineEnemy();
         this.health = health;
         this.movementSpeed = movementSpeed;
         this.attackDamage = attackDamage;
         velocity = new Vector2(-(this.movementSpeed), -(this.movementSpeed)*2);
-        b2body.setActive(false);
     }
 
     protected abstract void defineEnemy();

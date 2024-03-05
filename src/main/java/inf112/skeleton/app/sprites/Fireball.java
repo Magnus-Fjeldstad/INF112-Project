@@ -58,7 +58,7 @@ public class Fireball {
 
         fdef.shape = shape;
         fdef.filter.categoryBits = GameCreate.CATEGORY_FIRBALL;
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY;
 
         b2body.createFixture(fdef);
     }

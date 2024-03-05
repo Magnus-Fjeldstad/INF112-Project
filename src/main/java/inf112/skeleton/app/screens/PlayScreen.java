@@ -19,7 +19,9 @@ import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
-import inf112.skeleton.app.sprites.enemies.Enemy1;
+import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
+//import inf112.skeleton.app.sprites.enemies.Enemy1;
+import inf112.skeleton.app.sprites.enemies.RedEnemy;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -51,6 +53,9 @@ public class PlayScreen implements Screen {
 
     // Array of fireballs
     private Array<Fireball> fireballs;
+
+    // Array of enemies
+    private Array<AbstractEnemy> enemies;
 
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
@@ -88,6 +93,8 @@ public class PlayScreen implements Screen {
         // Creates an array of fireballs
         fireballs = new Array<Fireball>();
 
+        enemies = new Array<AbstractEnemy>();
+        enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
     }
 
     @Override
@@ -107,6 +114,10 @@ public class PlayScreen implements Screen {
 
         //Updated the player sprites position
         player.update(dt);
+
+        for (AbstractEnemy enemy : enemies) {
+            enemy.update(dt);
+        }
 
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
@@ -137,6 +148,10 @@ public class PlayScreen implements Screen {
 
         for (Fireball fireball : fireballs) {
             fireball.draw(game.batch);
+        }
+
+        for (AbstractEnemy enemy : enemies) {
+            enemy.draw(game.batch);
         }
 
         game.batch.end();
