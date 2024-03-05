@@ -20,7 +20,7 @@ import inf112.skeleton.app.tools.B2WorldCreator;
 import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
-import inf112.skeleton.app.sprites.Enemies.Enemy1;
+import inf112.skeleton.app.sprites.enemies.Enemy1;
 import inf112.skeleton.app.scenes.Hud;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
