@@ -8,4 +8,6 @@ Bytt branch `git checkout <branch-name>`
 
 Hent endringer fra main i repo: `git pull origin main`
 
+Slette én branch: ` git branch --delete <branchname> 
+
 Slett alle brancher som ikke er i bruk `git fetch --prune`
