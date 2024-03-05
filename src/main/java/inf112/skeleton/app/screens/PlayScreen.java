@@ -17,6 +17,7 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
+import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
