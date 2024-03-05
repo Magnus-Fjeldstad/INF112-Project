@@ -17,25 +17,38 @@ import inf112.skeleton.app.screens.PlayScreen;
  * Class representing the player in the game.
  */
 
-public class PlayerModel extends Sprite{
-    public enum State {STANDING, LEFT, RIGHT, UP, DOWN};
+public class PlayerModel extends Sprite {
+    public enum State {
+        STANDING, LEFT, RIGHT, UP, DOWN
+    };
+
     public State currentState;
     public State previousState;
 
     public PlayScreen screen;
     public Body b2body;
     public World world;
+
     private TextureRegion mainGuyStand;
+    private TextureRegion mainGuyStandLeft;
+    private TextureRegion mainGuyStandRight;
+    private TextureRegion mainGuyStandUp;
 
-    private Animation<TextureRegion> playerRun;
+    private Animation<TextureRegion> playerRunUp;
+    private Animation<TextureRegion> playerRunDown;
+    private Animation<TextureRegion> playerRunLeft;
+    private Animation<TextureRegion> playerRunRight;
+
+    // Sets the size of the sprite
+    private int frameWidth = 32; // Width of each frame
+    private int frameHeight = 35; // Height of each frame
+    private int padding = 16; // Padding between characters
+
     private float stateTimer;
-
-
 
     public int health;
     public float movementSpeed;
     public int attackDamage;
-
 
     public PlayerModel(PlayScreen screen, int health, float movementSpeed, int attackDamage) {
         super(screen.getAtlas().findRegion("MainGuy"));
@@ -45,25 +58,52 @@ public class PlayerModel extends Sprite{
         previousState = State.STANDING;
         stateTimer = 0;
 
-
+        // Down animation
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i <= 3; i++) {
-            frames.add(new TextureRegion(getTexture(), 0+(i*32) , 156, 32  , 32));
+        for (int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 120, frameWidth, frameHeight));
         }
-
-        playerRun = new Animation<TextureRegion>(0.1f, frames);
+        playerRunDown = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
+        // Right animation
+        for (int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 155, frameWidth, frameHeight));
+        }
+        playerRunRight = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        // Up animation
+        for (int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 191, frameWidth, frameHeight));
+        }
+        playerRunUp = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        // Left animation
+        for (int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 226, frameWidth, frameHeight));
+        }
+        playerRunLeft = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        // Set the player's health, speed and attack damage
         this.health = health;
         this.movementSpeed = movementSpeed;
         this.attackDamage = attackDamage;
         defineEntity();
 
-        mainGuyStand = new TextureRegion(getTexture(), 49, 120, 34, 34);
-        setBounds(0,0, 16 / GameCreate.PPM, 16 / GameCreate.PPM);
+        // Texture regions for when the player is standing still
+        mainGuyStand = new TextureRegion(getTexture(), 0, 120, frameWidth, frameHeight);
+        mainGuyStandLeft = new TextureRegion(getTexture(), 0, 226, frameWidth, frameHeight);
+        mainGuyStandRight = new TextureRegion(getTexture(), 0, 155, frameWidth, frameHeight);
+        mainGuyStandUp = new TextureRegion(getTexture(), 0, 191, frameWidth, frameHeight);
+
+        // Set the size of the sprite and the default frame
+        float scale = 0.75f;
+        setBounds(0, 0, (frameWidth * scale) / GameCreate.PPM, (frameHeight * scale) / GameCreate.PPM);
         setRegion(mainGuyStand);
     }
-
 
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -73,43 +113,74 @@ public class PlayerModel extends Sprite{
     public TextureRegion getFrame(float dt) {
         currentState = getState();
 
-        TextureRegion region;
+        TextureRegion region = mainGuyStand; // Default to standing still frame if no other conditions met
         switch (currentState) {
-            case LEFT:
-                region = playerRun.getKeyFrame(stateTimer, true);
-                break;
-            case RIGHT:
-                region = playerRun.getKeyFrame(stateTimer, true);
-                break;
             case UP:
-                region = playerRun.getKeyFrame(stateTimer, true);
+                region = playerRunUp.getKeyFrame(stateTimer, true);
+                previousState = State.UP; 
                 break;
             case DOWN:
-                region = playerRun.getKeyFrame(stateTimer, true);
+                region = playerRunDown.getKeyFrame(stateTimer, true);
+                previousState = State.DOWN; 
+                break;
+            case LEFT:
+                region = playerRunLeft.getKeyFrame(stateTimer, true);
+                previousState = State.LEFT; 
+                break;
+            case RIGHT:
+                region = playerRunRight.getKeyFrame(stateTimer, true);
+                previousState = State.RIGHT; 
                 break;
             case STANDING:
-            default:
-                region = mainGuyStand;
+                // Choose the standing still frame based on the previousState
+                if (previousState != null) {
+                    switch (previousState) {
+                        case UP:
+                            region = mainGuyStandUp;
+                            break;
+                        case LEFT:
+                            region = mainGuyStandLeft;
+                            break;
+                        case RIGHT:
+                            region = mainGuyStandRight;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
                 break;
         }
+
+        if (currentState != State.STANDING) {
+            stateTimer += dt;
+        } else {
+            stateTimer = 0;
+        }
+
         return region;
     }
 
     public State getState() {
-        if (b2body.getLinearVelocity().y > 0){
-            return State.UP;
-        }
-        else if (b2body.getLinearVelocity().y < 0){
-            return State.DOWN;
-        }
-        else if (b2body.getLinearVelocity().x > 0){
-            return State.RIGHT;
-        }
-        else if (b2body.getLinearVelocity().x < 0){
-            return State.LEFT;
-        }
-        return State.STANDING;
+        float xVelocity = b2body.getLinearVelocity().x;
+        float yVelocity = b2body.getLinearVelocity().y;
+        boolean movingHorizontally = Math.abs(xVelocity) > Math.abs(yVelocity);
 
+        if (movingHorizontally) {
+            if (xVelocity > 0) {
+                return State.RIGHT;
+            } else if (xVelocity < 0) {
+                return State.LEFT;
+            }
+        } else {
+            if (yVelocity > 0) {
+                return State.UP;
+            } else if (yVelocity < 0) {
+                return State.DOWN;
+            }
+        }
+
+        return State.STANDING;
     }
 
     protected void defineEntity() {
@@ -120,25 +191,24 @@ public class PlayerModel extends Sprite{
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(9 / GameCreate.PPM);
+        shape.setRadius(11 / GameCreate.PPM);
 
         fdef.shape = shape;
-        
-        fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER; 
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS; 
+
+        fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS;
 
         b2body.createFixture(fdef);
     }
 
-   
     public int getHealth() {
         return this.health;
     }
 
-    public void setHealth(int deltaHealth){
+    public void setHealth(int deltaHealth) {
         this.health += deltaHealth;
     }
-    
+
     public float getSpeed() {
         return this.movementSpeed;
     }
