@@ -27,9 +27,7 @@
 Vi opplever at rollene i teamet fungerer ganske greit. Vi har satt faste rammer og forventninger til hvilke arbeidsoppgaver de forskjellige rollene skal gjøre. I starten var det litt overveldene å sette seg inn i nye verktøy som å bruke GIT i et team, men det har kommet seg veldig over de siste ukene. På møte 05.03 (Se referat), kom vi frem til at for dem som ikke har programmert så mye er det vanskelig å sette seg inn i prosjektet ettersom det begynner å bli ganske omfattende med mange klasser og logikk.
 
 ## Trenger vi nye roller?
-
 Vi kunne trengt en person som tar litt ansvar for fordeling av arbeidsoppgaver ettersom det er vanskelig å vite hva man skal gjøre. Dette ansvaret har vi gitt til Magnus og Henrik ettersom det er de som har programmert mest og kjenner prosjektstrukturen best. 
-
 
 ### Hvilke erfaringer har vi fått i henhold til å være et team?
 Vi har tatt et utgangspunkt i en Scrumban metodikk som vi har hatt litt trøbbel med å opprettholde. Nå som vi er kommet bedre i gang med selve prosjektet så går ting mer radig og konkrete arbeidsoppgaver blir fordelt og fullført. Vi har gått litt unna
@@ -38,19 +36,15 @@ Vi har tatt et utgangspunkt i en Scrumban metodikk som vi har hatt litt trøbbel
 Vi bruker trello til kanban. Også bruker vi Libgdx og Box2d for spillimplementasjon. Vi bruker Tiled for å lage mappet.
 
 ## Hvordan fungerer gruppedtynamikk og kommunikasjon?
-
 Gruppen kommer godt overens og mye tid blir brukt på å drøfte forskjellige ideer og implementasjoner til prosjektet. Vi møtes fysisk 1-2 ganger i uken, men er også aktive på messenger og discord. Vi håper dette fører til økt fleksibilitet mtp. fordeling av arbeidsoppgaver. Vi føler at alle i gruppen er engasjerte og kommer med gode innspill, noe som fører til et godt arbeidsmiljø.
 
 ## Kort retrospektivt om hva som er bra og hva som kan forbedres
+Hittil har det vært noen på gruppen som har hatt kontroll på det administrative, mens andre har hatt kontroll på koden. Dette har ført til at det har vært vanskelig for alle å få til noe arbeid på koden for egenhånd. Dette har ikke vært optimalt ettersom det fører til at noen skriver koden mens andre legger planer for den. Etterhvert som kodebasen vokser, vil det også bli vanskeligere å lære seg hvordan den henger sammen. 
 
-FYLL UT HER HENRIK:
-
-
-## Nevn tre foredringspunkter som skal følges opp
-
-FYLL UT HER
-
-
+## Nevn tre forbedringspunkter som skal følges opp
+1. Alle skal lære seg og forstå kodebasen. Hittil har det vært et problem at det er vanskelig å finne små oppgaver som lar lagmedlemmene jobbe med kodebasen. Nå dukker det opp flere lette oppgaver som gjør det lettere for alle å jobbe med koden. Vi ønsker at alle skal kunne jobbe med koden og bli kjent med den. 
+2. Alle skal forstå og ta i bruk kanban aktivt. Nå som vi har kommet et stykke er det lettere å finne oppgaver som må gjøres, noe som gjør det lettere å ta i bruk kanban på en god måte. Vi ønsker at alle skal komme inn i en god flyt og få til å gjøre oppgaver fra kanbantavlen på egenhånd.
+3. Alle skal lære seg libGDX bedre. Hittil har mye av koden blitt skrevet på en måte som funker, men som ikke er optimalt for bruk med libGDX. Dersom vi lærer oss rammeverket bedre, vil vi få bedre kode som er lettere å jobbe med og debuge.
 
 ## Krav og Spesifikasjoner
 Nedenfor er de samme MVP-kravene vi oppførte i begynnelsen av prosjektet. Hittil kan vi krysse av samtlige, men har fremdeles litt å strekke oss etter.
@@ -82,7 +76,7 @@ Mange av disse punktene er halvveis gjort. For eksempel har vi et spillbrett, me
 
 
 ## Bugs
-- Siden mange av MVP kravene er halvveis ferdig, finnes det flere bugs. Programkræsj ved forsøk å komme til pausemeny, fiende som får en enorm akselerasjon ved treff av fireball. Dette er småting som naturligvis kan og skal fikses.
+- Siden mange av MVP kravene er halvveis ferdig, finnes det flere bugs. Programkræsj ved forsøk å komme til pausemeny, fiende som får en enorm akselerasjon ved treff av fireball og diagonal bevegelse som er raskere enn horisontal og vertikal. Dette er småting som naturligvis kan og skal fikses.
 
 
 ## Prioriteringer fremover
