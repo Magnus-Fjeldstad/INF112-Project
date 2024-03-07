@@ -81,15 +81,15 @@ Nedenfor er de samme MVP-kravene vi oppførte i begynnelsen av prosjektet. Hitti
 Mange av disse punktene er halvveis gjort. For eksempel har vi et spillbrett, men at karakteren ikke begynner i midten. Vi har også laget fiende, men er ikke ferdig med å lage en "EnemySpawner". Enn så lenge har vi konstruert en PlayerModel som kan bevege seg i 4 forskjellige retninger på spillbrettet. Forskjellige screens som start screen og pause screen er under konstruksjon, noe som kommer til å øke spillets helhet. Hit points og Collisions er også godt i gang. Spilleren selv, og skuddene karakteren avfyrer kolliderer med vegg, men vi mangler implementasjon av kollisjon med fiende. 
 
 
-### Bugs
+## Bugs
 - Siden mange av MVP kravene er halvveis ferdig, finnes det flere bugs. Programkræsj ved forsøk å komme til pausemeny, fiende som får en enorm akselerasjon ved treff av fireball. Dette er småting som naturligvis kan og skal fikses.
 
 
-### Prioriteringer fremover
+## Prioriteringer fremover
 - Å fullføre MVP er hovedprioritet. Det å få spawner in enemies som kan gjøre skade på spilleren og at spilleren kan drepe fiender er noe av det som står øverest. Når det er i boks, sammen med startskjerm og pauseskjerm begynner programmet og ligne et skikkelig rouge-like spill. Noe vi har vært veldig dårlig med som må forbedres er skriving av tester. Å skrive tester parallelt med videreutvikling av selve spillet kommer til å være noe vi legger vekt på fremover. 
 
 
-### Brukerhistorie, akseptansekriterier og arbeidsoppgaver
+## Brukerhistorie, akseptansekriterier og arbeidsoppgaver
 Fremover vil det bli lagt fokus på følgende
 1. Som spiller ønsker jeg at fire balls gjør skade på enemy
 - Akeptansekriterer
@@ -123,7 +123,7 @@ Fremover vil det bli lagt fokus på følgende
     - Legge til knapper "Continue" og "Exit" som gjør at spiller enten blir sendt tilbake til PlayScreen, eller sendt ut til StartScreen
 
 
-### Styring av spillkarakter
+## Styring av spillkarakter
 - Spillkarakteren styres ved bruk av 'w', 'a', 's' og 'd'
 - Angriper med 'SPACE' eller 'Mouse Button 1'
 
