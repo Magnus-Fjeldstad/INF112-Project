@@ -1,6 +1,8 @@
 package inf112.skeleton.app.sprites;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -12,38 +14,37 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-public class Fireball {
+public class Fireball extends Sprite {
 
-    private Texture texture;
     private PlayerModel player;
     private PlayScreen screen;
     private World world;
     private Body b2body;
     private float x, y;
+    private TextureRegion fireballTexture;
 
     public int damage;
 
-    public Fireball(PlayerModel player, PlayScreen screen, int damage) {
+    /**
+     * Constructor for Fireball class.
+     *
+     * @param player The player model.
+     * @param screen The play screen.
+     * @param damage The damage of the fireball.
+     * @param atlas The texture atlas containing the fireball texture.
+     */
+    public Fireball(PlayerModel player, PlayScreen screen, int damage, TextureAtlas atlas) {
         this.player = player;
         this.world = screen.getWorld();
-        this.damage = player.getAttackDamage();
-
-        this.texture = new Texture("blackCircle.png");
-
-        // Assuming player.b2body.getPosition() returns a Vector2
+        this.damage = damage;
         this.x = player.b2body.getPosition().x;
         this.y = player.b2body.getPosition().y;
-
+        fireballTexture = new TextureRegion(atlas.findRegion("SkeletonEnemy"), 2, 2, 14, 18); // Assuming SkeletonEnemy is the region name
+        setBounds(x, y, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+        setRegion(fireballTexture);
         defineEntity();
-    }
-
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y);
-    }
-
-    public void setLinearVelocity(Vector2 velocity) {
-        this.b2body.setLinearVelocity(velocity);
     }
 
     protected void defineEntity() {
@@ -60,6 +61,14 @@ public class Fireball {
         fdef.filter.categoryBits = GameCreate.CATEGORY_FIRBALL;
         fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY;
 
-        b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData("Fireball");
+    }
+
+     public void setLinearVelocity(Vector2 velocity) {
+        this.b2body.setLinearVelocity(velocity);
+    }
+
+    public void update(float dt) {
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
 }

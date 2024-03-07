@@ -199,9 +199,10 @@ public class PlayerModel extends Sprite {
         fdef.shape = shape;
 
         fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER;
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS |  GameCreate.CATEGORY_ENEMY;
 
         b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData("Player");
     }
 
     public int getHealth() {

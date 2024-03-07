@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -56,6 +57,9 @@ public class PlayScreen implements Screen {
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
+    // ContactListener
+    private WorldContactListener contactListener;
+
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
 
@@ -95,9 +99,10 @@ public class PlayScreen implements Screen {
         enemies = new Array<AbstractEnemy>();
         enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
 
-        world.setContactListener(new WorldContactListener());
-    }
+        contactListener = new WorldContactListener();
 
+        world.setContactListener(contactListener);
+    }
 
     @Override
     public void show() {
@@ -113,9 +118,15 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
+        removeBodies(world);
 
-        //Updated the player sprites position
+        // Updated the player sprites position
         player.update(dt);
+
+        // Updates the fireballs
+        for (Fireball fireball : fireballs) {
+            fireball.update(dt);
+        }
 
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
@@ -130,6 +141,15 @@ public class PlayScreen implements Screen {
         gamecam.update();
         renderer.setView(gamecam);
 
+    }
+
+    public void removeBodies(World world) {
+        for (Body body : contactListener.getBodiesToRemove()) {
+            if (body != null) {
+                world.destroyBody(body);
+            }
+        }
+        contactListener.setBodiesToRemove(new Array<>());
     }
 
     @Override
@@ -168,7 +188,7 @@ public class PlayScreen implements Screen {
      *                  and directs it in the direction of the players cursor
      */
     public void createFireball(Vector2 direction) {
-        Fireball newFireball = new Fireball(player, this, player.getAttackDamage());
+        Fireball newFireball = new Fireball(player, this, player.getAttackDamage(), atlas);
         newFireball.setLinearVelocity(direction);
         fireballs.add(newFireball);
     }
