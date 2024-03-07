@@ -221,5 +221,10 @@ public class PlayScreen implements Screen {
         b2dr.dispose();
         hud.dispose();
     }
+    
+    // Method to get the current ongoing game when changing screens
+    public GameCreate getGame() {
+        return game;
+    }
 
 }

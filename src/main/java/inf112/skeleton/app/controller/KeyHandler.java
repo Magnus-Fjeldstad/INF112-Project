@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import inf112.skeleton.app.screens.PauseScreen;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.PlayerModel;
 
@@ -90,5 +91,14 @@ public class KeyHandler {
         float vy = MathUtils.clamp(player.b2body.getLinearVelocity().y, -maxSpeed, maxSpeed);
 
         player.b2body.setLinearVelocity(vx, vy);
+
+        // Pauses the game from the current PlayScreen into PauseScreen
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        playScreen.getGame().setScreen(new PauseScreen(playScreen.getGame()));
+}
+
+
     }
+
+
 }
