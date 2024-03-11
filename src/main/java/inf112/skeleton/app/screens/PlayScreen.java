@@ -264,6 +264,10 @@ public class PlayScreen implements Screen {
         this.enemies = livingEnemies;
     }
 
+    /**
+     * Returns player
+     * @return PlayerModel
+     */
     public PlayerModel getPlayerModel() {
         return this.player;
     }
