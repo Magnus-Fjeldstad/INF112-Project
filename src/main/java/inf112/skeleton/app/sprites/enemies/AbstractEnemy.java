@@ -31,5 +31,17 @@ public abstract class AbstractEnemy extends Sprite  {
 
     protected abstract void defineEnemy();
     public abstract void update(float dt);
+
+    public void takeDamage(int damageTaken) {
+        health -= damageTaken;
+    }
+
+    /**
+     * Returns the AbstractEnemy's health
+     * @return
+     */
+    public int getHealth() {
+        return health;
+    }
     
 }   

@@ -17,7 +17,6 @@ public class RedEnemy extends AbstractEnemy {
     private World world;
     private Body b2body;
     private TextureRegion enemyStand;
-    private Vector2 initialPosition;
 
     public RedEnemy(World world, float x, float y, int health, float movementSpeed, int damage, PlayScreen screen) {
         super(screen, x, y, health, movementSpeed, damage, screen.getAtlas().findRegion("SkeletonEnemy"));
@@ -26,7 +25,6 @@ public class RedEnemy extends AbstractEnemy {
         enemyStand = new TextureRegion(getTexture(), 2, 2, 14, 18);
         setBounds(2, 2, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(enemyStand);
-        initialPosition = new Vector2(x, y); // Initialize before use
     }
     
 
@@ -55,8 +53,7 @@ public class RedEnemy extends AbstractEnemy {
     }
 
     @Override
-    protected void defineEnemy() {
-    }
+    protected void defineEnemy() {}
     
 }
 
