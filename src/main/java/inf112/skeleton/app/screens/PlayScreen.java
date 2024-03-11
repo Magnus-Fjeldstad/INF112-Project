@@ -182,6 +182,7 @@ public class PlayScreen implements Screen {
             fireball.draw(game.batch);
         }
 
+        removeDeadEnemies(); // Removes all dead enemies
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
@@ -250,5 +251,16 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+    }
+
+    /**
+     * Removes AbstractEnemies with health that are not 1 or more
+     */
+    private void removeDeadEnemies() {
+        Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
+        for (AbstractEnemy enemy : enemies) {
+            if (enemy.getHealth() > 0) livingEnemies.add(enemy);
+        }
+        this.enemies = livingEnemies;
     }
 }
