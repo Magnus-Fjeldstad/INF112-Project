@@ -35,6 +35,9 @@ Vi har tatt et utgangspunkt i en Scrumban metodikk som vi har hatt litt trøbbel
 ## Prosjektverktøy
 Vi bruker trello til kanban. Også bruker vi Libgdx og Box2d for spillimplementasjon. Vi bruker Tiled for å lage mappet.
 
+Her er en lenke til trello boardet, vil glemte å ta den med i forrige oblig1 og så først nå at dere ville ha tilgang til det
+https://trello.com/b/NoTT8KFC/h%C3%B8ytek-survivors
+
 ## Hvordan fungerer gruppedtynamikk og kommunikasjon?
 Gruppen kommer godt overens og mye tid blir brukt på å drøfte forskjellige ideer og implementasjoner til prosjektet. Vi møtes fysisk 1-2 ganger i uken, men er også aktive på messenger og discord. Vi håper dette fører til økt fleksibilitet mtp. fordeling av arbeidsoppgaver. Vi føler at alle i gruppen er engasjerte og kommer med gode innspill, noe som fører til et godt arbeidsmiljø.
 
