@@ -22,7 +22,7 @@ import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.enemies.RedEnemy;
+import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -56,6 +56,8 @@ public class PlayScreen implements Screen {
 
     // Array of enemies
     private Array<AbstractEnemy> enemies;
+
+    private AbstractEnemyFactory enemyFactory;
 
     // ContactListener
     private WorldContactListener contactListener;
@@ -97,11 +99,19 @@ public class PlayScreen implements Screen {
         fireballs = new Array<Fireball>();
 
         enemies = new Array<AbstractEnemy>();
-        enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
+
+        enemyFactory = new AbstractEnemyFactory(this);
 
         contactListener = new WorldContactListener();
 
         world.setContactListener(contactListener);
+
+        // Testing enemy factory
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
     }
 
     @Override
@@ -241,5 +251,4 @@ public class PlayScreen implements Screen {
         b2dr.dispose();
         hud.dispose();
     }
-
 }
