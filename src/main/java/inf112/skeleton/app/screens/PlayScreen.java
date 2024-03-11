@@ -199,7 +199,7 @@ public class PlayScreen implements Screen {
      *                  and directs it in the direction of the players cursor
      */
     public void createFireball(Vector2 direction) {
-        Fireball newFireball = new Fireball(player, this, player.getAttackDamage(), atlas);
+        Fireball newFireball = new Fireball(this, player.getAttackDamage(), atlas);
         newFireball.setLinearVelocity(direction);
         fireballs.add(newFireball);
     }
@@ -254,7 +254,7 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Removes AbstractEnemies with health that are not 1 or more
+     * Removes AbstractEnemies with health that is not 1 or more
      */
     private void removeDeadEnemies() {
         Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
@@ -262,5 +262,9 @@ public class PlayScreen implements Screen {
             if (enemy.getHealth() > 0) livingEnemies.add(enemy);
         }
         this.enemies = livingEnemies;
+    }
+
+    public PlayerModel getPlayerModel() {
+        return this.player;
     }
 }

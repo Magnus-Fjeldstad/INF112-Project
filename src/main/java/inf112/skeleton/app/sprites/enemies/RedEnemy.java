@@ -1,7 +1,6 @@
 package inf112.skeleton.app.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -44,7 +43,6 @@ public class RedEnemy extends AbstractEnemy {
 
         b2body.createFixture(fixtureDef);
         b2body.createFixture(fixtureDef).setUserData("RedEnemy");
-
     }
 
     @Override
