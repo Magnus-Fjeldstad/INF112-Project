@@ -16,6 +16,6 @@ public class AbstractEnemyFactory {
      */
     public AbstractEnemy spawnRandom() {
         // TODO: Make this spawn different enemies in given spawn locations based on time
-        return new RedEnemy(screen.getWorld(), 0, 0, 0, 0, 0, screen);
+        return new RedEnemy(screen, 0, 0, 0, 0, 0);
     }
 }
