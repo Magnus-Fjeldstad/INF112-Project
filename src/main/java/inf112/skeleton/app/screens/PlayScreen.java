@@ -56,7 +56,7 @@ public class PlayScreen implements Screen {
     private Array<Fireball> fireballs;
 
     // Fireball variables
-    private float fireballCooldown = 1.5f;
+    private float fireballCooldown = 0.5f;
     private float timeSinceLastFireball = 0f;
     private float speedMultiplier = 2.0f;
 
@@ -172,10 +172,10 @@ public class PlayScreen implements Screen {
             for (Fireball fireball : fireballs) {
                 if (fireball.b2body.equals(body)) {
                     fireballs.removeValue(fireball, true);
+                    world.destroyBody(body);
                     break;
                 }
             }
-            world.destroyBody(body);
         }
         bodiesToRemove.clear();
     }
@@ -220,25 +220,25 @@ public class PlayScreen implements Screen {
         // fireballs.add(newFireball);
 
         // Firing additional fireballs in a cone
-        for (int i = 0; i < 3; i++) {
-            Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
-            Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
-            coneFireball.setLinearVelocity(coneVelocity);
-            fireballs.add(coneFireball);
-        }
+        // for (int i = 0; i < 3; i++) {
+        //     Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
+        //     Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
+        //     coneFireball.setLinearVelocity(coneVelocity);
+        //     fireballs.add(coneFireball);
+        // }
 
         // Firing additional fireballs in eight directions
         // Automatic firing
             
-        // for (int i = 0; i < 8; i++) {
-        //     Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
-        //             atlas);
-        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
-        //             45).nor().scl(speedMultiplier);
-        //     // velocity
-        //     directionFireball.setLinearVelocity(directionVelocity);
-        //     fireballs.add(directionFireball);
-        // }
+        for (int i = 0; i < 8; i++) {
+            Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
+                    atlas);
+            Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
+                    45).nor().scl(speedMultiplier);
+            // velocity
+            directionFireball.setLinearVelocity(directionVelocity);
+            fireballs.add(directionFireball);
+        }
     }
 
     /**
