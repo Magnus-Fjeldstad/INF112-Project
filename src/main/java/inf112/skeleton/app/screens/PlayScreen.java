@@ -32,9 +32,6 @@ public class PlayScreen implements Screen {
 
     private GameCreate game;
 
-    private float fireballCooldown = 1.5f; // Adjust the cooldown time as needed
-    private float timeSinceLastFireball = 0f;
-
     // Gamecam + HUD variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -57,6 +54,11 @@ public class PlayScreen implements Screen {
 
     // Array of fireballs
     private Array<Fireball> fireballs;
+
+    // Fireball variables
+    private float fireballCooldown = 1.5f;
+    private float timeSinceLastFireball = 0f;
+    private float speedMultiplier = 2.0f;
 
     // Array of enemies
     private Array<AbstractEnemy> enemies;
@@ -155,6 +157,7 @@ public class PlayScreen implements Screen {
         gamecam.update();
         renderer.setView(gamecam);
 
+        attemptToFireFireball(dt);
     }
 
     public void removeBodies(World world) {
@@ -175,13 +178,6 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         update(delta);
 
-         // Automatic firing
-         timeSinceLastFireball += delta;
-        if (timeSinceLastFireball >= fireballCooldown) {
-            timeSinceLastFireball = 0f;
-            fireAutomaticFireball(this); // Pass the PlayScreen instance
-}
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -195,7 +191,7 @@ public class PlayScreen implements Screen {
         player.draw(game.batch);
 
         for (Fireball fireball : fireballs) {
-           fireball.draw(game.batch);
+            fireball.draw(game.batch);
         }
 
         for (AbstractEnemy enemy : enemies) {
@@ -209,7 +205,6 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * 
      * @param direction spawns a fireball at the players center
      *                  and directs it in the direction of the players cursor
      */
@@ -217,22 +212,38 @@ public class PlayScreen implements Screen {
         // Fireball newFireball = new Fireball(this, player.getAttackDamage(), atlas);
         // newFireball.setLinearVelocity(direction);
         // fireballs.add(newFireball);
-    
+
         // Firing additional fireballs in a cone
-        for (int i = 0; i < 3; i++) {
-            Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
-            Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
-            coneFireball.setLinearVelocity(coneVelocity);
-            fireballs.add(coneFireball);
-        }
-    
-        // Firing additional fireballs in eight directions
-        // for (int i = 0; i < 8; i++) {
-        //     Fireball directionFireball = new Fireball(this, player.getAttackDamage(), atlas);
-        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i * 45); // Adjust angle as needed
-        //     directionFireball.setLinearVelocity(directionVelocity);
-        //     fireballs.add(directionFireball);
+        // for (int i = 0; i < 3; i++) {
+        // Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
+        // Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust
+        // angle as needed
+        // coneFireball.setLinearVelocity(coneVelocity);
+        // fireballs.add(coneFireball);
         // }
+
+        // Firing additional fireballs in eight directions
+        // Automatic firing
+
+        for (int i = 0; i < 8; i++) {
+            Fireball directionFireball = new Fireball(this, player.getAttackDamage(), atlas);
+            Vector2 directionVelocity = direction.cpy().setAngleDeg(i * 45).nor().scl(speedMultiplier); // Increase
+                                                                                                        // velocity
+            directionFireball.setLinearVelocity(directionVelocity);
+            fireballs.add(directionFireball);
+        }
+    }
+
+    /**
+     * 
+     * @param dt attempts to fire a fireball every dt
+     */
+    private void attemptToFireFireball(float dt) {
+        timeSinceLastFireball += dt;
+        if (timeSinceLastFireball >= fireballCooldown) {
+            timeSinceLastFireball = 0f;
+            fireAutomaticFireball(this);
+        }
     }
 
     public OrthographicCamera getGamecam() {
@@ -305,23 +316,28 @@ public class PlayScreen implements Screen {
         return this.player;
     }
 
+    /**
+     * Fires a fireball in the direction of the cursor
+     * 
+     * @param screen The PlayScreen instance
+     */
     private void fireAutomaticFireball(PlayScreen screen) {
         // Get the player's position
         Vector2 playerPosition = new Vector2(player.b2body.getPosition().x, player.b2body.getPosition().y);
-    
+
         // Get the cursor position in screen coordinates
         Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-    
+
         // Convert screen coordinates to world coordinates
         Vector3 worldCursorPos = new Vector3(cursorPos);
         screen.getGamecam().unproject(worldCursorPos);
-    
+
         // Convert cursor position to vector
         Vector2 cursorPosition = new Vector2(worldCursorPos.x, worldCursorPos.y);
-    
+
         // Calculate the direction vector (from player to cursor)
         Vector2 direction = new Vector2(cursorPosition).sub(playerPosition).nor();
-    
+
         // Call the createFireball method with the calculated direction
         screen.createFireball(direction);
     }
