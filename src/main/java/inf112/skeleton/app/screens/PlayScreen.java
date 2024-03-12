@@ -160,18 +160,23 @@ public class PlayScreen implements Screen {
         attemptToFireFireball(dt);
     }
 
+    /**
+     * Removes bodies from the world and from the fireball array
+     * 
+     * @param world
+     */
     public void removeBodies(World world) {
         Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
         for (Body body : bodiesToRemove) {
             for (Fireball fireball : fireballs) {
                 if (fireball.b2body.equals(body)) {
-                    fireballs.removeValue(fireball, true); // Remove the fireball from the array
-                    break; // Exit the loop after finding the matching fireball
+                    fireballs.removeValue(fireball, true); 
+                    break; 
                 }
             }
-            world.destroyBody(body); // Remove the body from the world
+            world.destroyBody(body); 
         }
-        bodiesToRemove.clear(); // Clear the list of bodies to remove
+        bodiesToRemove.clear(); 
     }
 
     @Override
