@@ -1,8 +1,10 @@
 package inf112.skeleton.app.sprites;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -50,10 +52,10 @@ public class PlayerModel extends Sprite {
     private float stateTimer;
 
     public int health;
+    public int maxHealth;
     public float movementSpeed;
-    public int attackDamage;
 
-    public PlayerModel(PlayScreen screen, int health, float movementSpeed, int attackDamage) {
+    public PlayerModel(PlayScreen screen, int health, int maxHealth, float movementSpeed) {
         super(screen.getAtlas().findRegion("MainGuy"));
         this.screen = screen;
         this.world = screen.getWorld();
@@ -92,8 +94,8 @@ public class PlayerModel extends Sprite {
 
         // Set the player's health, speed and attack damage
         this.health = health;
+        this.maxHealth = maxHealth;
         this.movementSpeed = movementSpeed;
-        this.attackDamage = attackDamage;
         definePlayer();
 
         // Texture regions for when the player is standing still
@@ -109,12 +111,39 @@ public class PlayerModel extends Sprite {
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2 , b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
+    }
+
+    // Add this method to draw the health bar
+    /**
+     * Draws the player's health bar.
+     * 
+     * @param shapeRenderer The ShapeRenderer instance used for drawing shapes.
+     */
+    public void drawHealthBar(ShapeRenderer shapeRenderer) {
+        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+
+        float width = getWidth() * 0.8f; // Adjust the width to be ~20% narrower
+        float x = b2body.getPosition().x - width / 2; // Center the health bar over the player
+        float y = b2body.getPosition().y + getHeight() / 2 + 0.05f; // Position above the player
+        float height = 0.02f; // Vertical thickness of the health bar
+
+        float healthPercentage = (float) health / maxHealth;
+        float greenWidth = width * healthPercentage; // Green portion based on current health
+
+        shapeRenderer.setColor(Color.GREEN); // Draw green part
+        shapeRenderer.rect(x, y, greenWidth, height);
+
+        if (healthPercentage < 1) { // Draw red part only if health is not full
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rect(x + greenWidth, y, width - greenWidth, height);
+        }
     }
 
     /**
      * Returns the correct frame for the player based on the current state.
+     * 
      * @param dt the time since the last frame
      * @return the correct frame for the player
      */
@@ -214,7 +243,7 @@ public class PlayerModel extends Sprite {
         fdef.shape = shape;
 
         fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER;
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS |  GameCreate.CATEGORY_ENEMY;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY;
 
         b2body.createFixture(fdef);
         b2body.createFixture(fdef).setUserData("Player");
@@ -250,21 +279,5 @@ public class PlayerModel extends Sprite {
      */
     public void setSpeed(float deltaSpeed) {
         this.movementSpeed += deltaSpeed;
-    }
-
-    /**
-     * 
-     * @return the player's attack damage
-     */
-    public int getAttackDamage() {
-        return this.attackDamage;
-    }
-
-    /**
-     * 
-     * @param deltaAttackDamage the change in attack damage
-     */
-    public void setAttack(int deltaAttackDamage) {
-        this.attackDamage += deltaAttackDamage;
     }
 }
