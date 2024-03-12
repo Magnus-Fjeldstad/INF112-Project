@@ -23,7 +23,7 @@ public class WorldContactListener implements ContactListener {
                 && fixB.getUserData().equals("Wall")) ||
                 (fixA.getUserData() != null && fixA.getUserData().equals("Wall") && fixB.getUserData() != null
                         && fixB.getUserData().equals("Fireball"))) {
-
+                            
             // If fixA is the fireball, add its body to bodiesToRemove
             if (fixA.getUserData().equals("Fireball")) {
                 bodiesToRemove.add(fixA.getBody());
