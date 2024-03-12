@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -62,7 +60,7 @@ public class PauseScreen implements Screen{
         table.setFillParent(true); // Make the table fill the stage
         stage.addActor(table);
 
-        // Add buttons to the table
+        // Adds buttons to the table
         TextButton resumeButton = new TextButton("Resume", skin);
         TextButton optionsButton = new TextButton("Options", skin);
         TextButton mainMenuButton = new TextButton("Main Menu", skin);
@@ -70,7 +68,7 @@ public class PauseScreen implements Screen{
 
 
 
-        // Add listeners to the buttons
+        // Adds listeners to the buttons
         resumeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -99,9 +97,8 @@ public class PauseScreen implements Screen{
             }
         });
 
-        // Add other button listeners here...
 
-        // Add buttons to the table, maybe with some padding
+        // Add buttons to the table with padding
         table.add(resumeButton).pad(10);
         table.row(); // Move to the next row
         table.add(optionsButton).pad(10);
