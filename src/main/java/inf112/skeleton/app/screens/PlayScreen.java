@@ -220,25 +220,25 @@ public class PlayScreen implements Screen {
         // fireballs.add(newFireball);
 
         // Firing additional fireballs in a cone
-        // for (int i = 0; i < 3; i++) {
-        //     Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
-        //     Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
-        //     coneFireball.setLinearVelocity(coneVelocity);
-        //     fireballs.add(coneFireball);
-        // }
+        for (int i = 0; i < 3; i++) {
+            Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
+            Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
+            coneFireball.setLinearVelocity(coneVelocity);
+            fireballs.add(coneFireball);
+        }
 
         // Firing additional fireballs in eight directions
         // Automatic firing
-
-        for (int i = 0; i < 8; i++) {
-        Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
-        atlas);
-        Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
-        45).nor().scl(speedMultiplier); // Increase
-        // velocity
-        directionFireball.setLinearVelocity(directionVelocity);
-        fireballs.add(directionFireball);
-        }
+            
+        // for (int i = 0; i < 8; i++) {
+        //     Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
+        //             atlas);
+        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
+        //             45).nor().scl(speedMultiplier);
+        //     // velocity
+        //     directionFireball.setLinearVelocity(directionVelocity);
+        //     fireballs.add(directionFireball);
+        // }
     }
 
     /**
