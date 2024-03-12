@@ -35,13 +35,14 @@ public class WorldContactListener implements ContactListener {
         }
     }
 
+    /**
+     * 
+     * @return the array of bodies to remove
+     */
     public Array<Body> getBodiesToRemove() {
         return bodiesToRemove;
     }
 
-    public void setBodiesToRemove(Array<Body> bodiesToRemove) {
-        this.bodiesToRemove = bodiesToRemove;
-    }
 
     @Override
     public void endContact(Contact contact) {
