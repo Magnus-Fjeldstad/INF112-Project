@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="34">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="48">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" tilecount="1147" columns="37">
   <image source="tileset_gutter.png" width="594" height="504"/>
  </tileset>
@@ -14,10 +14,15 @@
   </data>
  </layer>
  <objectgroup id="5" name="Collision">
-  <object id="4" x="0.701754" y="1.40351" width="14.0351" height="477.895"/>
-  <object id="10" x="0.701754" y="465.965" width="479.298" height="13.3333"/>
-  <object id="13" x="1.31294" y="1.31294" width="477.91" height="15.0988"/>
-  <object id="28" x="464.343" y="2.16982" width="16.6353" height="477.361"/>
   <object id="29" x="510.54" y="449.993"/>
+  <object id="35" x="464" y="0" width="16" height="224"/>
+  <object id="36" x="464" y="224" width="16" height="256"/>
+  <object id="41" x="0" y="464" width="304" height="16"/>
+  <object id="42" x="304" y="464" width="176" height="16"/>
+  <object id="43" x="405.913" y="517.351"/>
+  <object id="44" x="0" y="0" width="16" height="288"/>
+  <object id="45" x="0" y="288" width="16" height="176"/>
+  <object id="46" x="0" y="0" width="480" height="16"/>
+  <object id="47" x="493.509" y="49.2726"/>
  </objectgroup>
 </map>

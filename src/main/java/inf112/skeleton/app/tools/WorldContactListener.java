@@ -8,9 +8,11 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
 
+import inf112.skeleton.app.GameCreate;
+
 public class WorldContactListener implements ContactListener {
 
-    public Array<Body> bodiesToRemove = new Array<Body>();
+    public Array<Body> bodiesToRemove = new Array<Body>(1000);
 
     @Override
     public void beginContact(Contact contact) {
@@ -19,17 +21,17 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
 
         // Check if either fixture's UserData is "Fireball" and the other is "Wall"
-        if ((fixA.getUserData() != null && fixA.getUserData().equals("Fireball") && fixB.getUserData() != null
-                && fixB.getUserData().equals("Wall")) ||
-                (fixA.getUserData() != null && fixA.getUserData().equals("Wall") && fixB.getUserData() != null
-                        && fixB.getUserData().equals("Fireball"))) {
-                            
+        if ((fixA.getUserData() != null && fixA.getUserData().equals(GameCreate.CATEGORY_FIREBALL) && fixB.getUserData() != null
+                && fixB.getUserData().equals(GameCreate.CATEGORY_WALLS)) ||
+                (fixA.getUserData() != null && fixA.getUserData().equals(GameCreate.CATEGORY_WALLS) && fixB.getUserData() != null
+                        && fixB.getUserData().equals(GameCreate.CATEGORY_FIREBALL))) {
+
             // If fixA is the fireball, add its body to bodiesToRemove
-            if (fixA.getUserData().equals("Fireball")) {
+            if (fixA.getUserData().equals(GameCreate.CATEGORY_FIREBALL)) {
                 bodiesToRemove.add(fixA.getBody());
             }
             // If fixB is the fireball, add its body to bodiesToRemove
-            else if (fixB.getUserData().equals("Fireball")) {
+            else if (fixB.getUserData().equals(GameCreate.CATEGORY_FIREBALL)) {
                 bodiesToRemove.add(fixB.getBody());
             }
         }
@@ -42,7 +44,6 @@ public class WorldContactListener implements ContactListener {
     public Array<Body> getBodiesToRemove() {
         return bodiesToRemove;
     }
-
 
     @Override
     public void endContact(Contact contact) {
