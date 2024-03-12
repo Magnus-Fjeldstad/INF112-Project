@@ -154,12 +154,17 @@ public class PlayScreen implements Screen {
     }
 
     public void removeBodies(World world) {
-        for (Body body : contactListener.getBodiesToRemove()) {
-            if (body != null) {
-                world.destroyBody(body);
+        Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
+        for (Body body : bodiesToRemove) {
+            for (Fireball fireball : fireballs) {
+                if (fireball.b2body.equals(body)) {
+                    fireballs.removeValue(fireball, true); // Remove the fireball from the array
+                    break; // Exit the loop after finding the matching fireball
+                }
             }
+            world.destroyBody(body); // Remove the body from the world
         }
-        contactListener.setBodiesToRemove(new Array<>());
+        bodiesToRemove.clear(); // Clear the list of bodies to remove
     }
 
     @Override
@@ -179,10 +184,9 @@ public class PlayScreen implements Screen {
         player.draw(game.batch);
 
         for (Fireball fireball : fireballs) {
-            fireball.draw(game.batch);
+           fireball.draw(game.batch);
         }
 
-        removeDeadEnemies(); // Removes all dead enemies
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
@@ -259,13 +263,15 @@ public class PlayScreen implements Screen {
     private void removeDeadEnemies() {
         Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
         for (AbstractEnemy enemy : enemies) {
-            if (enemy.getHealth() > 0) livingEnemies.add(enemy);
+            if (enemy.getHealth() > 0)
+                livingEnemies.add(enemy);
         }
         this.enemies = livingEnemies;
     }
 
     /**
      * Returns player
+     * 
      * @return PlayerModel
      */
     public PlayerModel getPlayerModel() {

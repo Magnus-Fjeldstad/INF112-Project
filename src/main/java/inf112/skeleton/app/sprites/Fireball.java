@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 public class Fireball extends Sprite {
 
     private World world;
-    private Body b2body;
+    public Body b2body;
     private float x, y;
     private TextureRegion fireballTexture;
 
@@ -52,8 +52,8 @@ public class Fireball extends Sprite {
         shape.setRadius(2 / GameCreate.PPM);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = GameCreate.CATEGORY_FIRBALL;
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY;
+        fdef.filter.categoryBits = GameCreate.CATEGORY_FIREBALL;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY ;
 
         b2body.createFixture(fdef).setUserData("Fireball");
     }

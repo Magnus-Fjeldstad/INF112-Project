@@ -91,7 +91,7 @@ public class PlayerModel extends Sprite {
         this.health = health;
         this.movementSpeed = movementSpeed;
         this.attackDamage = attackDamage;
-        defineEntity();
+        definePlayer();
 
         // Texture regions for when the player is standing still
         mainGuyStand = new TextureRegion(getTexture(), 0, 120, frameWidth, frameHeight);
@@ -186,7 +186,7 @@ public class PlayerModel extends Sprite {
         return State.STANDING;
     }
 
-    protected void defineEntity() {
+    protected void definePlayer() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / GameCreate.PPM, 32 / GameCreate.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
