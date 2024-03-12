@@ -55,7 +55,7 @@ public class Fireball extends Sprite {
         fdef.filter.categoryBits = GameCreate.CATEGORY_FIREBALL;
         fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY ;
 
-        b2body.createFixture(fdef).setUserData("Fireball");
+        b2body.createFixture(fdef).setUserData(GameCreate.CATEGORY_FIREBALL);
     }
 
      public void setLinearVelocity(Vector2 velocity) {

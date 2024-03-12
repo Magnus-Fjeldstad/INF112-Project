@@ -41,7 +41,7 @@ public class B2WorldCreator {
             fdef.filter.maskBits = GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
             body.createFixture(fdef);
 
-            body.createFixture(fdef).setUserData("Wall");
+            body.createFixture(fdef).setUserData(GameCreate.CATEGORY_WALLS);
         }
     }
 }

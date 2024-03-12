@@ -40,7 +40,7 @@ public class RedEnemy extends AbstractEnemy {
         fixtureDef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER; 
 
         b2body.createFixture(fixtureDef);
-        b2body.createFixture(fixtureDef).setUserData("RedEnemy");
+        b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_ENEMY);
     }
 
     @Override
