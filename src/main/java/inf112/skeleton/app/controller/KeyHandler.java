@@ -16,16 +16,13 @@ public class KeyHandler {
 
     private PlayerModel player;
 
-    private PlayScreen playScreen;
-
     /**
      * Constructor for KeyHandler.
      *
      * @param player The player model that will be controlled.
      */
-    public KeyHandler(PlayerModel player, PlayScreen playScreen) {
+    public KeyHandler(PlayerModel player) {
         this.player = player;
-        this.playScreen = playScreen;
     }
 
     /**
@@ -57,32 +54,6 @@ public class KeyHandler {
         if (!Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A)) {
             float vx = player.b2body.getLinearVelocity().x;
             player.b2body.applyForceToCenter(-vx * stopForce, 0, true);
-        }
-
-        
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT )|| Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            // Get the cursor position in screen coordinates
-            Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        
-            // Convert screen coordinates to world coordinates
-            playScreen.getGamecam().unproject(cursorPos);
-        
-            // Calculate the direction vector (from player to cursor)
-            Vector2 direction = new Vector2(
-                    cursorPos.x - player.b2body.getPosition().x,
-                    cursorPos.y - player.b2body.getPosition().y);
-        
-            // Normalize the direction vector
-            direction.nor();
-        
-            // Define a constant speed for the fireball
-            float fireballSpeed = 3.0f;
-        
-            // Multiply the normalized direction by the constant speed
-            direction.scl(fireballSpeed);
-        
-            // Create the fireball
-            playScreen.createFireball(direction);
         }
 
         // Limit maximum velocity
