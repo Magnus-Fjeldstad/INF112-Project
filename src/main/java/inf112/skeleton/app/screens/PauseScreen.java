@@ -2,74 +2,133 @@ package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import inf112.skeleton.app.GameCreate;
 
 public class PauseScreen implements Screen{
 
-    private static final int EXIT_BUTTON_WIDTH = 300;
-    private static final int EXIT_BUTTON_HEIGHT = 100;
-    private static final int PLAY_BUTTON_WIDTH = 300;
-    private static final int PLAY_BUTTON_HEIGHT = 100;
 
     // Reference to the main game object to switch screens.
     GameCreate game;
 
-    // Textures for the pause screen buttons.
-    Texture exitButtonActive;
-    Texture exitButtonInactive;
-    Texture playButtonAcitive;
-    Texture playButtonInactive;
+    // Stage for the pause screen
+    Stage stage;
 
-    public PauseScreen(GameCreate game) {
+    // Skin for the buttons
+    private Skin skin;
+
+    OrthographicCamera camera;
+
+    Viewport viewport;
+
+    // Reference to the play screen so we can switch back to current instead of creating new upon "Resume"
+    PlayScreen playScreen;
+
+  
+
+    public PauseScreen(GameCreate game, PlayScreen playScreen) {
         this.game = game;
-        exitButtonActive = new Texture("exit_button_active.png");
-        exitButtonInactive = new Texture("exit_button_inactive.png");
-        playButtonAcitive = new Texture("play_button_active.png");
-        playButtonInactive = new Texture("play_button_inactive.png");
+        this.playScreen = playScreen;
+
+        camera = new OrthographicCamera();
+        camera.zoom = 2.5f;
+        viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, camera);
+        viewport.apply();
+        
+        stage = new Stage(viewport, game.batch);
+        Gdx.input.setInputProcessor(stage);
+        
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("glassy-ui.atlas"));
+        skin = new Skin(Gdx.files.internal("glassy-ui.json"), atlas);
+        
+        createLayout();
     }
     
+    private void createLayout() {
+       Table table = new Table();
+        table.setFillParent(true); // Make the table fill the stage
+        stage.addActor(table);
+
+        // Add buttons to the table
+        TextButton resumeButton = new TextButton("Resume", skin);
+        TextButton optionsButton = new TextButton("Options", skin);
+        TextButton mainMenuButton = new TextButton("Main Menu", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
+
+
+
+        // Add listeners to the buttons
+        resumeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(playScreen);
+            }
+        });
+        
+        optionsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // Handle option action
+            }
+        });
+
+        mainMenuButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // Handle mainMenu action
+            }
+        });
+
+        quitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
+        // Add other button listeners here...
+
+        // Add buttons to the table, maybe with some padding
+        table.add(resumeButton).pad(10);
+        table.row(); // Move to the next row
+        table.add(optionsButton).pad(10);
+        table.row();
+        table.add(mainMenuButton).pad(10);
+        table.row();
+        table.add(quitButton).pad(10);
+    }
 
     @Override
-    public void show() {
-    }
+    public void show() {}
 
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(Gdx.gl.GL_COLOR_BUFFER_BIT);
-        
-        game.batch.begin();
-        
-        // Calculate the center position for the buttons
-        int x = (Gdx.graphics.getWidth() - EXIT_BUTTON_WIDTH) / 2;
-        int exitY = 100; // Position for the exit button
-        int playY = exitY + EXIT_BUTTON_HEIGHT + 20; // Position for the play button, with a margin of 20
-        
-        // Draw the exit button
-        if (Gdx.input.getX() >= x && Gdx.input.getX() <= x + EXIT_BUTTON_WIDTH &&
-            Gdx.graphics.getHeight() - Gdx.input.getY() >= exitY && Gdx.graphics.getHeight() - Gdx.input.getY() <= exitY + EXIT_BUTTON_HEIGHT) {
-            game.batch.draw(exitButtonActive, x, exitY, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        } else {
-            game.batch.draw(exitButtonInactive, x, exitY, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        }
-        
-        // Draw the play button
-        if (Gdx.input.getX() >= x && Gdx.input.getX() <= x + PLAY_BUTTON_WIDTH &&
-            Gdx.graphics.getHeight() - Gdx.input.getY() >= playY && Gdx.graphics.getHeight() - Gdx.input.getY() <= playY + PLAY_BUTTON_HEIGHT) {
-            game.batch.draw(playButtonAcitive, x, playY, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        } else {
-            game.batch.draw(playButtonInactive, x, playY, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        }
-        
-        game.batch.end();
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
     }
-
+    
     @Override
-    public void resize(int width, int height) {}
-
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+    }
+        
     @Override
     public void pause() {}
 
@@ -80,6 +139,9 @@ public class PauseScreen implements Screen{
     public void hide() {}
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+        stage.dispose();
+        skin.dispose();
+    }
     
 }

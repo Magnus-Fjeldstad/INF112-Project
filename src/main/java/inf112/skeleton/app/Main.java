@@ -9,6 +9,6 @@ public class Main {
         cfg.setForegroundFPS(60);
 		cfg.setTitle("GAME-TEST");
         new Lwjgl3Application(new GameCreate(), cfg);
-
+        
     }
 }

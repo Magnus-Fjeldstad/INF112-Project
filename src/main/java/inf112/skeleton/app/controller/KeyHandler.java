@@ -93,10 +93,12 @@ public class KeyHandler {
         player.b2body.setLinearVelocity(vx, vy);
 
         // Pauses the game from the current PlayScreen into PauseScreen
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-        playScreen.getGame().setScreen(new PauseScreen(playScreen.getGame()));
-}
+        // Inside KeyHandler class
 
+        // KeyHandler for pausing the game
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            this.playScreen.getGame().setScreen(new PauseScreen(this.playScreen.getGame(), this.playScreen));
+        }
 
     }
 
