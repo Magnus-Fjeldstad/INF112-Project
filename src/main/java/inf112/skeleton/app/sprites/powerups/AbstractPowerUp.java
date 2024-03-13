@@ -26,6 +26,7 @@ public abstract class AbstractPowerUp extends Sprite  {
         this.screen = screen;
         randomCoordinates();
         definePowerUp();
+        
     }
 
 

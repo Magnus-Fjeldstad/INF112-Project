@@ -23,10 +23,10 @@ import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.powerups.SpeedPowerUp;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import inf112.skeleton.app.sprites.powerups.PowerUpFactory;
 
 public class PlayScreen implements Screen {
     private TextureAtlas atlas;
@@ -68,9 +68,6 @@ public class PlayScreen implements Screen {
 
     // ContactListener
     private WorldContactListener contactListener;
-
-    // Test powerup
-    private SpeedPowerUp speedPowerUp;
 
 
     public PlayScreen(GameCreate game) {
@@ -117,13 +114,8 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(contactListener);
 
-        // Testing enemy factory
-        
-
-        // Testing powerup
-        speedPowerUp = new SpeedPowerUp(this);
-        speedPowerUp = new SpeedPowerUp(this);
-        speedPowerUp = new SpeedPowerUp(this);
+        // Spawns powerups
+        PowerUpFactory powerUpFactory = new PowerUpFactory(this);
 
     }
 
@@ -203,13 +195,19 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
 
+        
+
+
+
         // for (Fireball fireball : fireballs) {
         //     fireball.draw(game.batch);
         // }
 
+        
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
+
 
         game.batch.end();
 
