@@ -23,7 +23,6 @@ import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
-import inf112.skeleton.app.sprites.enemies.RedEnemy;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
 
@@ -206,6 +205,7 @@ public class PlayScreen implements Screen {
             fireball.draw(game.batch);
         }
 
+        removeDeadEnemies();
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
