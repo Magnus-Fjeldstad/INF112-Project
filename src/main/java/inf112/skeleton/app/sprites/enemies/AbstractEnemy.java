@@ -53,5 +53,9 @@ public abstract class AbstractEnemy extends Sprite  {
     public int getHealth() {
         return this.health;
     }
+
+    public Body getBody() {
+        return this.b2body;
+    }
     
 }   
