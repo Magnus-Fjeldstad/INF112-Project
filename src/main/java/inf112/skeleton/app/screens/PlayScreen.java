@@ -106,8 +106,8 @@ public class PlayScreen implements Screen {
         playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
         
-        // Creates a KeyHandler for he player
-        keyHandler = new KeyHandler(player);
+        // Creates a KeyHandler for the player
+        keyHandler = new KeyHandler(player, game, this);
 
         // Creates an array of fireballs
         fireballs = new Array<Fireball>(1000);
