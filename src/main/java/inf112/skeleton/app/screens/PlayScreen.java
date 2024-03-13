@@ -25,6 +25,7 @@ import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.RedEnemy;
 import inf112.skeleton.app.sprites.player.PlayerModel;
+import inf112.skeleton.app.sprites.player.PlayerView;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -51,6 +52,7 @@ public class PlayScreen implements Screen {
 
     // Sprites
     private PlayerModel player;
+    private PlayerView playerView;
     private ShapeRenderer shapeRenderer;
 
 
@@ -102,6 +104,7 @@ public class PlayScreen implements Screen {
 
         // Creates the player
         player = new PlayerModel(this, 70, 100, 4);
+        playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
         
         // Creates a KeyHandler for he player
@@ -139,7 +142,7 @@ public class PlayScreen implements Screen {
 
         // System.out.println("Number of fireballs: " + fireballs.size);
         // Updated the player sprites position
-        player.update(dt);
+        playerView.update(dt);
 
         // Updates the fireballs
         for (Fireball fireball : fireballs) {
@@ -196,7 +199,7 @@ public class PlayScreen implements Screen {
 
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        player.draw(game.batch);
+        playerView.draw(game.batch);
        
 
         for (Fireball fireball : fireballs) {
@@ -211,7 +214,7 @@ public class PlayScreen implements Screen {
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        //player.drawHealthBar(shapeRenderer);
+        playerView.drawHealthBar(shapeRenderer);
         shapeRenderer.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);

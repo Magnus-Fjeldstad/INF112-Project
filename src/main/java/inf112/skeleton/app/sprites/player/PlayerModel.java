@@ -1,18 +1,11 @@
 package inf112.skeleton.app.sprites.player;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import inf112.skeleton.app.sprites.player.PlayerEnum;
-
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
@@ -21,147 +14,27 @@ import inf112.skeleton.app.screens.PlayScreen;
  */
 
 public class PlayerModel extends Sprite {
-   
+
     public PlayerEnum currentState;
     public PlayerEnum previousState;
 
     public Body b2body;
     public World world;
 
-    private TextureRegion mainGuyStand;
-    private TextureRegion mainGuyStandLeft;
-    private TextureRegion mainGuyStandRight;
-    private TextureRegion mainGuyStandUp;
-
-    private Animation<TextureRegion> playerRunUp;
-    private Animation<TextureRegion> playerRunDown;
-    private Animation<TextureRegion> playerRunLeft;
-    private Animation<TextureRegion> playerRunRight;
-
-    // Sets the size of the sprite
-    private int frameWidth = 32; // Width of each frame
-    private int frameHeight = 36; // Height of each frame
-    private int padding = 16; // Padding between characters
-
-    private float stateTimer;
-
     public int health;
     public int maxHealth;
     public float movementSpeed;
 
     public PlayerModel(PlayScreen screen, int health, int maxHealth, float movementSpeed) {
-        super(screen.getAtlas().findRegion("MainGuy"));
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
-        stateTimer = 0;
-
-        // Down animation
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 120, frameWidth, frameHeight));
-        }
-        playerRunDown = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-
-        // Right animation
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 155, frameWidth, frameHeight));
-        }
-        playerRunRight = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-
-        // Up animation
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 191, frameWidth, frameHeight));
-        }
-        playerRunUp = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-
-        // Left animation
-        for (int i = 0; i < 4; i++) {
-            frames.add(new TextureRegion(getTexture(), i * (frameWidth + padding), 226, frameWidth, frameHeight));
-        }
-        playerRunLeft = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
 
         // Set the player's health, speed and attack damage
         this.health = health;
         this.maxHealth = maxHealth;
         this.movementSpeed = movementSpeed;
         definePlayer();
-
-        // Texture regions for when the player is standing still
-        mainGuyStand = new TextureRegion(getTexture(), 0, 120, frameWidth, frameHeight);
-        mainGuyStandLeft = new TextureRegion(getTexture(), 0, 226, frameWidth, frameHeight);
-        mainGuyStandRight = new TextureRegion(getTexture(), 0, 155, frameWidth, frameHeight);
-        mainGuyStandUp = new TextureRegion(getTexture(), 0, 191, frameWidth, frameHeight);
-
-        // Set the size of the sprite and the default frame
-        float scale = 0.75f;
-        setBounds(0, 0, (frameWidth * scale) / GameCreate.PPM, (frameHeight * scale) / GameCreate.PPM);
-        setRegion(mainGuyStand);
-    }
-
-    public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion(getFrame(dt));
-    }
-
-   
-    
-
-    /**
-     * Returns the correct frame for the player based on the current state.
-     * 
-     * @param dt the time since the last frame
-     * @return the correct frame for the player
-     */
-    public TextureRegion getFrame(float dt) {
-        currentState = getState();
-
-        TextureRegion region = mainGuyStand; // Default to standing still frame if no other conditions met
-        switch (currentState) {
-            case UP:
-                region = playerRunUp.getKeyFrame(stateTimer, true);
-                previousState = PlayerEnum.UP;
-                break;
-            case DOWN:
-                region = playerRunDown.getKeyFrame(stateTimer, true);
-                previousState = PlayerEnum.DOWN;
-                break;
-            case LEFT:
-                region = playerRunLeft.getKeyFrame(stateTimer, true);
-                previousState = PlayerEnum.LEFT;
-                break;
-            case RIGHT:
-                region = playerRunRight.getKeyFrame(stateTimer, true);
-                previousState = PlayerEnum.RIGHT;
-                break;
-            case STANDING:
-                // Choose the standing still frame based on the previousState
-                if (previousState != null) {
-                    switch (previousState) {
-                        case UP:
-                            region = mainGuyStandUp;
-                            break;
-                        case LEFT:
-                            region = mainGuyStandLeft;
-                            break;
-                        case RIGHT:
-                            region = mainGuyStandRight;
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                break;
-        }
-
-        stateTimer = currentState == previousState ? stateTimer + dt : 0;
-
-        return region;
     }
 
     /**
@@ -196,16 +69,6 @@ public class PlayerModel extends Sprite {
 
         return PlayerEnum.STANDING;
     }
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Defines the player's body and fixture.
