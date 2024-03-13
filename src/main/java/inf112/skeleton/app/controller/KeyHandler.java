@@ -1,9 +1,11 @@
 package inf112.skeleton.app.controller;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 
+import inf112.skeleton.app.screens.PauseScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
 /**
@@ -12,6 +14,8 @@ import inf112.skeleton.app.sprites.player.PlayerModel;
 public class KeyHandler {
 
     private PlayerModel player;
+
+    private Game game;
 
     /**
      * Constructor for KeyHandler.
@@ -58,5 +62,6 @@ public class KeyHandler {
         float vy = MathUtils.clamp(player.b2body.getLinearVelocity().y, -maxSpeed, maxSpeed);
 
         player.b2body.setLinearVelocity(vx, vy);
+
     }
 }
