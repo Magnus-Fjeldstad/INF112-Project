@@ -1,4 +1,4 @@
-package inf112.skeleton.app.sprites;
+package inf112.skeleton.app.sprites.player;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import inf112.skeleton.app.sprites.player.PlayerEnum;
 
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
@@ -20,17 +21,10 @@ import inf112.skeleton.app.screens.PlayScreen;
  */
 
 public class PlayerModel extends Sprite {
-    /**
-     * Enum representing the different states the player can be in.
-     */
-    public enum State {
-        STANDING, LEFT, RIGHT, UP, DOWN
-    };
+   
+    public PlayerEnum currentState;
+    public PlayerEnum previousState;
 
-    public State currentState;
-    public State previousState;
-
-    public PlayScreen screen;
     public Body b2body;
     public World world;
 
@@ -57,10 +51,9 @@ public class PlayerModel extends Sprite {
 
     public PlayerModel(PlayScreen screen, int health, int maxHealth, float movementSpeed) {
         super(screen.getAtlas().findRegion("MainGuy"));
-        this.screen = screen;
         this.world = screen.getWorld();
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        currentState = PlayerEnum.STANDING;
+        previousState = PlayerEnum.STANDING;
         stateTimer = 0;
 
         // Down animation
@@ -115,31 +108,8 @@ public class PlayerModel extends Sprite {
         setRegion(getFrame(dt));
     }
 
-    // Add this method to draw the health bar
-    /**
-     * Draws the player's health bar.
-     * 
-     * @param shapeRenderer The ShapeRenderer instance used for drawing shapes.
-     */
-    public void drawHealthBar(ShapeRenderer shapeRenderer) {
-        shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-
-        float width = getWidth() * 0.8f; // Adjust the width to be ~20% narrower
-        float x = b2body.getPosition().x - width / 2; // Center the health bar over the player
-        float y = b2body.getPosition().y + getHeight() / 2 + 0.05f; // Position above the player
-        float height = 0.02f; // Vertical thickness of the health bar
-
-        float healthPercentage = (float) health / maxHealth;
-        float greenWidth = width * healthPercentage; // Green portion based on current health
-
-        shapeRenderer.setColor(Color.GREEN); // Draw green part
-        shapeRenderer.rect(x, y, greenWidth, height);
-
-        if (healthPercentage < 1) { // Draw red part only if health is not full
-            shapeRenderer.setColor(Color.RED);
-            shapeRenderer.rect(x + greenWidth, y, width - greenWidth, height);
-        }
-    }
+   
+    
 
     /**
      * Returns the correct frame for the player based on the current state.
@@ -154,19 +124,19 @@ public class PlayerModel extends Sprite {
         switch (currentState) {
             case UP:
                 region = playerRunUp.getKeyFrame(stateTimer, true);
-                previousState = State.UP;
+                previousState = PlayerEnum.UP;
                 break;
             case DOWN:
                 region = playerRunDown.getKeyFrame(stateTimer, true);
-                previousState = State.DOWN;
+                previousState = PlayerEnum.DOWN;
                 break;
             case LEFT:
                 region = playerRunLeft.getKeyFrame(stateTimer, true);
-                previousState = State.LEFT;
+                previousState = PlayerEnum.LEFT;
                 break;
             case RIGHT:
                 region = playerRunRight.getKeyFrame(stateTimer, true);
-                previousState = State.RIGHT;
+                previousState = PlayerEnum.RIGHT;
                 break;
             case STANDING:
                 // Choose the standing still frame based on the previousState
@@ -198,7 +168,7 @@ public class PlayerModel extends Sprite {
      * 
      * @return the current state of the player
      */
-    public State getState() {
+    public PlayerEnum getState() {
         float xVelocity = b2body.getLinearVelocity().x;
         float yVelocity = b2body.getLinearVelocity().y;
         float velocityThreshold = 0.1f; // Define a suitable threshold for your game
@@ -207,25 +177,35 @@ public class PlayerModel extends Sprite {
         boolean isMoving = Math.abs(xVelocity) > velocityThreshold || Math.abs(yVelocity) > velocityThreshold;
 
         if (!isMoving) {
-            return State.STANDING;
+            return PlayerEnum.STANDING;
         }
 
         if (isMovingHorizontally) {
             if (xVelocity > 0) {
-                return State.RIGHT;
+                return PlayerEnum.RIGHT;
             } else if (xVelocity < 0) {
-                return State.LEFT;
+                return PlayerEnum.LEFT;
             }
         } else {
             if (yVelocity > 0) {
-                return State.UP;
+                return PlayerEnum.UP;
             } else if (yVelocity < 0) {
-                return State.DOWN;
+                return PlayerEnum.DOWN;
             }
         }
 
-        return State.STANDING;
+        return PlayerEnum.STANDING;
     }
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Defines the player's body and fixture.
@@ -279,5 +259,13 @@ public class PlayerModel extends Sprite {
      */
     public void setSpeed(float deltaSpeed) {
         this.movementSpeed += deltaSpeed;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    public void setMaxHealth(int deltaMaxHealth) {
+        this.maxHealth += deltaMaxHealth;
     }
 }

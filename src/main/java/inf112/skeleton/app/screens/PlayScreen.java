@@ -21,10 +21,10 @@ import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
-import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.RedEnemy;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -211,7 +211,7 @@ public class PlayScreen implements Screen {
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        player.drawHealthBar(shapeRenderer);
+        //player.drawHealthBar(shapeRenderer);
         shapeRenderer.end();
 
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
