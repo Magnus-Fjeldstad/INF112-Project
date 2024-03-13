@@ -20,7 +20,7 @@ import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import inf112.skeleton.app.tools.WorldContactListener;
-import inf112.skeleton.app.sprites.Fireball;
+import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.RedEnemy;
