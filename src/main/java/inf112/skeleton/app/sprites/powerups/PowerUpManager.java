@@ -5,6 +5,8 @@ import java.util.TimerTask;
 import inf112.skeleton.app.sprites.powerups.*;
 import java.util.Random;
 
+
+//This class is responsible for spawning powerups in the game
 public class PowerUpManager {
     public PowerUpManager() {
         spawnPowerUp();
