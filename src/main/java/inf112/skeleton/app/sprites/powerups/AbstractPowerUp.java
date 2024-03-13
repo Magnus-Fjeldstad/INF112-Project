@@ -25,7 +25,6 @@ public abstract class AbstractPowerUp extends Sprite  {
         super(region); 
         this.screen = screen;
         randomCoordinates();
-        setPosition(startingX, startingY);
         definePowerUp();
     }
 
@@ -46,8 +45,9 @@ public abstract class AbstractPowerUp extends Sprite  {
     //Generates random coordinates for the powerup
     protected void randomCoordinates() {
         Random rand = new Random();
-        startingX = rand.nextInt(1);
-        startingY = rand.nextInt(1);
+        startingX = rand.nextInt(32, 450);
+        startingY = rand.nextInt(32, 200);
+        System.out.println("X: " + startingX + " Y: " + startingY);
     }
 
     protected abstract void removePowerUp();
@@ -57,7 +57,7 @@ public abstract class AbstractPowerUp extends Sprite  {
 
     private void definePowerUp(){
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / GameCreate.PPM, 32/ GameCreate.PPM);
+        bodyDef.position.set(startingX / GameCreate.PPM, startingY / GameCreate.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = screen.getWorld().createBody(bodyDef);
 

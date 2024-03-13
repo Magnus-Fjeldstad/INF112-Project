@@ -24,7 +24,6 @@ import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.powerups.SpeedPowerUp;
-import inf112.skeleton.app.sprites.powerups.*;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -73,7 +72,7 @@ public class PlayScreen implements Screen {
     // Test powerup
     private SpeedPowerUp speedPowerUp;
 
-    
+
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
 
@@ -108,7 +107,7 @@ public class PlayScreen implements Screen {
         keyHandler = new KeyHandler(player);
 
         // Creates an array of fireballs
-        fireballs = new Array<Fireball>(1000);
+        // fireballs = new Array<Fireball>();
 
         enemies = new Array<AbstractEnemy>();
 
@@ -119,13 +118,11 @@ public class PlayScreen implements Screen {
         world.setContactListener(contactListener);
 
         // Testing enemy factory
-        enemyFactory.spawnRandom();
-        enemyFactory.spawnRandom();
-        enemyFactory.spawnRandom();
-        enemyFactory.spawnRandom();
-        enemyFactory.spawnRandom();
+        
 
         // Testing powerup
+        speedPowerUp = new SpeedPowerUp(this);
+        speedPowerUp = new SpeedPowerUp(this);
         speedPowerUp = new SpeedPowerUp(this);
 
     }
@@ -151,9 +148,9 @@ public class PlayScreen implements Screen {
         player.update(dt);
 
         // Updates the fireballs
-        for (Fireball fireball : fireballs) {
-            fireball.update(dt);
-        }
+        // for (Fireball fireball : fireballs) {
+        //     fireball.update(dt);
+        // }
 
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
@@ -206,9 +203,9 @@ public class PlayScreen implements Screen {
         game.batch.begin();
         player.draw(game.batch);
 
-        for (Fireball fireball : fireballs) {
-            fireball.draw(game.batch);
-        }
+        // for (Fireball fireball : fireballs) {
+        //     fireball.draw(game.batch);
+        // }
 
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
@@ -240,15 +237,15 @@ public class PlayScreen implements Screen {
         // Firing additional fireballs in eight directions
         // Automatic firing
             
-        for (int i = 0; i < 8; i++) {
-            Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
-                    atlas);
-            Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
-                    45).nor().scl(speedMultiplier);
-            // velocity
-            directionFireball.setLinearVelocity(directionVelocity);
-            fireballs.add(directionFireball);
-        }
+        // for (int i = 0; i < 8; i++) {
+        //     Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
+        //             atlas);
+        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
+        //             45).nor().scl(speedMultiplier);
+        //     // velocity
+        //     directionFireball.setLinearVelocity(directionVelocity);
+        //     fireballs.add(directionFireball);
+        // }
     }
 
     /**
