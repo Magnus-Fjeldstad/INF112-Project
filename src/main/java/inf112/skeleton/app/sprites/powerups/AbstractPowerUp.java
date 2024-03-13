@@ -2,6 +2,7 @@ package inf112.skeleton.app.sprites.powerups;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,12 +14,15 @@ import inf112.skeleton.app.screens.PlayScreen;
 public abstract class AbstractPowerUp extends Sprite  {
     protected World world;
     protected PlayScreen screen;
+    private int startingX;
+    private int startingY;
     public Body b2body;
 
-    public AbstractPowerUp(PlayScreen screen, float startingX, float startingY, TextureAtlas.AtlasRegion region) {
+    public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
         super(region); // Initialize the Sprite with the given region
         this.world = screen.getWorld();
         this.screen = screen;
+        randomCoordinates();
         setPosition(startingX, startingY);
         definePowerUp();
     }
@@ -33,6 +37,12 @@ public abstract class AbstractPowerUp extends Sprite  {
             }
         }, 5000);
 
+    }
+
+    protected void randomCoordinates() {
+        Random rand = new Random();
+        startingX = rand.nextInt(100);
+        startingY = rand.nextInt(100);
     }
 
     private void removePowerUp() {

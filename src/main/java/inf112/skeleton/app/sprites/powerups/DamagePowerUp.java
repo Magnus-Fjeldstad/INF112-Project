@@ -11,18 +11,25 @@ import inf112.skeleton.app.sprites.PlayerModel;
 public class DamagePowerUp extends AbstractPowerUp {
     protected World world;
     protected PlayScreen screen;
+    private int startingX;
+    private int startingY;
     public Body b2body;
 
-    public DamagePowerUp(PlayScreen screen, float startingX, float startingY, TextureAtlas.AtlasRegion region) {
-        super(screen, startingX, startingY, region); // Initialize the Sprite with the given region
+    public DamagePowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
+        super(screen, region); // Initialize the Sprite with the given region
         this.world = screen.getWorld();
         this.screen = screen;
         setPosition(startingX, startingY);
         definePowerUp();
     }
 
+    //Trenger kanskje ikke super her?
     private void startTimer() {
         super.startPowerUp();
+    }
+
+    protected void randomCoordinates() {
+        super.randomCoordinates();
     }
 
     private void removePowerUp() {
