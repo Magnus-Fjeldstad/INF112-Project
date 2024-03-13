@@ -1,4 +1,4 @@
-package inf112.skeleton.app.sprites;
+package inf112.skeleton.app.sprites.weapons.fireball;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Sprite;
