@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PauseScreen;
+import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
 /**
@@ -14,16 +16,18 @@ import inf112.skeleton.app.sprites.player.PlayerModel;
 public class KeyHandler {
 
     private PlayerModel player;
-
-    private Game game;
+    private PlayScreen playScreen;
+    private GameCreate game;
 
     /**
      * Constructor for KeyHandler.
      *
      * @param player The player model that will be controlled.
      */
-    public KeyHandler(PlayerModel player) {
+    public KeyHandler(PlayerModel player, GameCreate game, PlayScreen playScreen) {
         this.player = player;
+        this.game = game;
+        this.playScreen = playScreen;
     }
 
     /**
@@ -63,5 +67,9 @@ public class KeyHandler {
 
         player.b2body.setLinearVelocity(vx, vy);
 
+        // KeyHandler to pause the game while in PlayScreen if ESCAPE is pressed
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(new PauseScreen(game, playScreen));
+        }
     }
 }
