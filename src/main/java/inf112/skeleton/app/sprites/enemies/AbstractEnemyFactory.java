@@ -1,8 +1,5 @@
 package inf112.skeleton.app.sprites.enemies;
 
-import java.util.Random;
-
-import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class AbstractEnemyFactory {
