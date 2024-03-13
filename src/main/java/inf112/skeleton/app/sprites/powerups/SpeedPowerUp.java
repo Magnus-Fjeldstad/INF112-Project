@@ -5,8 +5,6 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class SpeedPowerUp extends AbstractPowerUp {
-    private int startingX;
-    private int startingY;
     private TextureRegion sprite;
 
     public SpeedPowerUp(PlayScreen screen) {
