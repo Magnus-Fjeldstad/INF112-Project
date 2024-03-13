@@ -18,6 +18,9 @@ import inf112.skeleton.app.screens.PlayScreen;
  */
 
 public class PlayerModel extends Sprite {
+    /**
+     * Enum representing the different states the player can be in.
+     */
     public enum State {
         STANDING, LEFT, RIGHT, UP, DOWN
     };
@@ -91,7 +94,7 @@ public class PlayerModel extends Sprite {
         this.health = health;
         this.movementSpeed = movementSpeed;
         this.attackDamage = attackDamage;
-        defineEntity();
+        definePlayer();
 
         // Texture regions for when the player is standing still
         mainGuyStand = new TextureRegion(getTexture(), 0, 120, frameWidth, frameHeight);
@@ -106,10 +109,15 @@ public class PlayerModel extends Sprite {
     }
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - getWidth() / 2 , b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
     }
 
+    /**
+     * Returns the correct frame for the player based on the current state.
+     * @param dt the time since the last frame
+     * @return the correct frame for the player
+     */
     public TextureRegion getFrame(float dt) {
         currentState = getState();
 
@@ -157,6 +165,10 @@ public class PlayerModel extends Sprite {
         return region;
     }
 
+    /**
+     * 
+     * @return the current state of the player
+     */
     public State getState() {
         float xVelocity = b2body.getLinearVelocity().x;
         float yVelocity = b2body.getLinearVelocity().y;
@@ -186,7 +198,10 @@ public class PlayerModel extends Sprite {
         return State.STANDING;
     }
 
-    protected void defineEntity() {
+    /**
+     * Defines the player's body and fixture.
+     */
+    protected void definePlayer() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(32 / GameCreate.PPM, 32 / GameCreate.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -199,31 +214,56 @@ public class PlayerModel extends Sprite {
         fdef.shape = shape;
 
         fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER;
-        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS;
+        fdef.filter.maskBits = GameCreate.CATEGORY_WALLS |  GameCreate.CATEGORY_ENEMY;
 
         b2body.createFixture(fdef);
+        b2body.createFixture(fdef).setUserData("Player");
     }
 
+    /**
+     * 
+     * @return the player's health
+     */
     public int getHealth() {
         return this.health;
     }
 
+    /**
+     * 
+     * @param deltaHealth the change in health
+     */
     public void setHealth(int deltaHealth) {
         this.health += deltaHealth;
     }
 
+    /**
+     * 
+     * @return the player's speed
+     */
     public float getSpeed() {
         return this.movementSpeed;
     }
 
+    /**
+     * 
+     * @param deltaSpeed the change in speed
+     */
     public void setSpeed(float deltaSpeed) {
         this.movementSpeed += deltaSpeed;
     }
 
+    /**
+     * 
+     * @return the player's attack damage
+     */
     public int getAttackDamage() {
         return this.attackDamage;
     }
 
+    /**
+     * 
+     * @param deltaAttackDamage the change in attack damage
+     */
     public void setAttack(int deltaAttackDamage) {
         this.attackDamage += deltaAttackDamage;
     }

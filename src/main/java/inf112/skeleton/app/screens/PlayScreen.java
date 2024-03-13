@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -21,7 +23,7 @@ import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.Fireball;
 import inf112.skeleton.app.sprites.PlayerModel;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.enemies.RedEnemy;
+import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -53,8 +55,18 @@ public class PlayScreen implements Screen {
     // Array of fireballs
     private Array<Fireball> fireballs;
 
+    // Fireball variables
+    private float fireballCooldown = 0.5f;
+    private float timeSinceLastFireball = 0f;
+    private float speedMultiplier = 2.0f;
+
     // Array of enemies
     private Array<AbstractEnemy> enemies;
+
+    private AbstractEnemyFactory enemyFactory;
+
+    // ContactListener
+    private WorldContactListener contactListener;
 
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
@@ -87,17 +99,26 @@ public class PlayScreen implements Screen {
         player = new PlayerModel(this, 100, 4, 5);
 
         // Creates a KeyHandler for he player
-        keyHandler = new KeyHandler(player, this);
+        keyHandler = new KeyHandler(player);
 
         // Creates an array of fireballs
-        fireballs = new Array<Fireball>();
+        fireballs = new Array<Fireball>(1000);
 
         enemies = new Array<AbstractEnemy>();
-        enemies.add(new RedEnemy(world, 0, 0, 1, 10, 1, this));
 
-        world.setContactListener(new WorldContactListener());
+        enemyFactory = new AbstractEnemyFactory(this);
+
+        contactListener = new WorldContactListener();
+
+        world.setContactListener(contactListener);
+
+        // Testing enemy factory
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
+        enemyFactory.spawnRandom();
     }
-
 
     @Override
     public void show() {
@@ -113,13 +134,22 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
+        removeBodies(world);
 
-        //Updated the player sprites position
+        // System.out.println("Number of fireballs: " + fireballs.size);
+        // Updated the player sprites position
         player.update(dt);
+
+        // Updates the fireballs
+        for (Fireball fireball : fireballs) {
+            fireball.update(dt);
+        }
 
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
+
+        attemptToFireFireball(dt);
 
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
@@ -129,7 +159,25 @@ public class PlayScreen implements Screen {
 
         gamecam.update();
         renderer.setView(gamecam);
+    }
 
+    /**
+     * Removes bodies from the world and from the fireball array
+     * 
+     * @param world
+     */
+    private void removeBodies(World world) {
+        Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
+        for (Body body : bodiesToRemove) {
+            for (Fireball fireball : fireballs) {
+                if (fireball.b2body.equals(body)) {
+                    fireballs.removeValue(fireball, true);
+                    world.destroyBody(body);
+                    break;
+                }
+            }
+        }
+        bodiesToRemove.clear();
     }
 
     @Override
@@ -163,14 +211,46 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * 
      * @param direction spawns a fireball at the players center
      *                  and directs it in the direction of the players cursor
      */
     public void createFireball(Vector2 direction) {
-        Fireball newFireball = new Fireball(player, this, player.getAttackDamage());
-        newFireball.setLinearVelocity(direction);
-        fireballs.add(newFireball);
+        // Fireball newFireball = new Fireball(this, player.getAttackDamage(), atlas);
+        // newFireball.setLinearVelocity(direction);
+        // fireballs.add(newFireball);
+
+        // Firing additional fireballs in a cone
+        // for (int i = 0; i < 3; i++) {
+        //     Fireball coneFireball = new Fireball(this, player.getAttackDamage(), atlas);
+        //     Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
+        //     coneFireball.setLinearVelocity(coneVelocity);
+        //     fireballs.add(coneFireball);
+        // }
+
+        // Firing additional fireballs in eight directions
+        // Automatic firing
+            
+        for (int i = 0; i < 8; i++) {
+            Fireball directionFireball = new Fireball(this, player.getAttackDamage(),
+                    atlas);
+            Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
+                    45).nor().scl(speedMultiplier);
+            // velocity
+            directionFireball.setLinearVelocity(directionVelocity);
+            fireballs.add(directionFireball);
+        }
+    }
+
+    /**
+     * 
+     * @param dt attempts to fire a fireball every dt
+     */
+    private void attemptToFireFireball(float dt) {
+        timeSinceLastFireball += dt;
+        if (timeSinceLastFireball >= fireballCooldown) {
+            timeSinceLastFireball = 0f;
+            fireAutomaticFireball();
+        }
     }
 
     public OrthographicCamera getGamecam() {
@@ -222,4 +302,50 @@ public class PlayScreen implements Screen {
         hud.dispose();
     }
 
+    /**
+     * Removes AbstractEnemies with health that is not 1 or more
+     */
+    private void removeDeadEnemies() {
+        Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
+        for (AbstractEnemy enemy : enemies) {
+            if (enemy.getHealth() > 0)
+                livingEnemies.add(enemy);
+        }
+        this.enemies = livingEnemies;
+    }
+
+    /**
+     * Returns player
+     * 
+     * @return PlayerModel
+     */
+    public PlayerModel getPlayerModel() {
+        return this.player;
+    }
+
+    /**
+     * Fires a fireball in the direction of the cursor
+     * 
+     * @param screen The PlayScreen instance
+     */
+    private void fireAutomaticFireball() {
+        // Get the player's position
+        Vector2 playerPosition = new Vector2(player.b2body.getPosition().x, player.b2body.getPosition().y);
+
+        // Get the cursor position in screen coordinates
+        Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+        // Convert screen coordinates to world coordinateswd
+        Vector3 worldCursorPos = new Vector3(cursorPos);
+        this.getGamecam().unproject(worldCursorPos);
+
+        // Convert cursor position to vector
+        Vector2 cursorPosition = new Vector2(worldCursorPos.x, worldCursorPos.y);
+
+        // Calculate the direction vector (from player to cursor)
+        Vector2 direction = new Vector2(cursorPosition).sub(playerPosition).nor();
+
+        // Call the createFireball method with the calculated direction
+        createFireball(direction);
+    }
 }

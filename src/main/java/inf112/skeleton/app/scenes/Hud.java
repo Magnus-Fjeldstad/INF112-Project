@@ -17,7 +17,6 @@ public class Hud implements Disposable{
     private Viewport viewport;
     
     private Integer worldTimer;
-    private float timeCount;
     private Integer score;
 
     Label countdownLabel;
@@ -29,7 +28,6 @@ public class Hud implements Disposable{
 
     public Hud(SpriteBatch sb) {
         worldTimer = 300;
-        timeCount = 0;
         score = 0;
 
         viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, new OrthographicCamera());
@@ -60,5 +58,13 @@ public class Hud implements Disposable{
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    /**
+     * Returns worldtimer
+     * @return Integer worldTimer
+     */
+    public int getWorldTimer() {
+        return this.worldTimer;
     }
 }
