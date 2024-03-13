@@ -10,10 +10,11 @@ public class GameCreate extends Game {
 	public SpriteBatch batch;
 
 	//Bits for collison detection
-	public static final short CATEGORY_PLAYER = 1;
-	public static final short CATEGORY_WALLS = 2;
-	public static final short CATEGORY_FIRBALL = 4;
-	public static final short CATEGORY_ENEMY = 8;
+	public static final short CATEGORY_DEFAULT = 1;
+	public static final short CATEGORY_PLAYER = 2;
+	public static final short CATEGORY_WALLS = 4;
+	public static final short CATEGORY_FIREBALL = 8;
+	public static final short CATEGORY_ENEMY = 16;
 
 	//Gamescreen variables for the screen and PPM (Pixels pr. meter)
 	public static final int V_Width = 400;

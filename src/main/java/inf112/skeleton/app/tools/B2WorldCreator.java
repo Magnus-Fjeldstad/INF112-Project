@@ -24,7 +24,7 @@ public class B2WorldCreator {
         FixtureDef fdef = new FixtureDef();
         Body body;
 
-        // Create object for ground
+        // Create walls
         for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
 
@@ -38,8 +38,10 @@ public class B2WorldCreator {
             fdef.shape = shape;
             
             fdef.filter.categoryBits = GameCreate.CATEGORY_WALLS; 
-            fdef.filter.maskBits = GameCreate.CATEGORY_FIRBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
+            fdef.filter.maskBits = GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
             body.createFixture(fdef);
+
+            body.createFixture(fdef).setUserData(GameCreate.CATEGORY_WALLS);
         }
     }
 }

@@ -106,8 +106,43 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
-		</dependency>	
+		</dependency>
+
+		<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-api</artifactId>
+    <version>5.10.2</version> <!-- Using the version defined in your properties -->
+    <scope>test</scope>
+</dependency>
+
+<!-- JUnit Jupiter Engine -->
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter-engine</artifactId>
+    <version>5.10.2</version> <!-- Using the version defined in your properties -->
+    <scope>test</scope>
+</dependency>
+
+<!-- Mockito Core -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>3.6.0</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- Mockito JUnit Jupiter Support -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-junit-jupiter</artifactId>
+    <version>3.6.0</version>
+    <scope>test</scope>
+</dependency>	
 	</dependencies>
+    
+
+
+
 	<build>
 		<plugins>
 			<!-- Run app through Maven -->
