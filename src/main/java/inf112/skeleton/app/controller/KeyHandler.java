@@ -3,7 +3,8 @@ package inf112.skeleton.app.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
-import inf112.skeleton.app.sprites.PlayerModel;
+
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 /**
  * Class to handle keyboard input for controlling the player.

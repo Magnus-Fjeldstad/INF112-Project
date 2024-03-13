@@ -1,5 +1,8 @@
 package inf112.skeleton.app.sprites.enemies;
 
+import java.util.Random;
+
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class AbstractEnemyFactory {
@@ -16,6 +19,6 @@ public class AbstractEnemyFactory {
      */
     public AbstractEnemy spawnRandom() {
         // TODO: Make this spawn different enemies in given spawn locations based on time
-        return new RedEnemy(screen, 0, 0, 0, 0, 0);
+        return new RedEnemy(screen, 0, 0, 0, 0.5f, 0);
     }
 }
