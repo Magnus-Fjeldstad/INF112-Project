@@ -1,4 +1,4 @@
-dpackage inf112.skeleton.app.sprites.enemies;
+package inf112.skeleton.app.sprites.enemies;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
