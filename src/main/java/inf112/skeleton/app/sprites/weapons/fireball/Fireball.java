@@ -39,6 +39,7 @@ public class Fireball extends Sprite {
         setBounds(x, y, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(fireballTexture);
         defineEntity();
+        setUserData();
     }
 
     protected void defineEntity() {
@@ -58,8 +59,12 @@ public class Fireball extends Sprite {
         b2body.createFixture(fdef).setUserData(GameCreate.CATEGORY_FIREBALL);
     }
 
-     public void setLinearVelocity(Vector2 velocity) {
+    public void setLinearVelocity(Vector2 velocity) {
         this.b2body.setLinearVelocity(velocity);
+    }
+
+    private void setUserData() {
+        b2body.setUserData(this);
     }
 
     public void update(float dt) {
