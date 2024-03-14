@@ -17,24 +17,12 @@ public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
-        Fixture fixA = contact.getFixtureA();
-        Fixture fixB = contact.getFixtureB();
-
-        // Check if either fixture's UserData is "Fireball" and the other is "Wall"
-        if ((fixA.getUserData() != null && fixA.getUserData().equals(GameCreate.CATEGORY_FIREBALL) && fixB.getUserData() != null
-                && fixB.getUserData().equals(GameCreate.CATEGORY_WALLS)) ||
-                (fixA.getUserData() != null && fixA.getUserData().equals(GameCreate.CATEGORY_WALLS) && fixB.getUserData() != null
-                        && fixB.getUserData().equals(GameCreate.CATEGORY_FIREBALL))) {
-
-            // If fixA is the fireball, add its body to bodiesToRemove
-            if (fixA.getUserData().equals(GameCreate.CATEGORY_FIREBALL)) {
-                bodiesToRemove.add(fixA.getBody());
-            }
-            // If fixB is the fireball, add its body to bodiesToRemove
-            else if (fixB.getUserData().equals(GameCreate.CATEGORY_FIREBALL)) {
-                bodiesToRemove.add(fixB.getBody());
-            }
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {
+            Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
+            bodiesToRemove.add(fireball.getBody());
         }
+
+        
     }
 
     /**
@@ -44,6 +32,42 @@ public class WorldContactListener implements ContactListener {
     public Array<Body> getBodiesToRemove() {
         return bodiesToRemove;
     }
+
+    /**
+     * 
+     * @param contact
+     * @param category1
+     * @param category2
+     * @return checks if fix is not null and if the
+     */
+    private boolean isCollisionBetween(Contact contact, short category1, short category2) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+    
+        return (fixA.getUserData() != null && fixA.getUserData().equals(category1) && fixB.getUserData() != null && fixB.getUserData().equals(category2)) ||
+               (fixA.getUserData() != null && fixA.getUserData().equals(category2) && fixB.getUserData() != null && fixB.getUserData().equals(category1));
+    }
+
+    /**
+     * 
+     * @param contact
+     * @param category
+     * @return checks which fixture is the target category
+     */
+    private Fixture getFixtureByCategory(Contact contact, short category) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+    
+        if (fixA.getUserData() != null && fixA.getUserData().equals(category)) {
+            return fixA;
+        } else if (fixB.getUserData() != null && fixB.getUserData().equals(category)) {
+            return fixB;
+        } else {
+            return null;
+        }
+    }
+
+
 
     @Override
     public void endContact(Contact contact) {

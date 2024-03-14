@@ -13,22 +13,10 @@ public class PowerUpFactory {
 
     public PowerUpFactory(PlayScreen screen) {
         this.screen = screen;
-        spawnPowerUp();
-    }
-
-    private void spawnPowerUp() {
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                randomPowerUp();
-            }
-        },1000, 1000);
     }
     
     
-    private AbstractPowerUp randomPowerUp() {
+    public AbstractPowerUp createRandomPowerUp() {
         Random rand = new Random();
         int i = rand.nextInt(2);
         switch (i) {
