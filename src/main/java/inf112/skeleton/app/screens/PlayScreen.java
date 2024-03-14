@@ -23,7 +23,6 @@ import inf112.skeleton.app.tools.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
-import inf112.skeleton.app.sprites.enemies.RedEnemy;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
 
@@ -107,8 +106,8 @@ public class PlayScreen implements Screen {
         playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
         
-        // Creates a KeyHandler for he player
-        keyHandler = new KeyHandler(player);
+        // Creates a KeyHandler for the player
+        keyHandler = new KeyHandler(player, game, this);
 
         // Creates an array of fireballs
         fireballs = new Array<Fireball>(1000);
@@ -138,7 +137,7 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
-        removeBodies(world);
+        removeFireballs(world);
 
         // System.out.println("Number of fireballs: " + fireballs.size);
         // Updated the player sprites position
@@ -170,7 +169,7 @@ public class PlayScreen implements Screen {
      * 
      * @param world
      */
-    private void removeBodies(World world) {
+    private void removeFireballs(World world) {
         Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
         for (Body body : bodiesToRemove) {
             for (Fireball fireball : fireballs) {
@@ -206,6 +205,7 @@ public class PlayScreen implements Screen {
             fireball.draw(game.batch);
         }
 
+        removeDeadEnemies();
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
@@ -364,9 +364,14 @@ public class PlayScreen implements Screen {
     private void removeDeadEnemies() {
         Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
         for (AbstractEnemy enemy : enemies) {
-            if (enemy.getHealth() > 0)
+            if (enemy.getHealth() > 0) {
                 livingEnemies.add(enemy);
+            } else {
+                // The enemy is dead, so remove its body from the world
+                world.destroyBody(enemy.getBody()); // Assuming getBody() returns the Box2D body
+            }
         }
+        // Update the enemies list to only include living enemies
         this.enemies = livingEnemies;
     }
 }

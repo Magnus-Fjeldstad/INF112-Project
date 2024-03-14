@@ -18,8 +18,6 @@ public class RedEnemy extends AbstractEnemy {
 
     public RedEnemy(PlayScreen screen, float x, float y, int health, float movementSpeed, int damage) {
         super(screen, x, y, health, movementSpeed, damage, screen.getAtlas().findRegion("SkeletonEnemy"));
-        
-        defineEnemy();
         enemyStand = new TextureRegion(getTexture(), 2, 2, 14, 18);
         setBounds(2, 2, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(enemyStand);
@@ -38,7 +36,7 @@ public class RedEnemy extends AbstractEnemy {
         fixtureDef.shape = shape;
 
         fixtureDef.filter.categoryBits = GameCreate.CATEGORY_ENEMY; 
-        fixtureDef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER; 
+        fixtureDef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
 
         b2body.createFixture(fixtureDef);
         b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_ENEMY);

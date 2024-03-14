@@ -5,8 +5,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.screens.PlayScreen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

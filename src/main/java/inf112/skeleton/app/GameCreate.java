@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import inf112.skeleton.app.screens.MainMenuScreen;
 import inf112.skeleton.app.screens.PlayScreen;
 
 public class GameCreate extends Game {
@@ -24,7 +25,7 @@ public class GameCreate extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
