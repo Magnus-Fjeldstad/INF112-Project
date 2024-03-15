@@ -1,5 +1,7 @@
 package inf112.skeleton.app.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,7 +21,7 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
-import inf112.skeleton.app.tools.WorldContactListener;
+import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
@@ -137,7 +139,7 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
-        removeFireballs(world);
+        removeBodies(world);
 
         // System.out.println("Number of fireballs: " + fireballs.size);
         // Updated the player sprites position
@@ -164,25 +166,38 @@ public class PlayScreen implements Screen {
         renderer.setView(gamecam);
     }
 
-    /**
-     * Removes bodies from the world and from the fireball array
-     * 
-     * @param world
-     */
-    private void removeFireballs(World world) {
-        Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
+
+
+    private void removeBodies(World world){
+        Array<Body> bodiesToRemove = contactListener.getAllBodiesToRemove();
+        System.out.println("Bodies to remove: " + bodiesToRemove.size);
         for (Body body : bodiesToRemove) {
-            for (Fireball fireball : fireballs) {
-                if (fireball.b2body.equals(body)) {
-                    world.destroyBody(body);
-                    fireballs.removeValue(fireball, true);
-                    break;
-                }
+            if (body.getUserData() instanceof Fireball){
+                System.out.println("Fireball removed");
+                removeFireball(body);
             }
+            // else if (body.getUserData() instanceof PowerUp) {
+            //     removePowerUp(body);
+            // }
         }
         bodiesToRemove.clear();
     }
 
+
+    private void removeFireball(Body body){
+        for (Fireball fireball : fireballs) {
+            if (fireball.b2body.equals(body)) {
+                world.destroyBody(body);
+                fireballs.removeValue(fireball, true);
+                break;
+            }
+        }
+    }
+
+    //To implement
+    private void removePowerUp(Body body){
+
+    }
 
     @Override
     public void render(float delta) {
