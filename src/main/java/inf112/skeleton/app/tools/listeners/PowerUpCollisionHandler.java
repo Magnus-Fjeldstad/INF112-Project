@@ -17,6 +17,10 @@ public class PowerUpCollisionHandler extends CollisionHandler{
         return bodiesToRemove;
     }
     
+    public void clearBodiesToRemove() {
+        bodiesToRemove.clear();
+    }
+
     @Override
     public void handleCollision(Contact contact) {
         if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {

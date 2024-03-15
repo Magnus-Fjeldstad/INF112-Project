@@ -1,6 +1,7 @@
 package inf112.skeleton.app.screens;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -169,30 +170,25 @@ public class PlayScreen implements Screen {
 
 
     private void removeBodies(World world){
-        Array<Body> bodiesToRemove = contactListener.getAllBodiesToRemove();
-        System.out.println("Bodies to remove: " + bodiesToRemove.size);
-        for (Body body : bodiesToRemove) {
-            if (body.getUserData() instanceof Fireball){
-                System.out.println("Fireball removed");
-                removeFireball(body);
+        Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
+        //checks only for fireball bodies. To implement all bodies 
+        for(Fireball fireball : fireballs){
+            for(Body body : bodiesToRemove){
+                if(fireball.b2body == body){
+                    removeFireball(body);
+                }
             }
-            // else if (body.getUserData() instanceof PowerUp) {
-            //     removePowerUp(body);
-            // }
+            contactListener.removeBodies();
         }
-        bodiesToRemove.clear();
     }
-
-
+    
     private void removeFireball(Body body){
-        for (Fireball fireball : fireballs) {
-            if (fireball.b2body.equals(body)) {
-                world.destroyBody(body);
-                fireballs.removeValue(fireball, true);
-                break;
-            }
-        }
+        fireballs.removeValue((Fireball) body.getUserData(), true);
+        world.destroyBody(body);
     }
+
+
+    
 
     //To implement
     private void removePowerUp(Body body){

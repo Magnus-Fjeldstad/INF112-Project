@@ -9,12 +9,12 @@ import com.badlogic.gdx.utils.Array;
 
 public abstract class CollisionHandler {
 
-   
-
     public abstract void handleCollision(Contact contact);
 
    
     public abstract Array<Body> getBodiesToRemove();
+
+    public abstract void clearBodiesToRemove();
 
     /**
      * 
@@ -49,4 +49,6 @@ public abstract class CollisionHandler {
             return null;
         }
     }
+
+
 }
