@@ -171,21 +171,15 @@ public class PlayScreen implements Screen {
 
     private void removeBodies(World world){
         Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
-        //checks only for fireball bodies. To implement all bodies 
-        for(Fireball fireball : fireballs){
-            for(Body body : bodiesToRemove){
-                if(fireball.b2body == body){
-                    removeFireball(body);
-                }
-            }
+        for (Body body : bodiesToRemove) {
+            if (body.getUserData() instanceof Fireball) {
+                fireballs.removeValue((Fireball) body.getUserData(), true);
+            } 
+            world.destroyBody(body);
             contactListener.removeBodies();
         }
     }
     
-    private void removeFireball(Body body){
-        fireballs.removeValue((Fireball) body.getUserData(), true);
-        world.destroyBody(body);
-    }
 
 
     
