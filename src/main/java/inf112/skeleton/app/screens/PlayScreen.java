@@ -27,6 +27,7 @@ import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
+import inf112.skeleton.app.sprites.powerups.PowerUpFactory;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -76,6 +77,8 @@ public class PlayScreen implements Screen {
     // ContactListener
     private WorldContactListener contactListener;
 
+    private PowerUpFactory powerUpFactory;
+
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
 
@@ -123,6 +126,8 @@ public class PlayScreen implements Screen {
         world.setContactListener(contactListener);
 
         enemies.add(enemyFactory.spawnRandom());
+
+        powerUpFactory = new PowerUpFactory(this);
     }
 
     @Override
@@ -224,6 +229,7 @@ public class PlayScreen implements Screen {
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
+        powerUpFactory.createRandomPowerUp().draw(game.batch);
 
         game.batch.end();
 
@@ -235,6 +241,8 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
+
+
 
     /**
      * @param direction spawns a fireball at the players center

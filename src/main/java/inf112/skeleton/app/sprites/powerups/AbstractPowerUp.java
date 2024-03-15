@@ -20,6 +20,7 @@ public abstract class AbstractPowerUp extends Sprite  {
     public Body b2body;
     private int startingX;
     private int startingY;
+    private static final float powerUpDuration = 5;
 
     public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
         super(region); 
@@ -76,7 +77,22 @@ public abstract class AbstractPowerUp extends Sprite  {
 
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        this.powerUpDuration -= dt;
+        if (this.powerUpDuration <= 0) {
+            removePowerUp();
+        }
     }
     
+     public AbstractPowerUp createRandomPowerUp() {
+        Random rand = new Random();
+        int i = rand.nextInt(2);
+        switch (i) {
+            case 0:
+                return new SpeedPowerUp(screen);
+            case 1:
+                return new DamagePowerUp(screen);
+            default:
+                throw new IllegalArgumentException("Invalid powerup");
+            }
+        }
 }   
