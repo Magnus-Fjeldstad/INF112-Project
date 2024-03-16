@@ -14,12 +14,12 @@ import com.badlogic.gdx.utils.Array;
 
 
 public class WorldContactListener implements ContactListener {
-    private ArrayList<CollisionHandler> collisionHandlers;
+    private Array<CollisionHandler> collisionHandlers;
     private CollisionHandler fireballCollisionHandler;
     private CollisionHandler powerUpCollisionHandler;
 
     public WorldContactListener() {
-        this.collisionHandlers = new ArrayList<CollisionHandler>();
+        this.collisionHandlers = new Array<CollisionHandler>();
         this.fireballCollisionHandler = new FireballCollisionHandler();
         //this.powerUpCollisionHandler = new PowerUpCollisionHandler();
         this.collisionHandlers.add(fireballCollisionHandler);
@@ -33,7 +33,7 @@ public class WorldContactListener implements ContactListener {
         }
     }
 
-    public Array<Body> getAllBodiesToRemove() {
+    public Array<Body> getBodiesToRemove() {
         Array<Body> allBodiesToRemove = new Array<>();
         for (CollisionHandler handler : collisionHandlers) {
             Array<Body> bodiesToRemove = handler.getBodiesToRemove();
@@ -44,8 +44,11 @@ public class WorldContactListener implements ContactListener {
         return allBodiesToRemove;
     }
 
-
-
+    public void removeBodies() {
+        for (CollisionHandler handler : collisionHandlers) {
+            handler.clearBodiesToRemove();
+        }
+    }
 
     @Override
     public void endContact(Contact contact) {
