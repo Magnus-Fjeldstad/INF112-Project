@@ -1,8 +1,5 @@
 package inf112.skeleton.app.screens;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +9,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -64,21 +60,11 @@ public class PlayScreen implements Screen {
     // Variables for keyhandler
     private KeyHandler keyHandler;
 
-    // Array of fireballs
-    private Array<Fireball> fireballs;
-
-    // Fireball variables
-    private float fireballCooldown = 1.5f;
-    private float timeSinceLastFireball = 0f;
-    private float speedMultiplier = 3.0f;
-
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
     private AbstractEnemyFactory enemyFactory;
 
-    // ContactListener
-    private WorldContactListener contactListener;
 
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
@@ -119,13 +105,10 @@ public class PlayScreen implements Screen {
         keyHandler = new KeyHandler(player, game, this);
 
         // Creates an array of fireballs
-        fireballs = new Array<Fireball>(1000);
 
         enemies = new Array<AbstractEnemy>();
 
         enemyFactory = new AbstractEnemyFactory(this);
-
-        contactListener = new WorldContactListener();
 
 
         enemies.add(enemyFactory.spawnRandom());
@@ -151,13 +134,10 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
-        // removeBodies(world);
 
         powerUpManager.update(dt);
         fireballManager.update(dt);
 
-        // System.out.println("Number of fireballs: " + fireballs.size);
-        // Updated the player sprites position
         playerView.update(dt);
 
         for (AbstractEnemy enemy : enemies) {
