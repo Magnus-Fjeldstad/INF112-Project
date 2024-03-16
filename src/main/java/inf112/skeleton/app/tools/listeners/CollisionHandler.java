@@ -31,9 +31,7 @@ public abstract class CollisionHandler implements ContactListener{
      */
     protected boolean isCollisionBetween(Contact contact, short category1, short category2) {
         Fixture fixA = contact.getFixtureA();
-        System.out.println(fixA.getUserData() + " " + category1);
         Fixture fixB = contact.getFixtureB();
-        System.out.println(fixB.getUserData() + " " + category2);
     
         return (fixA.getUserData() != null && fixA.getUserData().equals(category1) && fixB.getUserData() != null && fixB.getUserData().equals(category2)) ||
                (fixA.getUserData() != null && fixA.getUserData().equals(category2) && fixB.getUserData() != null && fixB.getUserData().equals(category1));

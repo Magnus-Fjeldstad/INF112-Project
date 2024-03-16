@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 
@@ -17,16 +19,20 @@ import inf112.skeleton.app.screens.PlayScreen;
 public abstract class AbstractPowerUp extends Sprite  {
     
     protected PlayScreen screen;
+    private World world;
     public Body b2body;
     private int startingX;
     private int startingY;
     private static final float powerUpDuration = 5;
 
     public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
-        super(region); 
+        super(region);
+        this.world = screen.getWorld(); 
         this.screen = screen;
         randomCoordinates();
         definePowerUp();
+        setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+
         setUserData();
     }
 

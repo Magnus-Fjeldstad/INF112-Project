@@ -224,6 +224,7 @@ public class PlayScreen implements Screen {
         }
 
         for(AbstractPowerUp powerUp : powerUpManager.getPowerUps()){
+            System.out.println("Drawing powerup");
             powerUp.draw(game.batch);
         }
 

@@ -16,7 +16,7 @@ public class PowerUpManager {
     private Array<Body> powerUpsToRemove;
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
-    private static final float SPAWN_INTERVAL = 20;
+    private static final float SPAWN_INTERVAL = 2;
     private PlayScreen screen;
 
     public PowerUpManager(PlayScreen screen) {
