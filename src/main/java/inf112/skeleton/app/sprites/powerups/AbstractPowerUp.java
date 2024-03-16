@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import inf112.skeleton.app.GameCreate;
-import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 
 
 import inf112.skeleton.app.screens.PlayScreen;

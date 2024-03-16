@@ -21,7 +21,7 @@ public class Fireball extends Sprite {
     private float x, y;
     private TextureRegion fireballTexture;
 
-    public int damage;
+    public int damage = 10;
 
     /**
      * Constructor for Fireball class.
@@ -30,12 +30,11 @@ public class Fireball extends Sprite {
      * @param damage The damage of the fireball.
      * @param atlas The texture atlas containing the fireball texture.
      */
-    public Fireball(PlayScreen screen, int damage, TextureAtlas atlas) {
+    public Fireball(PlayScreen screen) {
         this.world = screen.getWorld();
-        this.damage = damage;
         this.x = screen.getPlayerModel().b2body.getPosition().x;
         this.y = screen.getPlayerModel().b2body.getPosition().y;
-        fireballTexture = new TextureRegion(atlas.findRegion("SkeletonEnemy"), 2, 2, 14, 18); // Assuming SkeletonEnemy is the region name
+        fireballTexture = new TextureRegion(screen.getAtlas().findRegion("SkeletonEnemy"), 2, 2, 14, 18); // Assuming SkeletonEnemy is the region name
         setBounds(x, y, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(fireballTexture);
         defineEntity();
@@ -66,6 +65,15 @@ public class Fireball extends Sprite {
     private void setUserData() {
         b2body.setUserData(this);
     }
+
+    private void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    private int getDamage() {
+        return damage;
+    }   
+
 
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
