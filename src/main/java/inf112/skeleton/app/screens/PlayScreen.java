@@ -177,17 +177,6 @@ public class PlayScreen implements Screen {
 
 
 
-    // private void removeBodies(World world){
-    //     Array<Body> bodiesToRemove = contactListener.getBodiesToRemove();
-    //     for (Body body : bodiesToRemove) {
-    //         if (body.getUserData() instanceof Fireball) {
-    //             fireballs.removeValue((Fireball) body.getUserData(), true);
-    //         } 
-    //         world.destroyBody(body);
-    //         contactListener.removeBodies();
-    //     }
-    // }
-
 
     @Override
     public void render(float delta) {
