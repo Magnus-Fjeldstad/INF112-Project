@@ -28,6 +28,7 @@ import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
 import inf112.skeleton.app.sprites.powerups.PowerUpManager;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -222,6 +223,11 @@ public class PlayScreen implements Screen {
             enemy.draw(game.batch);
         }
 
+        for(AbstractPowerUp powerUp : powerUpManager.getPowerUps()){
+            powerUp.draw(game.batch);
+        }
+
+       
         game.batch.end();
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);

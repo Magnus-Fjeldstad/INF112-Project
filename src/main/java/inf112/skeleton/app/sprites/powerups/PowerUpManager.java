@@ -16,7 +16,7 @@ public class PowerUpManager {
     private Array<Body> powerUpsToRemove;
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
-    private static final float SPAWN_INTERVAL = 1;
+    private static final float SPAWN_INTERVAL = 20;
     private PlayScreen screen;
 
     public PowerUpManager(PlayScreen screen) {
@@ -67,6 +67,10 @@ public class PowerUpManager {
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }
+    }
+
+    public Array<AbstractPowerUp> getPowerUps() {
+        return powerUps;
     }
 
 }
