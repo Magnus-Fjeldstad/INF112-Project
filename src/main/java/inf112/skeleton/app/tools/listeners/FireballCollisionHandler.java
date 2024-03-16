@@ -23,6 +23,7 @@ public class FireballCollisionHandler extends CollisionHandler{
 
     @Override
     public void handleCollision(Contact contact) {
+        System.out.println(isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS));
         if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {
             Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
             bodiesToRemove.add(fireball.getBody());

@@ -124,11 +124,11 @@ public class PlayScreen implements Screen {
 
         contactListener = new WorldContactListener();
 
-        world.setContactListener(contactListener);
 
         enemies.add(enemyFactory.spawnRandom());
 
         powerUpManager = new PowerUpManager(this);
+
 
     }
 
@@ -145,9 +145,9 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         keyHandler.handleInput(dt);
 
-        powerUpManager.update(dt);
         world.step(1 / 60f, 6, 2);
         removeBodies(world);
+        powerUpManager.update(dt);
 
         // System.out.println("Number of fireballs: " + fireballs.size);
         // Updated the player sprites position

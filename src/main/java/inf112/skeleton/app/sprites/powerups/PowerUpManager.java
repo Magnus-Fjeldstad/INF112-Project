@@ -21,6 +21,7 @@ public class PowerUpManager {
 
     public PowerUpManager(PlayScreen screen) {
         this.powerUps = new Array<>();
+        this.powerUpsToRemove = new Array<>();
         this.screen = screen;
         powerUpCollisionHandler = new PowerUpCollisionHandler();
         screen.getWorld().setContactListener(powerUpCollisionHandler);
@@ -45,12 +46,10 @@ public class PowerUpManager {
 
     private void handleCollision() {
         for (AbstractPowerUp powerUp : powerUps) {
-            System.out.println("Powerups to remove" + powerUpCollisionHandler.getBodiesToRemove());
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
                 powerUps.removeValue(powerUp, false);
                 powerUpsToRemove.add(powerUp.b2body);
                 powerUp.b2body.getWorld().destroyBody(powerUp.b2body);
-                System.out.println("Powerups to remove" + powerUpsToRemove);
             }
         }
 
