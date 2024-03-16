@@ -28,7 +28,7 @@ import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
-import inf112.skeleton.app.sprites.powerups.PowerUpFactory;
+import inf112.skeleton.app.sprites.powerups.PowerUpManager;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -78,7 +78,7 @@ public class PlayScreen implements Screen {
     // ContactListener
     private WorldContactListener contactListener;
 
-    private PowerUpFactory powerUpFactory;
+    private PowerUpManager powerUpManager;
 
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
@@ -128,7 +128,8 @@ public class PlayScreen implements Screen {
 
         enemies.add(enemyFactory.spawnRandom());
 
-        powerUpFactory = new PowerUpFactory(this);
+        powerUpManager = new PowerUpManager(this);
+
     }
 
     @Override
@@ -144,6 +145,7 @@ public class PlayScreen implements Screen {
     public void update(float dt) {
         keyHandler.handleInput(dt);
 
+        powerUpManager.update(dt);
         world.step(1 / 60f, 6, 2);
         removeBodies(world);
 
@@ -219,7 +221,6 @@ public class PlayScreen implements Screen {
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
-        powerUpFactory.createRandomPowerUp().draw(game.batch);
 
         game.batch.end();
 

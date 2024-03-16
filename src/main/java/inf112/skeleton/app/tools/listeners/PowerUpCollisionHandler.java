@@ -23,9 +23,9 @@ public class PowerUpCollisionHandler extends CollisionHandler{
 
     @Override
     public void handleCollision(Contact contact) {
-        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {
-            Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
-            bodiesToRemove.add(fireball.getBody());
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP)) {
+            Fixture powerUp = getFixtureByCategory(contact, GameCreate.CATEGORY_POWERUP);
+            bodiesToRemove.add(powerUp.getBody());
         }
     }
 }

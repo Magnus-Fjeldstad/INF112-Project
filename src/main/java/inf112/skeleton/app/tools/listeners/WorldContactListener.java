@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Array;
 public class WorldContactListener implements ContactListener {
     private Array<CollisionHandler> collisionHandlers;
     private CollisionHandler fireballCollisionHandler;
-    private CollisionHandler powerUpCollisionHandler;
 
     public WorldContactListener() {
         this.collisionHandlers = new Array<CollisionHandler>();
