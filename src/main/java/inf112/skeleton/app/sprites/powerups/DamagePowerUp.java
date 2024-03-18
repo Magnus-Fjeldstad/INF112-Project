@@ -10,7 +10,6 @@ public class DamagePowerUp extends AbstractPowerUp {
     public DamagePowerUp(PlayScreen screen) {
         super(screen, screen.getAtlas().findRegion("SkeletonEnemy"));
         sprite = new TextureRegion(getTexture(), 2, 2, 14, 18);
-        setBounds(2, 2, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(sprite);
         
         

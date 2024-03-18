@@ -1,7 +1,6 @@
 package inf112.skeleton.app.sprites.powerups;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+
 import inf112.skeleton.app.GameCreate;
 
 
@@ -17,38 +18,29 @@ import inf112.skeleton.app.screens.PlayScreen;
 public abstract class AbstractPowerUp extends Sprite  {
     
     protected PlayScreen screen;
+    private World world;
     public Body b2body;
     private int startingX;
     private int startingY;
+    private static final float powerUpDuration = 5;
 
     public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
-        super(region); 
+        super(region);
+        this.world = screen.getWorld(); 
         this.screen = screen;
         randomCoordinates();
         definePowerUp();
-        
+        setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+
+        setUserData();
     }
 
-
-    //countdown for the powerup
-    protected void startPowerUp() {
-        applyPowerUp();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                removePowerUp();
-            }
-        }, 5000);
-
-    }
 
     //Generates random coordinates for the powerup
     protected void randomCoordinates() {
         Random rand = new Random();
         startingX = rand.nextInt(32, 450);
         startingY = rand.nextInt(32, 200);
-        System.out.println("X: " + startingX + " Y: " + startingY);
     }
 
     protected abstract void removePowerUp();
@@ -67,16 +59,22 @@ public abstract class AbstractPowerUp extends Sprite  {
         shape.setRadius(5 / GameCreate.PPM);
         fixtureDef.shape = shape;
 
-        fixtureDef.filter.categoryBits = GameCreate.CATEGORY_ENEMY; 
-        fixtureDef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER; 
+        fixtureDef.filter.categoryBits = GameCreate.CATEGORY_POWERUP; 
+        fixtureDef.filter.maskBits = GameCreate.CATEGORY_PLAYER; 
 
         b2body.createFixture(fixtureDef);
-        b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_ENEMY);
+        b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_POWERUP);
     };
 
 
     public void update(float dt) {
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+        // this.powerUpDuration -= dt;
+        // if (this.powerUpDuration <= 0) {
+        //     removePowerUp();
+        // }
     }
-    
+
+    private void setUserData() {
+        b2body.setUserData(this);
+    }
 }   

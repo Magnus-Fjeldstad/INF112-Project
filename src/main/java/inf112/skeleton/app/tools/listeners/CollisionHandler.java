@@ -4,17 +4,23 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact; 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 
 
 
-public abstract class CollisionHandler {
-
-   
+public abstract class CollisionHandler implements ContactListener{
 
     public abstract void handleCollision(Contact contact);
 
    
     public abstract Array<Body> getBodiesToRemove();
+
+    public abstract void clearBodiesToRemove();
+
+    @Override
+    public void beginContact(Contact contact) {
+        handleCollision(contact);
+    }
 
     /**
      * 
@@ -49,4 +55,18 @@ public abstract class CollisionHandler {
             return null;
         }
     }
+
+    @Override
+    public void endContact(Contact contact) {
+    }
+
+    @Override
+    public void preSolve(Contact contact, com.badlogic.gdx.physics.box2d.Manifold oldManifold) {
+    }
+
+    @Override
+    public void postSolve(Contact contact, com.badlogic.gdx.physics.box2d.ContactImpulse impulse) {
+    }
+
+
 }

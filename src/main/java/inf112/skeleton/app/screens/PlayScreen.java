@@ -1,7 +1,5 @@
 package inf112.skeleton.app.screens;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -23,10 +20,13 @@ import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
 import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
+import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
+import inf112.skeleton.app.sprites.powerups.PowerUpManager;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -60,21 +60,14 @@ public class PlayScreen implements Screen {
     // Variables for keyhandler
     private KeyHandler keyHandler;
 
-    // Array of fireballs
-    private Array<Fireball> fireballs;
-
-    // Fireball variables
-    private float fireballCooldown = 1.5f;
-    private float timeSinceLastFireball = 0f;
-    private float speedMultiplier = 3.0f;
-
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
     private AbstractEnemyFactory enemyFactory;
 
-    // ContactListener
-    private WorldContactListener contactListener;
+
+    private PowerUpManager powerUpManager;
+    private FireballManager fireballManager;
 
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
@@ -112,17 +105,19 @@ public class PlayScreen implements Screen {
         keyHandler = new KeyHandler(player, game, this);
 
         // Creates an array of fireballs
-        fireballs = new Array<Fireball>(1000);
 
         enemies = new Array<AbstractEnemy>();
 
         enemyFactory = new AbstractEnemyFactory(this);
 
-        contactListener = new WorldContactListener();
-
-        world.setContactListener(contactListener);
 
         enemies.add(enemyFactory.spawnRandom());
+
+        powerUpManager = new PowerUpManager(this);
+        fireballManager = new FireballManager(this);
+
+
+
     }
 
     @Override
@@ -139,22 +134,16 @@ public class PlayScreen implements Screen {
         keyHandler.handleInput(dt);
 
         world.step(1 / 60f, 6, 2);
-        removeBodies(world);
 
-        // System.out.println("Number of fireballs: " + fireballs.size);
-        // Updated the player sprites position
+        powerUpManager.update(dt);
+        fireballManager.update(dt);
+
         playerView.update(dt);
-
-        // Updates the fireballs
-        for (Fireball fireball : fireballs) {
-            fireball.update(dt);
-        }
 
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
 
-        attemptToFireFireball(dt);
 
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
@@ -168,36 +157,6 @@ public class PlayScreen implements Screen {
 
 
 
-    private void removeBodies(World world){
-        Array<Body> bodiesToRemove = contactListener.getAllBodiesToRemove();
-        System.out.println("Bodies to remove: " + bodiesToRemove.size);
-        for (Body body : bodiesToRemove) {
-            if (body.getUserData() instanceof Fireball){
-                System.out.println("Fireball removed");
-                removeFireball(body);
-            }
-            // else if (body.getUserData() instanceof PowerUp) {
-            //     removePowerUp(body);
-            // }
-        }
-        bodiesToRemove.clear();
-    }
-
-
-    private void removeFireball(Body body){
-        for (Fireball fireball : fireballs) {
-            if (fireball.b2body.equals(body)) {
-                world.destroyBody(body);
-                fireballs.removeValue(fireball, true);
-                break;
-            }
-        }
-    }
-
-    //To implement
-    private void removePowerUp(Body body){
-
-    }
 
     @Override
     public void render(float delta) {
@@ -216,7 +175,7 @@ public class PlayScreen implements Screen {
         playerView.draw(game.batch);
        
 
-        for (Fireball fireball : fireballs) {
+        for (Fireball fireball : fireballManager.getFireball()) {
             fireball.draw(game.batch);
         }
 
@@ -225,6 +184,11 @@ public class PlayScreen implements Screen {
             enemy.draw(game.batch);
         }
 
+        for(AbstractPowerUp powerUp : powerUpManager.getPowerUps()){
+            powerUp.draw(game.batch);
+        }
+
+       
         game.batch.end();
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);
@@ -236,78 +200,17 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
     }
 
-    /**
-     * @param direction spawns a fireball at the players center
-     *                  and directs it in the direction of the players cursor
-     */
-    private void createFireball(Vector2 direction) {
-        // Fireball newFireball = new Fireball(this, player.getAttackDamage(), atlas);
-        // newFireball.setLinearVelocity(direction);
-        // fireballs.add(newFireball);
-
-        //Firing additional fireballs in a cone
-        for (int i = 0; i < 3; i++) {
-            Fireball coneFireball = new Fireball(this, 50, atlas);
-            Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
-            coneFireball.setLinearVelocity(coneVelocity);
-            fireballs.add(coneFireball);
-        }
-
-        // Firing additional fireballs in eight directions
-        // Automatic firing
-        // for (int i = 0; i < 8; i++) {
-        //     Fireball directionFireball = new Fireball(this, 50,
-        //             atlas);
-        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
-        //             45).nor().scl(speedMultiplier);
-        //     // velocity
-        //     directionFireball.setLinearVelocity(directionVelocity);
-        //     fireballs.add(directionFireball);
-        // }
-    }
-
-    /**
-     * 
-     * @param dt attempts to fire a fireball every dt
-     */
-    private void attemptToFireFireball(float dt) {
-        timeSinceLastFireball += dt;
-        if (timeSinceLastFireball >= fireballCooldown) {
-            timeSinceLastFireball = 0f;
-            fireAutomaticFireball();
-        }
-    }
-    /**
-     * Fires a fireball in the direction of the cursor
-     * 
-     * @param screen The PlayScreen instance
-     */
-    private void fireAutomaticFireball() {
-        // Get the player's position
-        Vector2 playerPosition = new Vector2(player.b2body.getPosition().x, player.b2body.getPosition().y);
-
-        // Get the cursor position in screen coordinates
+    //To implement field variable
+    public Vector3 getCursorPosition(){
         Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-
-        // Convert screen coordinates to world coordinateswd
-        Vector3 worldCursorPos = new Vector3(cursorPos);
-        this.getGamecam().unproject(worldCursorPos);
-
-        // Convert cursor position to vector
-        Vector2 cursorPosition = new Vector2(worldCursorPos.x, worldCursorPos.y);
-
-        // Calculate the direction vector (from player to cursor)
-        Vector2 direction = new Vector2(cursorPosition).sub(playerPosition).nor();
-
-        // Call the createFireball method with the calculated direction
-        createFireball(direction);
+        return cursorPos;
     }
 
     /**
      * 
      * @return the gamecam
      */
-    public OrthographicCamera getGamecam() {
+    public OrthographicCamera getGameCam() {
         return this.gamecam;
     }
 

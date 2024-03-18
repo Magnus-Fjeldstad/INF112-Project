@@ -15,6 +15,7 @@ public class GameCreate extends Game {
 	public static final short CATEGORY_WALLS = 4;
 	public static final short CATEGORY_FIREBALL = 8;
 	public static final short CATEGORY_ENEMY = 16;
+	public static final short CATEGORY_POWERUP = 32;
 
 	//Gamescreen variables for the screen and PPM (Pixels pr. meter)
 	public static final int V_Width = 400;

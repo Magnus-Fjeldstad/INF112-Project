@@ -1,5 +1,6 @@
 package inf112.skeleton.app.tools.listeners;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -17,11 +18,18 @@ public class PowerUpCollisionHandler extends CollisionHandler{
         return bodiesToRemove;
     }
     
+    public void clearBodiesToRemove() {
+        bodiesToRemove.clear();
+    }
+
     @Override
     public void handleCollision(Contact contact) {
-        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {
-            Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
-            bodiesToRemove.add(fireball.getBody());
+        // System.out.println("handler in acoin");
+        // System.out.println(isCollisionBetween(contact, GameCreate.CATEGORY_POWERUP, GameCreate.CATEGORY_PLAYER) );
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP)) {
+            Fixture powerUp = getFixtureByCategory(contact, GameCreate.CATEGORY_POWERUP);
+            bodiesToRemove.add(powerUp.getBody());
+            System.out.println("Powerup collision");
         }
     }
 }
