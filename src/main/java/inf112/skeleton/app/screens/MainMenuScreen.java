@@ -104,7 +104,9 @@ public class MainMenuScreen implements Screen{
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
 
     @Override
@@ -128,7 +130,9 @@ public class MainMenuScreen implements Screen{
     public void resume() {}
 
     @Override
-    public void hide() {}
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
+    }
 
     @Override
     public void dispose() {
