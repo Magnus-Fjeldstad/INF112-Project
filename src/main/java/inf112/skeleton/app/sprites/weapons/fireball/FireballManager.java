@@ -25,7 +25,7 @@ public class FireballManager {
         this.fireballsToRemove = new Array<>();
         this.screen = screen;
         fireballCollisionHandler = new FireballCollisionHandler();
-        screen.getWorld().setContactListener(fireballCollisionHandler);
+        // screen.getWorld().setContactListener(fireballCollisionHandler);
     }
     
     public void update(float dt) {
@@ -82,7 +82,7 @@ public class FireballManager {
 
     private Vector2 calculateVector() {
         // Player position
-        Vector2 playerPosition = new Vector2(screen.getPlayerModel().getX(), screen.getPlayerModel().getY());
+        Vector2 playerPosition = new Vector2(screen.getPlayerModel().b2body.getPosition().x, screen.getPlayerModel().b2body.getPosition().y);
         
         // Cursor position
         Vector3 cursorPosition = screen.getCursorPosition();

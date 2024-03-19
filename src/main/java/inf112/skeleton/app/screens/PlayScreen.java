@@ -97,7 +97,7 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(this);
 
         // Creates the player
-        player = new PlayerModel(this, 70, 100, 4);
+        player = new PlayerModel(this);
         playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
         
