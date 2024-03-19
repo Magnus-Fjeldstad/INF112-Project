@@ -21,19 +21,16 @@ public class PlayerModel extends Sprite {
     public Body b2body;
     public World world;
 
-    public int health;
-    public int maxHealth;
-    public float movementSpeed;
+    public int health = 70;
+    public int maxHealth = 100;
+    public float movementSpeed = 4;
 
-    public PlayerModel(PlayScreen screen, int health, int maxHealth, float movementSpeed) {
+    public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
 
         // Set the player's health, speed and attack damage
-        this.health = health;
-        this.maxHealth = maxHealth;
-        this.movementSpeed = movementSpeed;
         definePlayer();
     }
 

@@ -29,18 +29,18 @@ public class PlayerModelTest {
         when(mockPlayScreen.getWorld()).thenReturn(world);
 
         // Initialize PlayerModel with the mocked PlayScreen and default values.
-        playerModel = new PlayerModel(mockPlayScreen, 100, 100, 5.0f);
+        playerModel = new PlayerModel(mockPlayScreen);
     }
 
     @Test
     public void testGetHealth() {
-        assertEquals(100, playerModel.getHealth(), "Health should initially be 100.");
+        assertEquals(70, playerModel.getHealth(), "Health should initially be 100.");
     }
 
     @Test
     public void testSetHealth() {
         playerModel.setHealth(-10); // Assuming this reduces health by 10
-        assertEquals(90, playerModel.getHealth(), "Health should be 90 after reducing by 10.");
+        assertEquals(60, playerModel.getHealth(), "Health should be 90 after reducing by 10.");
     }
 
     @Test
@@ -56,12 +56,12 @@ public class PlayerModelTest {
 
     @Test
     public void testGetSpeed() {
-        assertEquals(5.0f, playerModel.getSpeed(), "Speed should initially be 5.0f.");
+        assertEquals(4, playerModel.getSpeed(), "Speed should initially be 5.0f.");
     }
 
     @Test
     public void testSetSpeed() {
-        playerModel.setSpeed(1.0f); // Assuming this increases speed by 1.0f
-        assertEquals(6.0f, playerModel.getSpeed(), "Speed should be 6.0f after increasing by 1.0f.");
+        playerModel.setSpeed(1); // Assuming this increases speed by 1.0f
+        assertEquals(5, playerModel.getSpeed(), "Speed should be 6.0f after increasing by 1.0f.");
     }
 }
