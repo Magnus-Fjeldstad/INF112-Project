@@ -105,6 +105,7 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void show() {
+        // To initiate the the stage for MainMenuScreen shows in the MainMenuScreen
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -131,6 +132,7 @@ public class MainMenuScreen implements Screen{
 
     @Override
     public void hide() {
+        // To ensure that the MainMenuScreen stage does not handle input when it is not shown
         Gdx.input.setInputProcessor(null);
     }
 

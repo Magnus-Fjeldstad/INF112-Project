@@ -110,6 +110,7 @@ public class PauseScreen implements Screen{
 
     @Override
     public void show() {
+        // To initiate the the stage for PauseScreen shows in the PauseScreen
         Gdx.input.setInputProcessor(stage);
     }
 
