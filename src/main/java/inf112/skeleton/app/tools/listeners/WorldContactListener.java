@@ -1,53 +1,57 @@
 package inf112.skeleton.app.tools.listeners;
 
-import java.util.ArrayList;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.utils.Array;
+
+import inf112.skeleton.app.GameCreate;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
+import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 
 
 
 
 
 public class WorldContactListener implements ContactListener {
-    private Array<CollisionHandler> collisionHandlers;
-    private CollisionHandler fireballCollisionHandler;
-    private CollisionHandler powerUpCollisionHandler;
+    private PowerUpCollisionHandler powerUpCollisionHandler;
+    private FireballCollisionHandler fireballCollisionHandler;
 
-    public WorldContactListener() {
-        this.collisionHandlers = new Array<CollisionHandler>();
-        this.fireballCollisionHandler = new FireballCollisionHandler();
-        //this.powerUpCollisionHandler = new PowerUpCollisionHandler();
-        this.collisionHandlers.add(fireballCollisionHandler);
-        //this.collisionHandlers.add(powerUpCollisionHandler);
+    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler) {
+        this.powerUpCollisionHandler = powerUpCollisionHandler;
+        this.fireballCollisionHandler = fireballCollisionHandler;
     }
 
     @Override
     public void beginContact(Contact contact) {
-        for (CollisionHandler handler : collisionHandlers) {
-            handler.handleCollision(contact);
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+        System.out.println("--------------------");
+        System.out.println(fixtureB.getUserData());
+        System.out.println(fixtureA.getUserData());
+        
+        // Delegate to PowerUpCollisionHandler if a power-up is involved in the collision
+        if( isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP) ) {
+            powerUpCollisionHandler.handleCollision(contact);
         }
+
+        // Delegate to FireballCollisionHandler if a fireball is involved in the collision
+        // Replace Fireball.class with the actual class of your fireballs
+        if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS) ) {
+            fireballCollisionHandler.handleCollision(contact);
+        }
+
+        // Add more conditions here to delegate to other handlers...
     }
 
-    public Array<Body> getBodiesToRemove() {
-        Array<Body> allBodiesToRemove = new Array<>();
-        for (CollisionHandler handler : collisionHandlers) {
-            Array<Body> bodiesToRemove = handler.getBodiesToRemove();
-            if (bodiesToRemove != null) {
-                allBodiesToRemove.addAll(bodiesToRemove);
-            }
-        }
-        return allBodiesToRemove;
-    }
-
-    public void removeBodies() {
-        for (CollisionHandler handler : collisionHandlers) {
-            handler.clearBodiesToRemove();
-        }
+    protected boolean isCollisionBetween(Contact contact, short category1, short category2) {
+        Fixture fixA = contact.getFixtureA();
+        Fixture fixB = contact.getFixtureB();
+        return (fixA.getUserData() != null && fixA.getUserData().equals(category1) && fixB.getUserData() != null
+                && fixB.getUserData().equals(category2)) ||
+                (fixA.getUserData() != null && fixA.getUserData().equals(category2) && fixB.getUserData() != null && fixB.getUserData().equals(category1));
     }
 
     @Override
