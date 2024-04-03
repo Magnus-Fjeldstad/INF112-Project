@@ -69,6 +69,8 @@ public class PlayScreen implements Screen {
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
 
+    private WorldContactListener worldContactListener;
+
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
 
@@ -116,8 +118,8 @@ public class PlayScreen implements Screen {
         powerUpManager = new PowerUpManager(this);
         fireballManager = new FireballManager(this);
 
-
-
+        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(), fireballManager.getFireballCollisionHandler());
+        world.setContactListener(worldContactListener);
     }
 
     @Override

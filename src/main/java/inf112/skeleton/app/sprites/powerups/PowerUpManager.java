@@ -24,7 +24,6 @@ public class PowerUpManager {
         this.powerUpsToRemove = new Array<>();
         this.screen = screen;
         powerUpCollisionHandler = new PowerUpCollisionHandler();
-        screen.getWorld().setContactListener(powerUpCollisionHandler);
     }
     
     public void update(float dt) {
@@ -67,6 +66,10 @@ public class PowerUpManager {
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }
+    }
+
+    public PowerUpCollisionHandler getPowerUpCollisionHandler() {
+        return powerUpCollisionHandler;
     }
 
     public Array<AbstractPowerUp> getPowerUps() {
