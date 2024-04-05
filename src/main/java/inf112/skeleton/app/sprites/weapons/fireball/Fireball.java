@@ -63,11 +63,11 @@ public class Fireball extends Sprite {
 
  
 
-    private void setDamage(int damage) {
+    public void setDamage(int damage) {
         this.damage = damage;
     }
 
-    private int getDamage() {
+    public int getDamage() {
         return damage;
     }   
 

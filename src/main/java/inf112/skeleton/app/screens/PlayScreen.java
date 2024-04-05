@@ -23,6 +23,7 @@ import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
+import inf112.skeleton.app.sprites.enemies.EnemyManager;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
 import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
@@ -63,11 +64,9 @@ public class PlayScreen implements Screen {
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
-    private AbstractEnemyFactory enemyFactory;
-
-
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
+    private EnemyManager enemyManager;
 
     private WorldContactListener worldContactListener;
 
@@ -106,19 +105,14 @@ public class PlayScreen implements Screen {
         // Creates a KeyHandler for the player
         keyHandler = new KeyHandler(player, game, this);
 
-        // Creates an array of fireballs
-
-        enemies = new Array<AbstractEnemy>();
-
-        enemyFactory = new AbstractEnemyFactory(this);
-
-
-        enemies.add(enemyFactory.spawnRandom());
 
         powerUpManager = new PowerUpManager(this);
         fireballManager = new FireballManager(this);
+        enemyManager = new EnemyManager(this);
 
-        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(), fireballManager.getFireballCollisionHandler());
+        enemies = enemyManager.getEnemies();
+    
+        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(), fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler());
         world.setContactListener(worldContactListener);
     }
 
@@ -133,20 +127,20 @@ public class PlayScreen implements Screen {
      *           deltatime
      */
     public void update(float dt) {
-        keyHandler.handleInput(dt);
-
+        
         world.step(1 / 60f, 6, 2);
+        keyHandler.handleInput(dt);
 
         powerUpManager.update(dt);
         fireballManager.update(dt);
+        enemyManager.update(dt);
 
         playerView.update(dt);
 
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
-
-
+        
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
@@ -181,7 +175,6 @@ public class PlayScreen implements Screen {
             fireball.draw(game.batch);
         }
 
-        removeDeadEnemies();
         for (AbstractEnemy enemy : enemies) {
             enemy.draw(game.batch);
         }
@@ -276,22 +269,5 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
-    }
-
-    /**
-     * Removes AbstractEnemies with health that is not 1 or more
-     */
-    private void removeDeadEnemies() {
-        Array<AbstractEnemy> livingEnemies = new Array<AbstractEnemy>();
-        for (AbstractEnemy enemy : enemies) {
-            if (enemy.getHealth() > 0) {
-                livingEnemies.add(enemy);
-            } else {
-                // The enemy is dead, so remove its body from the world
-                world.destroyBody(enemy.getBody()); // Assuming getBody() returns the Box2D body
-            }
-        }
-        // Update the enemies list to only include living enemies
-        this.enemies = livingEnemies;
     }
 }
