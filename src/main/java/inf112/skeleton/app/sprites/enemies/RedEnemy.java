@@ -12,9 +12,18 @@ public class RedEnemy extends AbstractEnemy {
     public Body b2body;
     private TextureRegion enemyStand;
 
+    /**
+     * Constructor for the RedEnemy
+     * @param screen
+     * @param x
+     * @param y
+     * @param health
+     * @param movementSpeed
+     * @param damage
+     */
     public RedEnemy(PlayScreen screen, float x, float y, int health, float movementSpeed, int damage) {
         super(screen, x, y, health, movementSpeed, damage, screen.getEnemyAtlas().findRegion("RedEnemy"));
-        enemyStand = new TextureRegion(getTexture(), 2, 2, 14, 18);
+        enemyStand = new TextureRegion(getTexture(), 32, 80, 16, 16);
         setBounds(2, 2, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
         setRegion(enemyStand);
     }
