@@ -4,7 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 public abstract class AbstractEnemy extends Sprite  {
@@ -29,22 +33,30 @@ public abstract class AbstractEnemy extends Sprite  {
 
     /**
      * Defines the box 2d body of the 
-     */
-    protected abstract void defineEnemy();
+     */   
+    private void defineEnemy() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(32 / GameCreate.PPM, 32/ GameCreate.PPM);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        b2body = screen.getWorld().createBody(bodyDef);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        CircleShape shape = new CircleShape();
+        shape.setRadius(5 / GameCreate.PPM);
+        fixtureDef.shape = shape;
+
+        fixtureDef.filter.categoryBits = GameCreate.CATEGORY_ENEMY; 
+        fixtureDef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_FIREBALL | GameCreate.CATEGORY_PLAYER | GameCreate.CATEGORY_ENEMY;
+
+        b2body.createFixture(fixtureDef);
+        b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_ENEMY);
+    }
 
     /**
      * Updates the position of the Sprite
      * @param dt
      */
     public abstract void update(float dt);
-
-    /**
-     * Deals damage to enemy
-     * @param int the damage dealt to the enemy
-     */
-    public void takeDamage(int damageTaken) {
-        this.health -= damageTaken;
-    }
 
     /**
      * Returns the AbstractEnemy's health
@@ -56,6 +68,10 @@ public abstract class AbstractEnemy extends Sprite  {
 
     public Body getBody() {
         return this.b2body;
+    }
+
+    public void setHealth(int deltaHealt) {
+        this.health += deltaHealt;
     }
     
 }   

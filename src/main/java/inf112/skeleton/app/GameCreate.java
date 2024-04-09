@@ -1,6 +1,8 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import inf112.skeleton.app.screens.MainMenuScreen;
@@ -22,10 +24,11 @@ public class GameCreate extends Game {
 	public static final int V_Height = 208;
 	public static final float PPM = 100;
 
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+
 		setScreen(new MainMenuScreen(this));
 	}
 

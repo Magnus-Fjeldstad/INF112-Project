@@ -11,8 +11,6 @@ public class DamagePowerUp extends AbstractPowerUp {
         super(screen, screen.getAtlas().findRegion("SkeletonEnemy"));
         sprite = new TextureRegion(getTexture(), 2, 2, 14, 18);
         setRegion(sprite);
-        
-        
     }
 
     protected void removePowerUp() {

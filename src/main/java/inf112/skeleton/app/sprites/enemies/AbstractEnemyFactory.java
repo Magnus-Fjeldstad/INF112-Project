@@ -15,7 +15,7 @@ public class AbstractEnemyFactory {
      * @return AbstractEnemy
      */
     public AbstractEnemy spawnRandom() {
-        // TODO: Make this spawn different enemies in given spawn locations based on time
-        return new RedEnemy(screen, 0, 0, 1, 0.5f, 0);
+        AbstractEnemy enemy = new RedEnemy(screen, 0, 0, 20, 0.5f, 0);
+        return enemy;
     }
 }

@@ -18,20 +18,19 @@ import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 public class WorldContactListener implements ContactListener {
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private FireballCollisionHandler fireballCollisionHandler;
+    private EnemyCollisionHandler enemyCollisionHandler;
 
-    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler) {
+    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler) {
         this.powerUpCollisionHandler = powerUpCollisionHandler;
         this.fireballCollisionHandler = fireballCollisionHandler;
+        this.enemyCollisionHandler = enemyCollisionHandler;
     }
 
     @Override
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
-        System.out.println("--------------------");
-        System.out.println(fixtureB.getUserData());
-        System.out.println(fixtureA.getUserData());
-        
+      
         // Delegate to PowerUpCollisionHandler if a power-up is involved in the collision
         if( isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP) ) {
             powerUpCollisionHandler.handleCollision(contact);
@@ -41,6 +40,10 @@ public class WorldContactListener implements ContactListener {
         // Replace Fireball.class with the actual class of your fireballs
         if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS) ) {
             fireballCollisionHandler.handleCollision(contact);
+        }
+
+        if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY) ) {
+            enemyCollisionHandler.handleCollision(contact);
         }
 
         // Add more conditions here to delegate to other handlers...

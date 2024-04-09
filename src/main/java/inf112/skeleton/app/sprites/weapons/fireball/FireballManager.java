@@ -5,6 +5,8 @@ package inf112.skeleton.app.sprites.weapons.fireball;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.FireballCollisionHandler;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -33,6 +35,8 @@ public class FireballManager {
         if (timeSinceLastPowerUp >= SPAWN_INTERVAL) {
             createConeFireball();
             timeSinceLastPowerUp = 0;
+            Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_fire.ogg"));
+            sound.play(0.5f);
         }
 
         for (Fireball fireball : fireballs) {

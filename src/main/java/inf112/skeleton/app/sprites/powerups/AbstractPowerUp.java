@@ -31,8 +31,6 @@ public abstract class AbstractPowerUp extends Sprite  {
         randomCoordinates();
         definePowerUp();
         setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
-
-        setUserData();
     }
 
 
@@ -61,7 +59,7 @@ public abstract class AbstractPowerUp extends Sprite  {
 
         fixtureDef.filter.categoryBits = GameCreate.CATEGORY_POWERUP; 
         fixtureDef.filter.maskBits = GameCreate.CATEGORY_PLAYER; 
-
+        fixtureDef.isSensor = true;
         b2body.createFixture(fixtureDef);
         b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_POWERUP);
     };
@@ -72,9 +70,5 @@ public abstract class AbstractPowerUp extends Sprite  {
         // if (this.powerUpDuration <= 0) {
         //     removePowerUp();
         // }
-    }
-
-    private void setUserData() {
-        b2body.setUserData(this);
     }
 }   
