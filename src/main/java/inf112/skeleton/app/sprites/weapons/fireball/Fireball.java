@@ -12,7 +12,6 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class Fireball extends Sprite {
 
@@ -27,8 +26,6 @@ public class Fireball extends Sprite {
      * Constructor for Fireball class.
      *
      * @param screen The play screen.
-     * @param damage The damage of the fireball.
-     * @param atlas The texture atlas containing the fireball texture.
      */
     public Fireball(PlayScreen screen) {
         this.world = screen.getWorld();
@@ -40,6 +37,9 @@ public class Fireball extends Sprite {
         defineEntity();
     }
 
+    /**
+     * Defines the fireball
+     */
     protected void defineEntity() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x, y);
@@ -57,21 +57,34 @@ public class Fireball extends Sprite {
         b2body.createFixture(fdef).setUserData(GameCreate.CATEGORY_FIREBALL);
     }
 
+    /**
+     * Sets the velocity of the fireball
+     * @param velocity
+     */
     public void setLinearVelocity(Vector2 velocity) {
         this.b2body.setLinearVelocity(velocity);
     }
 
- 
-
+    /**
+     * Sets the damage the fireball deals
+     * @param damage
+     */
     public void setDamage(int damage) {
         this.damage = damage;
     }
 
+    /**
+     * Returns the damage of the fireball
+     * @return damage
+     */
     public int getDamage() {
         return damage;
     }   
 
-
+    /**
+     * Updates the position of the fireball
+     * @param dt
+     */
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }

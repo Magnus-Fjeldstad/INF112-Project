@@ -24,4 +24,5 @@ Requires Java 21 or later.
 ## Credits
 tileset_gutter.png er hentet fra "https://www.spriters-resource.com/fullview/52571/" og editet ned til en mindre versjon av "Magnus Fjeldstad"
 Enemy graphics was created by @JoeCreates on X and are being used under a CC-BY-SA 3.0 license and can be found here: "https://opengameart.org/content/roguelike-monsters"
+Fireball fraphics was created by "Master484", it is in the public domain and can be found here: https://opengameart.org/content/explosion-set-1-m484-games
 ...

@@ -36,6 +36,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public class PlayScreen implements Screen {
     private TextureAtlas atlas;
     private TextureAtlas enemyAtlas;
+    private TextureAtlas fireballAtlas;
 
     private GameCreate game;
 
@@ -74,6 +75,7 @@ public class PlayScreen implements Screen {
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
         enemyAtlas = new TextureAtlas("enemies.atlas");
+        fireballAtlas = new TextureAtlas("fireball.atlas");
 
         this.game = game;
         // Create cam to follow the player
@@ -249,6 +251,13 @@ public class PlayScreen implements Screen {
      */
     public TextureAtlas getEnemyAtlas() {
         return enemyAtlas;
+    }
+
+    /**
+     * @return TextureAtlas fireballAtlas
+     */
+    public TextureAtlas getFireballAtlas() {
+        return fireballAtlas;
     }
 
     @Override
