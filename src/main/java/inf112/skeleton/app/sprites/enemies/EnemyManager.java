@@ -47,7 +47,6 @@ public class EnemyManager {
             if (enemyCollisionHandler.getBodiesToRemove().contains(enemy.b2body, true)) {
                 if (enemy.getHealth() > 0) {
                     enemy.setHealth(-10);
-                    System.out.println("Enemy health: " + enemy.getHealth());
                 }
                 else {
                     enemies.removeValue(enemy, false);
