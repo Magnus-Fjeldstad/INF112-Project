@@ -4,6 +4,7 @@ package inf112.skeleton.app.sprites.weapons.fireball;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.FireballCollisionHandler;
+import inf112.skeleton.app.sprites.weapons.fireball.FireballFactory;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 //This class is responsible for spawning powerups in the game
 public class FireballManager {
     private Array<Fireball> fireballs;
+    private FireballFactory fireballFactory;
     private Array<Body> fireballsToRemove;
     private FireballCollisionHandler fireballCollisionHandler;
     private float timeSinceLastPowerUp;
@@ -26,6 +28,7 @@ public class FireballManager {
         this.fireballs = new Array<>();
         this.fireballsToRemove = new Array<>();
         this.screen = screen;
+        this.fireballFactory = new FireballFactory(screen);
         fireballCollisionHandler = new FireballCollisionHandler();
     }
     
@@ -61,7 +64,7 @@ public class FireballManager {
     
     private void createConeFireball() {
         for (int i = 0; i < 3; i++) {
-            Fireball coneFireball = new Fireball(screen);
+            Fireball coneFireball = fireballFactory.createFireball();
             Vector2 direction = calculateVector();
             Vector2 coneVelocity = direction.cpy().rotateDeg(-15 + i * 15); // Adjust angle as needed
             coneFireball.setLinearVelocity(coneVelocity);
