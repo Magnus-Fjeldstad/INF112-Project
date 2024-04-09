@@ -1,8 +1,11 @@
 package inf112.skeleton.app.sprites.enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.EnemyCollisionHandler;
 
@@ -23,6 +26,9 @@ public class EnemyManager {
         this.screen = screen;
         this.enemyFactory = new AbstractEnemyFactory(screen);
 
+        this.enemies.add(enemyFactory.spawnRandom());
+        this.enemies.add(enemyFactory.spawnRandom());
+        this.enemies.add(enemyFactory.spawnRandom());
         this.enemies.add(enemyFactory.spawnRandom());
 
         enemyCollisionHandler = new EnemyCollisionHandler();
@@ -47,6 +53,8 @@ public class EnemyManager {
                     enemies.removeValue(enemy, false);
                     enemiesToRemove.add(enemy.b2body);
                     enemy.b2body.getWorld().destroyBody(enemy.b2body);
+                    Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/death.ogg"));
+                    sound.play();
                 }
             }
         }
