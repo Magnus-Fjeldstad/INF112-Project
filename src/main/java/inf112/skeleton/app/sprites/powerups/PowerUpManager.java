@@ -4,6 +4,7 @@ package inf112.skeleton.app.sprites.powerups;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
+import inf112.skeleton.app.sprites.powerups.PowerUpFactory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -12,6 +13,7 @@ import java.util.Random;
 
 //This class is responsible for spawning powerups in the game
 public class PowerUpManager {
+    private PowerUpFactory powerUpFactory;
     private Array<AbstractPowerUp> powerUps;
     private Array<Body> powerUpsToRemove;
     private PowerUpCollisionHandler powerUpCollisionHandler;
@@ -23,7 +25,8 @@ public class PowerUpManager {
         this.powerUps = new Array<>();
         this.powerUpsToRemove = new Array<>();
         this.screen = screen;
-        powerUpCollisionHandler = new PowerUpCollisionHandler();
+        this.powerUpFactory = new PowerUpFactory(screen);
+        this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }
     
     public void update(float dt) {
@@ -60,9 +63,9 @@ public class PowerUpManager {
         int i = rand.nextInt(2);
         switch (i) {
             case 0:
-                return new SpeedPowerUp(screen);
+                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST);
             case 1:
-                return new DamagePowerUp(screen);
+                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST);
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }
