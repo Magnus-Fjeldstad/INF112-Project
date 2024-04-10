@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
-import inf112.skeleton.app.sprites.IEntity;
 
 /**
  * Class representing the player in the game.
