@@ -44,6 +44,7 @@ public class WorldContactListener implements ContactListener {
 
         if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY) ) {
             enemyCollisionHandler.handleCollision(contact);
+            fireballCollisionHandler.handleCollision(contact);
         }
 
         // Add more conditions here to delegate to other handlers...

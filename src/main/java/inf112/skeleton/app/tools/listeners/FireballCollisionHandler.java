@@ -27,5 +27,9 @@ public class FireballCollisionHandler extends CollisionHandler{
             Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
             bodiesToRemove.add(fireball.getBody());
         }
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY)) {
+            Fixture fireball = getFixtureByCategory(contact, GameCreate.CATEGORY_FIREBALL);
+            bodiesToRemove.add(fireball.getBody());
+        }
     }
 }
