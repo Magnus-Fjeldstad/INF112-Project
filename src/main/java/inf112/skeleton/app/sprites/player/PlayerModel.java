@@ -8,12 +8,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.IEntity;
+import inf112.skeleton.app.sprites.IEntity;
 
 /**
  * Class representing the player in the game.
  */
 
-public class PlayerModel extends Sprite {
+public class PlayerModel extends Sprite implements IEntity{
 
     public PlayerEnum currentState;
     public PlayerEnum previousState;
@@ -128,4 +130,15 @@ public class PlayerModel extends Sprite {
     public void setMaxHealth(int deltaMaxHealth) {
         this.maxHealth += deltaMaxHealth;
     }
+
+    @Override
+    public void update(float dt) {
+        // TODO 
+    }
+
+    @Override
+    public void dispose() {
+        // TODO 
+    }
+
 }
