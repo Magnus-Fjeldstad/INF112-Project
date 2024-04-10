@@ -55,7 +55,7 @@ public class FireballManager {
             if (fireballCollisionHandler.getBodiesToRemove().contains(fireball.b2body, true)) {
                 fireballs.removeValue(fireball, false);
                 fireballsToRemove.add(fireball.b2body);
-                fireball.b2body.getWorld().destroyBody(fireball.b2body);
+                fireball.dispose();;
             }
         }
 
