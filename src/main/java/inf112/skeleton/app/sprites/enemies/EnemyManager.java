@@ -47,6 +47,8 @@ public class EnemyManager {
             if (enemyCollisionHandler.getBodiesToRemove().contains(enemy.b2body, true)) {
                 if (enemy.getHealth() > 0) {
                     enemy.setHealth(-10);
+                    Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_hit.ogg"));
+                    sound.play();
                 }
                 else {
                     enemies.removeValue(enemy, false);
