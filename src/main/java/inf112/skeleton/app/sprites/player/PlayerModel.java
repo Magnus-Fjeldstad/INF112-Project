@@ -24,6 +24,7 @@ public class PlayerModel extends Sprite {
     public int health = 70;
     public int maxHealth = 100;
     public float movementSpeed = 4;
+    public int healthRegen = 0;
 
     public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();
@@ -128,4 +129,22 @@ public class PlayerModel extends Sprite {
     public void setMaxHealth(int deltaMaxHealth) {
         this.maxHealth += deltaMaxHealth;
     }
+
+    public void setHealthRegen(int regenValue) {
+        this.healthRegen = regenValue;
+    }
+
+    public int getHealthRegen() {
+        return this.healthRegen;
+    }
+
+    public void updateHealthWithRegen() {
+        // Increase player health by health regeneration value
+        this.health += this.healthRegen;
+        // Ensure player health doesn't exceed maximum health
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth;
+        }
+    }
 }
+
