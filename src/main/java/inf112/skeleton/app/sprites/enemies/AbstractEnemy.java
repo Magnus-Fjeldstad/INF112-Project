@@ -10,10 +10,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.IEntity;
+import com.badlogic.gdx.physics.box2d.World;
 
-public abstract class AbstractEnemy extends Sprite  {
+public abstract class AbstractEnemy extends Sprite implements IEntity{
     
     protected PlayScreen screen;
+    private World world;
     public Body b2body;
     public Vector2 velocity;
     public int health;
@@ -23,6 +26,7 @@ public abstract class AbstractEnemy extends Sprite  {
     public AbstractEnemy(PlayScreen screen, float startingX, float startingY, int health, float movementSpeed, int attackDamage, TextureAtlas.AtlasRegion region) {
         super(region); // Initialize the Sprite with the given region
         this.screen = screen;
+        this.world = screen.getWorld();
         setPosition(startingX, startingY);
         defineEnemy();
         this.health = health;
@@ -74,4 +78,7 @@ public abstract class AbstractEnemy extends Sprite  {
         this.health += deltaHealt;
     }
     
+    public void dispose() {
+        world.destroyBody(b2body);
+    }
 }   

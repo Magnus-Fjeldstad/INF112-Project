@@ -10,10 +10,11 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.IEntity;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
-public class Fireball extends Sprite {
+public class Fireball extends Sprite implements IEntity {
 
     private World world;
     public Body b2body;
@@ -27,7 +28,7 @@ public class Fireball extends Sprite {
      *
      * @param screen The play screen.
      */
-    public Fireball(PlayScreen screen) {
+    public Fireball(PlayScreen screen){
         this.world = screen.getWorld();
         this.x = screen.getPlayerModel().b2body.getPosition().x;
         this.y = screen.getPlayerModel().b2body.getPosition().y;
@@ -88,4 +89,12 @@ public class Fireball extends Sprite {
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
     }
+
+    /**
+     * Disposes the fireball
+     */
+    public void dispose() {
+        world.destroyBody(b2body);
+    }
+
 }

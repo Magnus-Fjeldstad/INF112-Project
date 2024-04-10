@@ -4,7 +4,6 @@ package inf112.skeleton.app.sprites.powerups;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
-import inf112.skeleton.app.sprites.powerups.PowerUpFactory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -51,7 +50,7 @@ public class PowerUpManager {
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
                 powerUps.removeValue(powerUp, false);
                 powerUpsToRemove.add(powerUp.b2body);
-                powerUp.b2body.getWorld().destroyBody(powerUp.b2body);
+                powerUp.dispose();
             }
         }
 

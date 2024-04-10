@@ -52,7 +52,7 @@ public class EnemyManager {
                 else {
                     enemies.removeValue(enemy, false);
                     enemiesToRemove.add(enemy.b2body);
-                    enemy.b2body.getWorld().destroyBody(enemy.b2body);
+                    enemy.dispose();
                     Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/death.ogg"));
                     sound.play();
                 }

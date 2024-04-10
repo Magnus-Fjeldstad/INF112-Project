@@ -14,8 +14,9 @@ import inf112.skeleton.app.GameCreate;
 
 
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.IEntity;
 
-public abstract class AbstractPowerUp extends Sprite  {
+public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
     protected PlayScreen screen;
     private World world;
@@ -71,4 +72,9 @@ public abstract class AbstractPowerUp extends Sprite  {
         //     removePowerUp();
         // }
     }
+
+    public void dispose() {
+        world.destroyBody(b2body);
+    }
+    
 }   
