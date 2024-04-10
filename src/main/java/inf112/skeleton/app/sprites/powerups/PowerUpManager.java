@@ -4,6 +4,7 @@ package inf112.skeleton.app.sprites.powerups;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -13,6 +14,7 @@ import java.util.Random;
 //This class is responsible for spawning powerups in the game
 public class PowerUpManager {
     private PowerUpFactory powerUpFactory;
+    private PlayerModel playerModel;
     private Array<AbstractPowerUp> powerUps;
     private Array<Body> powerUpsToRemove;
     private PowerUpCollisionHandler powerUpCollisionHandler;
@@ -20,10 +22,11 @@ public class PowerUpManager {
     private static final float SPAWN_INTERVAL = 2;
     private PlayScreen screen;
 
-    public PowerUpManager(PlayScreen screen) {
+    public PowerUpManager(PlayScreen screen, PlayerModel playerModel) {
         this.powerUps = new Array<>();
         this.powerUpsToRemove = new Array<>();
         this.screen = screen;
+        this.playerModel = playerModel;
         this.powerUpFactory = new PowerUpFactory(screen);
         this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }
@@ -50,6 +53,7 @@ public class PowerUpManager {
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
                 powerUps.removeValue(powerUp, false);
                 powerUpsToRemove.add(powerUp.b2body);
+                powerUp.applyPowerUp(playerModel);
                 powerUp.dispose();
             }
         }

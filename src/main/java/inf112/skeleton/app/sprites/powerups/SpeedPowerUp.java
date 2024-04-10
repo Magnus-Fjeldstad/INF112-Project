@@ -3,6 +3,7 @@ package inf112.skeleton.app.sprites.powerups;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public class SpeedPowerUp extends AbstractPowerUp {
     private TextureRegion sprite;
@@ -15,11 +16,11 @@ public class SpeedPowerUp extends AbstractPowerUp {
     }
 
 
-    protected void removePowerUp() {
-        // Remove the powerup from the game
+    protected void removePowerUp(PlayerModel playerModel) {
+        playerModel.movementSpeed -= 2;
     }
 
-    protected void applyPowerUp() {
-        // Apply the powerup to the player
+    protected void applyPowerUp(PlayerModel playerModel) {
+        playerModel.movementSpeed += 2;
     }
 }   

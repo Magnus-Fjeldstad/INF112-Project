@@ -15,6 +15,7 @@ import inf112.skeleton.app.GameCreate;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
@@ -42,9 +43,9 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         startingY = rand.nextInt(32, 200);
     }
 
-    protected abstract void removePowerUp();
+    protected abstract void removePowerUp(PlayerModel playerModel);
 
-    protected abstract void applyPowerUp();
+    protected abstract void applyPowerUp(PlayerModel playerModel);
 
 
     private void definePowerUp(){
@@ -66,11 +67,13 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     };
 
 
+
     public void update(float dt) {
-        // this.powerUpDuration -= dt;
-        // if (this.powerUpDuration <= 0) {
-        //     removePowerUp();
-        // }
+        if (powerUpDuration <= 0) {
+            removePowerUp(screen.getPlayerModel());
+        } else {
+            powerUpDuration -= dt;
+        }
     }
 
     public void dispose() {
