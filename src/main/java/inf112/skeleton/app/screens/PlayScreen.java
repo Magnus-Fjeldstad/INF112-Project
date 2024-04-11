@@ -22,7 +22,6 @@ import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.EnemyManager;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
@@ -59,13 +58,13 @@ public class PlayScreen implements Screen {
     private PlayerView playerView;
     private ShapeRenderer shapeRenderer;
 
-
     // Variables for keyhandler
     private KeyHandler keyHandler;
 
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
+    // Variables for powerups, weapons and enemies
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
     private EnemyManager enemyManager;
@@ -105,18 +104,18 @@ public class PlayScreen implements Screen {
         player = new PlayerModel(this);
         playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
-        
+
         // Creates a KeyHandler for the player
         keyHandler = new KeyHandler(player, game, this);
-
 
         powerUpManager = new PowerUpManager(this);
         fireballManager = new FireballManager(this);
         enemyManager = new EnemyManager(this);
 
         enemies = enemyManager.getEnemies();
-    
-        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(), fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler());
+
+        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(),
+                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler());
         world.setContactListener(worldContactListener);
     }
 
@@ -125,13 +124,13 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Updated the game
+     * Updates the game
      * 
      * @param dt is the games "clock" the game updates based on the
      *           deltatime
      */
     public void update(float dt) {
-        
+
         world.step(1 / 60f, 6, 2);
         keyHandler.handleInput(dt);
 
@@ -144,7 +143,7 @@ public class PlayScreen implements Screen {
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
-        
+
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
@@ -154,9 +153,6 @@ public class PlayScreen implements Screen {
         gamecam.update();
         renderer.setView(gamecam);
     }
-
-
-
 
     @Override
     public void render(float delta) {
@@ -173,7 +169,6 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         playerView.draw(game.batch);
-       
 
         for (Fireball fireball : fireballManager.getFireball()) {
             fireball.draw(game.batch);
@@ -183,11 +178,10 @@ public class PlayScreen implements Screen {
             enemy.draw(game.batch);
         }
 
-        for(AbstractPowerUp powerUp : powerUpManager.getPowerUps()){
+        for (AbstractPowerUp powerUp : powerUpManager.getPowerUps()) {
             powerUp.draw(game.batch);
         }
 
-       
         game.batch.end();
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);
@@ -199,8 +193,8 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
     }
 
-    //To implement field variable
-    public Vector3 getCursorPosition(){
+    // To implement field variable
+    public Vector3 getCursorPosition() {
         Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         return cursorPos;
     }
@@ -238,10 +232,16 @@ public class PlayScreen implements Screen {
         return this.player;
     }
 
+    /**
+     * Sets the crosshair for the screen
+     */
     private void setCrosshairCursor() {
         Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
 
+    /**
+     * @return TextureAtlas atlas
+     */
     public TextureAtlas getAtlas() {
         return atlas;
     }
