@@ -52,8 +52,11 @@ public class EnemyManager {
         for (AbstractEnemy enemy : enemies) {
             if (enemyCollisionHandler.getBodiesToRemove().contains(enemy.b2body, true)) {
                 if (enemy.getHealth() > 0) {
-                    enemy.setHealth(-10);
-                } else {
+                    enemy.setHealth(-screen.getPlayerModel().getAttackDamage());
+                    Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_hit.ogg"));
+                    sound.play();
+                }
+                else {
                     enemies.removeValue(enemy, false);
                     enemiesToRemove.add(enemy.b2body);
                     enemy.dispose();
@@ -65,10 +68,7 @@ public class EnemyManager {
         enemyCollisionHandler.clearBodiesToRemove(); 
     }
 
-    /**
-     * Returns the EnemyCollisionHandler of the EnemyManager
-     * @return
-     */
+
     public EnemyCollisionHandler getEnemyCollisionHandler() {
         return enemyCollisionHandler;
     }
