@@ -18,6 +18,7 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
+import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
@@ -69,6 +70,8 @@ public class PlayScreen implements Screen {
     private FireballManager fireballManager;
     private EnemyManager enemyManager;
 
+    private PlayerModelCollisionHandler playerCollisionHandler;
+
     private WorldContactListener worldContactListener;
 
     public PlayScreen(GameCreate game) {
@@ -112,10 +115,12 @@ public class PlayScreen implements Screen {
         fireballManager = new FireballManager(this);
         enemyManager = new EnemyManager(this);
 
+        playerCollisionHandler = new PlayerModelCollisionHandler();
+
         enemies = enemyManager.getEnemies();
 
         worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(),
-                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler());
+                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
         world.setContactListener(worldContactListener);
     }
 
@@ -239,6 +244,7 @@ public class PlayScreen implements Screen {
     public TextureAtlas getAtlas() {
         return atlas;
     }
+    
 
     /**
      * @return TextureAtlas enemyAtlas

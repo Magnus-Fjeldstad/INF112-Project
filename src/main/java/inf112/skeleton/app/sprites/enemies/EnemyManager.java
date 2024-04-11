@@ -46,7 +46,7 @@ public class EnemyManager {
         for (AbstractEnemy enemy : enemies) {
             if (enemyCollisionHandler.getBodiesToRemove().contains(enemy.b2body, true)) {
                 if (enemy.getHealth() > 0) {
-                    enemy.setHealth(-10);
+                    enemy.setHealth(-screen.getPlayerModel().getAttackDamage());
                     Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_hit.ogg"));
                     sound.play();
                 }
@@ -61,6 +61,7 @@ public class EnemyManager {
         }
         enemyCollisionHandler.clearBodiesToRemove(); 
     }
+
 
     public EnemyCollisionHandler getEnemyCollisionHandler() {
         return enemyCollisionHandler;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 
 /**
  * Class representing the player in the game.
@@ -23,13 +24,21 @@ public class PlayerModel extends Sprite {
 
     public int health = 70;
     public int maxHealth = 100;
+
+    public int attackDamage = 10;
+
     public float movementSpeed = 4;
+
+
+
+    private PlayerModelCollisionHandler playerCollisionHandler;
 
     public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
-
+        
+        playerCollisionHandler = new PlayerModelCollisionHandler();
         // Set the player's health, speed and attack damage
         definePlayer();
     }
@@ -103,6 +112,7 @@ public class PlayerModel extends Sprite {
      */
     public void setHealth(int deltaHealth) {
         this.health += deltaHealth;
+
     }
 
     /**
@@ -125,7 +135,24 @@ public class PlayerModel extends Sprite {
         return this.maxHealth;
     }
 
+    
+
     public void setMaxHealth(int deltaMaxHealth) {
         this.maxHealth += deltaMaxHealth;
+    }
+
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+
+    public void setAttackDamage(int deltaAttackDamage) {
+        this.attackDamage += deltaAttackDamage;
+    }
+
+
+    public void handleCollision() {
+        //setHealth(-10);
+
+        playerCollisionHandler.clearBodiesToRemove();
     }
 }
