@@ -25,8 +25,9 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     public Body b2body;
     private int startingX;
     private int startingY;
-    private boolean isActived = false;
-    private static float powerUpDuration = 5;
+    protected boolean isActive = false;
+    protected boolean isRemovable = false;
+    private float powerUpDuration = 10;
 
     public AbstractPowerUp(PlayScreen screen, PlayerModel playerModel, TextureAtlas.AtlasRegion region) {
         super(region);
@@ -36,7 +37,6 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         randomCoordinates();
         definePowerUp();
         setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
-        System.out.println("PowerUp created");
     }
 
 
@@ -52,15 +52,13 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     protected abstract void applyPowerUpEffect();
 
     protected void removePowerUp(){
-        isActived = false;
         removePowerUpEffect();
     }
 
     protected void applyPowerUp(){
-        System.out.println("PowerUp is applied");
-        System.out.println(powerUpDuration);
-        isActived = true;
         applyPowerUpEffect();
+        isActive = true;
+        dispose();
     }
 
     private void definePowerUp(){
@@ -84,13 +82,12 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
 
 
     public void update(float dt) {
-        System.out.println(isActived);
-        if (isActived) {
-            System.out.println("PowerUp is active");
+        if(isActive){
             powerUpDuration -= dt;
-            if (powerUpDuration <= 0) {
+            if(powerUpDuration <= 0){
+                removePowerUp();
+                isRemovable = true;
             }
-            
         }
     }
 
