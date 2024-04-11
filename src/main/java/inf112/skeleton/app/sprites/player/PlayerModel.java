@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.IEntity;
 import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 
 /**
@@ -150,11 +151,29 @@ public class PlayerModel extends Sprite implements IEntity{
         this.attackDamage += deltaAttackDamage;
     }
 
-
+    //TODO: Implement collison between player and enemy
     public void handleCollision() {
         //setHealth(-10);
 
         playerCollisionHandler.clearBodiesToRemove();
+    }
+
+    @Override
+    public void update(float dt) {
+        //TODO
+    }
+
+    @Override
+    public void dispose() {
+        // TODO
+    }
+
+    public int getHealthRegen() {
+        return healthRegen;
+    }
+
+    public void setHealthRegen(int healthRegen) {
+        this.healthRegen = healthRegen;
     }
 }
 
