@@ -18,12 +18,10 @@ public class PowerUpManager {
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 2;
-    private PlayScreen screen;
 
     public PowerUpManager(PlayScreen screen) {
         this.powerUps = new Array<>();
         this.powerUpsToRemove = new Array<>();
-        this.screen = screen;
         this.powerUpFactory = new PowerUpFactory(screen);
         this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }
