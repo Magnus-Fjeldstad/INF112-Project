@@ -14,7 +14,7 @@ import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
  * Class representing the player in the game.
  */
 
-public class PlayerModel extends Sprite {
+public class PlayerModel extends Sprite implements IEntity{
 
     public PlayerEnum currentState;
     public PlayerEnum previousState;
@@ -28,6 +28,7 @@ public class PlayerModel extends Sprite {
     public int attackDamage = 10;
 
     public float movementSpeed = 4;
+    public int healthRegen = 0;
 
 
 
@@ -156,3 +157,4 @@ public class PlayerModel extends Sprite {
         playerCollisionHandler.clearBodiesToRemove();
     }
 }
+

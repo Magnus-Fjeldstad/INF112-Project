@@ -23,7 +23,6 @@ import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.EnemyManager;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
@@ -66,6 +65,7 @@ public class PlayScreen implements Screen {
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
+    // Variables for powerups, weapons and enemies
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
     private EnemyManager enemyManager;
@@ -129,7 +129,7 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Updated the game
+     * Updates the game
      * 
      * @param dt is the games "clock" the game updates based on the
      *           deltatime
@@ -237,10 +237,16 @@ public class PlayScreen implements Screen {
         return this.player;
     }
 
+    /**
+     * Sets the crosshair for the screen
+     */
     private void setCrosshairCursor() {
         Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
 
+    /**
+     * @return TextureAtlas atlas
+     */
     public TextureAtlas getAtlas() {
         return atlas;
     }
