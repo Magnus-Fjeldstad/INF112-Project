@@ -11,6 +11,8 @@ import inf112.skeleton.app.tools.listeners.EnemyCollisionHandler;
 public class EnemyManager {
     private Array<AbstractEnemy> enemies;
 
+    private PlayScreen screen;
+
     private Array<Body> enemiesToRemove;
 
     private EnemyCollisionHandler enemyCollisionHandler;
@@ -23,9 +25,10 @@ public class EnemyManager {
     public EnemyManager(PlayScreen screen) {
         this.enemies = new Array<>();
         this.enemiesToRemove = new Array<>();
-    
         this.enemyFactory = new AbstractEnemyFactory(screen);
 
+        this.screen = screen;
+        
         this.enemies.add(enemyFactory.spawnRandom());
         this.enemies.add(enemyFactory.spawnRandom());
         this.enemies.add(enemyFactory.spawnRandom());
