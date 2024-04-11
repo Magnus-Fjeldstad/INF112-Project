@@ -20,19 +20,23 @@ import inf112.skeleton.app.sprites.player.PlayerModel;
 public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
     protected PlayScreen screen;
+    protected PlayerModel playerModel;
     private World world;
     public Body b2body;
     private int startingX;
     private int startingY;
-    private static final float powerUpDuration = 5;
+    private boolean isActived = false;
+    private static float powerUpDuration = 5;
 
-    public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
+    public AbstractPowerUp(PlayScreen screen, PlayerModel playerModel, TextureAtlas.AtlasRegion region) {
         super(region);
         this.world = screen.getWorld(); 
         this.screen = screen;
+        this.playerModel = playerModel;
         randomCoordinates();
         definePowerUp();
         setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+        System.out.println("PowerUp created");
     }
 
 
@@ -43,10 +47,21 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         startingY = rand.nextInt(32, 200);
     }
 
-    protected abstract void removePowerUp(PlayerModel playerModel);
+    protected abstract void removePowerUpEffect();
 
-    protected abstract void applyPowerUp(PlayerModel playerModel);
+    protected abstract void applyPowerUpEffect();
 
+    protected void removePowerUp(){
+        isActived = false;
+        removePowerUpEffect();
+    }
+
+    protected void applyPowerUp(){
+        System.out.println("PowerUp is applied");
+        System.out.println(powerUpDuration);
+        isActived = true;
+        applyPowerUpEffect();
+    }
 
     private void definePowerUp(){
         BodyDef bodyDef = new BodyDef();
@@ -69,10 +84,13 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
 
 
     public void update(float dt) {
-        if (powerUpDuration <= 0) {
-            removePowerUp(screen.getPlayerModel());
-        } else {
+        System.out.println(isActived);
+        if (isActived) {
+            System.out.println("PowerUp is active");
             powerUpDuration -= dt;
+            if (powerUpDuration <= 0) {
+            }
+            
         }
     }
 

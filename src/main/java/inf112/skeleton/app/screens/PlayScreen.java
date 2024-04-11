@@ -110,7 +110,7 @@ public class PlayScreen implements Screen {
         keyHandler = new KeyHandler(player, game, this);
 
 
-        powerUpManager = new PowerUpManager(this);
+        powerUpManager = new PowerUpManager(this, player);
         fireballManager = new FireballManager(this);
         enemyManager = new EnemyManager(this);
 

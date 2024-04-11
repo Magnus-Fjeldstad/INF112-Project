@@ -25,8 +25,8 @@ public class PowerUpManager {
     public PowerUpManager(PlayScreen screen, PlayerModel playerModel) {
         this.powerUps = new Array<>();
         this.powerUpsToRemove = new Array<>();
-        this.screen = screen;
         this.playerModel = playerModel;
+        this.screen = screen;
         this.powerUpFactory = new PowerUpFactory(screen);
         this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }
@@ -51,9 +51,9 @@ public class PowerUpManager {
     private void handleCollision() {
         for (AbstractPowerUp powerUp : powerUps) {
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
+                powerUp.applyPowerUp();
                 powerUps.removeValue(powerUp, false);
                 powerUpsToRemove.add(powerUp.b2body);
-                powerUp.applyPowerUp(playerModel);
                 powerUp.dispose();
             }
         }
@@ -66,9 +66,9 @@ public class PowerUpManager {
         int i = rand.nextInt(2);
         switch (i) {
             case 0:
-                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST);
+                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel);
             case 1:
-                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST);
+                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel);
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }

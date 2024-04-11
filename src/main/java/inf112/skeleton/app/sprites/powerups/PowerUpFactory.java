@@ -1,6 +1,7 @@
 package inf112.skeleton.app.sprites.powerups;
 
 import inf112.skeleton.app.screens.PlayScreen;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 
 public class PowerUpFactory {
@@ -12,12 +13,12 @@ public class PowerUpFactory {
         this.screen = screen;
     }
 
-    public AbstractPowerUp createPowerUp(PowerUpEnum type) {
+    public AbstractPowerUp createPowerUp(PowerUpEnum type, PlayerModel playerModel) {
         switch (type) {
             case SPEED_BOOST:
-                return new SpeedPowerUp(screen);
+                return new SpeedPowerUp(screen, playerModel);
             case DAMAGE_BOOST:
-                return new DamagePowerUp(screen);
+                return new DamagePowerUp(screen, playerModel);
             default:
                 throw new IllegalArgumentException("Invalid power-up type: " + type);
         }
