@@ -33,7 +33,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.zoom = 2.5f;
+        camera.zoom = 4.0f;
         viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, camera);
         viewport.apply();
 
@@ -55,7 +55,10 @@ public class MainMenuScreen implements Screen {
         TextButton startButton = new TextButton("Start", skin);
         TextButton upgradeButton = new TextButton("Upgrades", skin);
         TextButton optionsButton = new TextButton("Options", skin);
+        TextButton instructionsButton = new TextButton("How To Play", skin);
+        TextButton creditsButton = new TextButton("Credits", skin);
         TextButton quitButton = new TextButton("Quit", skin);
+        
 
         // Button to start a new game
         startButton.addListener(new ChangeListener() {
@@ -83,6 +86,20 @@ public class MainMenuScreen implements Screen {
             }
         });
 
+        instructionsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new InstructionScreen(game));
+            }
+        });
+
+        creditsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new CreditsScreen(game));
+            }
+        });
+
         quitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -97,11 +114,18 @@ public class MainMenuScreen implements Screen {
         table.row();
         table.add(optionsButton).pad(10);
         table.row();
+        table.add(instructionsButton).pad(10);
+        table.row();
+        table.add(creditsButton).pad(10);
+        table.row();
         table.add(quitButton).pad(10);
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        // To initiate the the stage for MainMenuScreen shows in the MainMenuScreen
+        Gdx.input.setInputProcessor(stage);
+    }
 
     @Override
     public void render(float delta) {
@@ -124,7 +148,10 @@ public class MainMenuScreen implements Screen {
     public void resume() {}
 
     @Override
-    public void hide() {}
+    public void hide() {
+        // To ensure that the MainMenuScreen stage does not handle input when it is not shown
+        Gdx.input.setInputProcessor(null);
+    }
 
     @Override
     public void dispose() {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
+import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 
 /**
  * Class representing the player in the game.
@@ -24,14 +25,22 @@ public class PlayerModel extends Sprite implements IEntity{
 
     public int health = 70;
     public int maxHealth = 100;
+
+    public int attackDamage = 10;
+
     public float movementSpeed = 4;
     public int healthRegen = 0;
+
+
+
+    private PlayerModelCollisionHandler playerCollisionHandler;
 
     public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
-
+        
+        playerCollisionHandler = new PlayerModelCollisionHandler();
         // Set the player's health, speed and attack damage
         definePlayer();
     }
@@ -105,6 +114,7 @@ public class PlayerModel extends Sprite implements IEntity{
      */
     public void setHealth(int deltaHealth) {
         this.health += deltaHealth;
+
     }
 
     /**
@@ -127,38 +137,43 @@ public class PlayerModel extends Sprite implements IEntity{
         return this.maxHealth;
     }
 
+    
+
     public void setMaxHealth(int deltaMaxHealth) {
         this.maxHealth += deltaMaxHealth;
     }
 
+    public int getAttackDamage() {
+        return this.attackDamage;
+    }
+
+    public void setAttackDamage(int deltaAttackDamage) {
+        this.attackDamage += deltaAttackDamage;
+    }
+
+    //TODO: Implement collison between player and enemy
+    public void handleCollision() {
+        //setHealth(-10);
+
+        playerCollisionHandler.clearBodiesToRemove();
+    }
 
     @Override
     public void update(float dt) {
-        // TODO 
+        //TODO
     }
 
     @Override
     public void dispose() {
-        // TODO 
-    }
-
-
-    public void setHealthRegen(int regenValue) {
-        this.healthRegen = regenValue;
+        // TODO
     }
 
     public int getHealthRegen() {
-        return this.healthRegen;
+        return healthRegen;
     }
 
-    public void updateHealthWithRegen() {
-        // Increase player health by health regeneration value
-        this.health += this.healthRegen;
-        // Ensure player health doesn't exceed maximum health
-        if (this.health > this.maxHealth) {
-            this.health = this.maxHealth;
-        }
+    public void setHealthRegen(int healthRegen) {
+        this.healthRegen = healthRegen;
     }
-
 }
 

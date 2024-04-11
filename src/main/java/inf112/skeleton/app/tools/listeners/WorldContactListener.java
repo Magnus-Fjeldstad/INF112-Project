@@ -19,11 +19,13 @@ public class WorldContactListener implements ContactListener {
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private FireballCollisionHandler fireballCollisionHandler;
     private EnemyCollisionHandler enemyCollisionHandler;
+    private PlayerModelCollisionHandler playerCollisionHandler;
 
-    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler) {
+    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler, PlayerModelCollisionHandler playerCollisionHandler) {
         this.powerUpCollisionHandler = powerUpCollisionHandler;
         this.fireballCollisionHandler = fireballCollisionHandler;
         this.enemyCollisionHandler = enemyCollisionHandler;
+        this.playerCollisionHandler = playerCollisionHandler;
     }
 
     @Override
@@ -45,6 +47,10 @@ public class WorldContactListener implements ContactListener {
         if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY) ) {
             enemyCollisionHandler.handleCollision(contact);
             fireballCollisionHandler.handleCollision(contact);
+        }
+
+        if( isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_ENEMY) ) {
+            playerCollisionHandler.handleCollision(contact);
         }
 
         // Add more conditions here to delegate to other handlers...

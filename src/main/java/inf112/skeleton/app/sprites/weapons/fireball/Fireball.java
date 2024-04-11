@@ -1,6 +1,7 @@
 package inf112.skeleton.app.sprites.weapons.fireball;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,7 +20,9 @@ public class Fireball extends Sprite implements IEntity {
     private World world;
     public Body b2body;
     private float x, y;
+
     private TextureRegion fireballTexture;
+    private Texture fireballImage;
 
     public int damage = 10;
 
@@ -32,9 +35,19 @@ public class Fireball extends Sprite implements IEntity {
         this.world = screen.getWorld();
         this.x = screen.getPlayerModel().b2body.getPosition().x;
         this.y = screen.getPlayerModel().b2body.getPosition().y;
-        fireballTexture = new TextureRegion(screen.getAtlas().findRegion("SkeletonEnemy"), 2, 2, 14, 18); // Assuming SkeletonEnemy is the region name
-        setBounds(x, y, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+        
+        // Load the fireball.png texture
+        fireballImage = new Texture("fireball.png"); // Ensure this path is correct
+        
+        // Create a TextureRegion from the loaded texture
+        fireballTexture = new TextureRegion(fireballImage);
+        
+        float scalingFactor = 0.08f;
+        setBounds(0, 0, fireballImage.getWidth() / GameCreate.PPM * scalingFactor, fireballImage.getHeight() / GameCreate.PPM * scalingFactor);
+        
+        // Set the TextureRegion to this sprite
         setRegion(fireballTexture);
+        
         defineEntity();
     }
 
@@ -80,8 +93,8 @@ public class Fireball extends Sprite implements IEntity {
      */
     public int getDamage() {
         return damage;
-    }   
-
+    }  
+    
     /**
      * Updates the position of the fireball
      * @param dt

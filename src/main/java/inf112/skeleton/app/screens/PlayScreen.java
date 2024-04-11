@@ -1,6 +1,7 @@
 package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -18,11 +20,11 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.controller.KeyHandler;
 import inf112.skeleton.app.scenes.Hud;
 import inf112.skeleton.app.tools.B2WorldCreator;
+import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 import inf112.skeleton.app.tools.listeners.WorldContactListener;
 import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
 import inf112.skeleton.app.sprites.weapons.fireball.FireballManager;
 import inf112.skeleton.app.sprites.enemies.AbstractEnemy;
-import inf112.skeleton.app.sprites.enemies.AbstractEnemyFactory;
 import inf112.skeleton.app.sprites.enemies.EnemyManager;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
@@ -59,16 +61,18 @@ public class PlayScreen implements Screen {
     private PlayerView playerView;
     private ShapeRenderer shapeRenderer;
 
-
     // Variables for keyhandler
     private KeyHandler keyHandler;
 
     // Array of enemies
     private Array<AbstractEnemy> enemies;
 
+    // Variables for powerups, weapons and enemies
     private PowerUpManager powerUpManager;
     private FireballManager fireballManager;
     private EnemyManager enemyManager;
+
+    private PlayerModelCollisionHandler playerCollisionHandler;
 
     private WorldContactListener worldContactListener;
 
@@ -105,7 +109,7 @@ public class PlayScreen implements Screen {
         player = new PlayerModel(this);
         playerView = new PlayerView(this, player);
         shapeRenderer = new ShapeRenderer();
-        
+
         // Creates a KeyHandler for the player
         keyHandler = new KeyHandler(player, game, this);
 
@@ -114,9 +118,12 @@ public class PlayScreen implements Screen {
         fireballManager = new FireballManager(this);
         enemyManager = new EnemyManager(this);
 
+        playerCollisionHandler = new PlayerModelCollisionHandler();
+
         enemies = enemyManager.getEnemies();
-    
-        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(), fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler());
+
+        worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(),
+                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
         world.setContactListener(worldContactListener);
     }
 
@@ -125,13 +132,13 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Updated the game
+     * Updates the game
      * 
      * @param dt is the games "clock" the game updates based on the
      *           deltatime
      */
     public void update(float dt) {
-        
+
         world.step(1 / 60f, 6, 2);
         keyHandler.handleInput(dt);
 
@@ -144,7 +151,7 @@ public class PlayScreen implements Screen {
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
-        
+
         // updates the gamecam
         gamecam.position.x = player.b2body.getPosition().x;
         gamecam.position.y = player.b2body.getPosition().y;
@@ -154,9 +161,6 @@ public class PlayScreen implements Screen {
         gamecam.update();
         renderer.setView(gamecam);
     }
-
-
-
 
     @Override
     public void render(float delta) {
@@ -173,7 +177,6 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         playerView.draw(game.batch);
-       
 
         for (Fireball fireball : fireballManager.getFireball()) {
             fireball.draw(game.batch);
@@ -183,11 +186,10 @@ public class PlayScreen implements Screen {
             enemy.draw(game.batch);
         }
 
-        for(AbstractPowerUp powerUp : powerUpManager.getPowerUps()){
+        for (AbstractPowerUp powerUp : powerUpManager.getPowerUps()) {
             powerUp.draw(game.batch);
         }
 
-       
         game.batch.end();
 
         shapeRenderer.setProjectionMatrix(gamecam.combined);
@@ -199,8 +201,8 @@ public class PlayScreen implements Screen {
         hud.stage.draw();
     }
 
-    //To implement field variable
-    public Vector3 getCursorPosition(){
+    // To implement field variable
+    public Vector3 getCursorPosition() {
         Vector3 cursorPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         return cursorPos;
     }
@@ -238,13 +240,20 @@ public class PlayScreen implements Screen {
         return this.player;
     }
 
+    /**
+     * Sets the crosshair for the screen
+     */
     private void setCrosshairCursor() {
         Gdx.graphics.setSystemCursor(SystemCursor.Crosshair);
     }
 
+    /**
+     * @return TextureAtlas atlas
+     */
     public TextureAtlas getAtlas() {
         return atlas;
     }
+    
 
     /**
      * @return TextureAtlas enemyAtlas
@@ -287,5 +296,13 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        atlas.dispose();
+        enemyAtlas.dispose();
+        fireballAtlas.dispose();
+        gamecam = null;
+        gamePort = null;
+        shapeRenderer.dispose();
     }
+
+
 }
