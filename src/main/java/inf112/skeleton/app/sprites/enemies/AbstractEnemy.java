@@ -23,12 +23,22 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
     public int attackDamage;
     public float movementSpeed;
 
+    /**
+     * Constructor for AbstractEnemy
+     * @param screen
+     * @param startingX
+     * @param startingY
+     * @param health
+     * @param movementSpeed
+     * @param attackDamage
+     * @param region
+     */
     public AbstractEnemy(PlayScreen screen, float startingX, float startingY, int health, float movementSpeed, int attackDamage, TextureAtlas.AtlasRegion region) {
         super(region); // Initialize the Sprite with the given region
         this.screen = screen;
         this.world = screen.getWorld();
         setPosition(startingX, startingY);
-        defineEnemy();
+        defineEnemy(startingX, startingY);
         this.health = health;
         this.movementSpeed = movementSpeed;
         this.attackDamage = attackDamage;
@@ -38,9 +48,9 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
     /**
      * Defines the box 2d body of the 
      */   
-    private void defineEnemy() {
+    private void defineEnemy(float startingX, float startingY) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / GameCreate.PPM, 32/ GameCreate.PPM);
+        bodyDef.position.set(startingX / GameCreate.PPM, startingY/ GameCreate.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         b2body = screen.getWorld().createBody(bodyDef);
 
@@ -70,14 +80,25 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
         return this.health;
     }
 
+    /**
+     * Returns the b2body of the AbstractEnemy
+     * @return
+     */
     public Body getBody() {
         return this.b2body;
     }
 
+    /**
+     * Sets the health of an AbstractEnemy
+     * @param deltaHealt
+     */
     public void setHealth(int deltaHealt) {
         this.health += deltaHealt;
     }
     
+    /**
+     * Removes the b2body from the screens world
+     */
     public void dispose() {
         world.destroyBody(b2body);
     }
