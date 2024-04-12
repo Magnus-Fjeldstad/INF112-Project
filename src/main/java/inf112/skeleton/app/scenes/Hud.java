@@ -19,12 +19,12 @@ public class Hud implements Disposable{
     private Integer worldTimer;
     private Integer score;
 
-    Label countdownLabel;
-    Label scoreLabel;
-    Label timeLabel;
-    Label levelLabel;
-    Label roundLabel;
-    Label gameNameLabel;
+    private Label countdownLabel;
+    private Label scoreLabel;
+    private Label timeLabel;
+    private Label levelLabel;
+    private Label roundLabel;
+    private Label gameNameLabel;
 
     public Hud(SpriteBatch sb) {
         worldTimer = 300;

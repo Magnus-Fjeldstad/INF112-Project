@@ -1,12 +1,9 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import inf112.skeleton.app.screens.MainMenuScreen;
-import inf112.skeleton.app.screens.PlayScreen;
+
 
 public class GameCreate extends Game {
 	public SpriteBatch batch;

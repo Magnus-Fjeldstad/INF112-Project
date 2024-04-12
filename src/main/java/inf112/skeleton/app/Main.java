@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
         cfg.setForegroundFPS(60);
-		cfg.setTitle("GAME-TEST");
+		cfg.setTitle("HØYTEK: NIGHTFALL SURVIVORS");
         new Lwjgl3Application(new GameCreate(), cfg);
     }
 }

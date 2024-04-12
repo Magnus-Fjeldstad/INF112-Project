@@ -2,14 +2,13 @@ package inf112.skeleton.app.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,53 +18,56 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import inf112.skeleton.app.GameCreate;
 
-public class InstructionScreen implements Screen{
+public class InstructionScreen implements Screen {
 
-    GameCreate game;
-    Stage stage;
+    private GameCreate game;
+    private Stage stage;
     private Skin skin;
-    OrthographicCamera camera;
-    Viewport viewport;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+
+    private Texture texture;
+    private Image image;
+
 
     public InstructionScreen(GameCreate game) {
         this.game = game;
-        
+
         camera = new OrthographicCamera();
-        camera.zoom = 2.5f;
+        camera.zoom = 4.5f;
         viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, camera);
         viewport.apply();
-        
+
         stage = new Stage(viewport, game.batch);
         Gdx.input.setInputProcessor(stage);
-        
+
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("glassy-ui.atlas"));
         skin = new Skin(Gdx.files.internal("glassy-ui.json"), atlas);
-        
-        BitmapFont font = new BitmapFont();
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = font;
-        style.fontColor = Color.WHITE;
 
-        // Create a Label with text for the screen
-        Label creditsLabel = new Label("How to Play:\n", style);
-        creditsLabel.setPosition(100, 200); // Position on the stage.
-        creditsLabel.setSize(400, 300); // Assuming you want to give it some size.
+        // Load the texture
+        texture = new Texture(Gdx.files.internal("instruksjon.png"));
+        // Create an Image actor with the texture
+        image = new Image(texture);
+        // Set the position of the image (adjust as needed)
+        image.setPosition(-500, -500);
+        // Add the image to the stage
+        stage.addActor(image);
 
-        // Add Label to the Stage
-        stage.addActor(creditsLabel);
-        
         createLayout();
-        
+
     }
 
     private void createLayout() {
         Table table = new Table();
         table.setFillParent(true); // Make the table fill the stage
         stage.addActor(table);
-
+    
         // Add button to the table
         TextButton backButton = new TextButton("Back", skin);
-
+    
+        // Set the size of the button (adjust as needed)
+        backButton.setSize(100, 50); // Width, Height
+    
         // Back button to return to main menu
         backButton.addListener(new ChangeListener() {
             @Override
@@ -73,10 +75,11 @@ public class InstructionScreen implements Screen{
                 game.setScreen(new MainMenuScreen(game));
             }
         });
-
-        table.add(backButton).pad(10);
-    }
     
+        // Add the button to the table with padding
+        table.add(backButton).padBottom(-800); // Move the button further down
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -98,14 +101,10 @@ public class InstructionScreen implements Screen{
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pause'");
     }
 
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resume'");
     }
 
     @Override
@@ -117,6 +116,7 @@ public class InstructionScreen implements Screen{
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        texture.dispose();
     }
-    
+
 }
