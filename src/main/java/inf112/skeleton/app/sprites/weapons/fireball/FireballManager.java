@@ -4,12 +4,11 @@ package inf112.skeleton.app.sprites.weapons.fireball;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.FireballCollisionHandler;
-import inf112.skeleton.app.sprites.weapons.fireball.FireballFactory;
+import inf112.skeleton.app.tools.sound.SoundManager;
 
 import java.util.Iterator;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,6 +24,8 @@ public class FireballManager {
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 2;
     private PlayScreen screen;
+    private SoundManager soundManager;
+    
 
     public FireballManager(PlayScreen screen) {
         this.fireballs = new Array<>();
@@ -32,6 +33,7 @@ public class FireballManager {
         this.screen = screen;
         this.fireballFactory = new FireballFactory(screen);
         fireballCollisionHandler = new FireballCollisionHandler();
+        this.soundManager = new SoundManager();
     }
     
     public void update(float dt) {
@@ -40,8 +42,7 @@ public class FireballManager {
         if (timeSinceLastPowerUp >= SPAWN_INTERVAL) {
             createConeFireball();
             timeSinceLastPowerUp = 0;
-            Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_shoot.ogg"));
-            sound.play(0.5f);
+            soundManager.fireball_shoot.play();
         }
 
         for (Fireball fireball : fireballs) {
