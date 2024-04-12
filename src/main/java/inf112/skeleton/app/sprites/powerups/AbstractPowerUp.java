@@ -15,20 +15,25 @@ import inf112.skeleton.app.GameCreate;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
     protected PlayScreen screen;
+    protected PlayerModel playerModel;
     private World world;
     public Body b2body;
     private int startingX;
     private int startingY;
-    private static final float powerUpDuration = 5;
+    protected boolean isActive = false;
+    protected boolean isRemovable = false;
+    private float powerUpDuration = 10;
 
-    public AbstractPowerUp(PlayScreen screen, TextureAtlas.AtlasRegion region) {
+    public AbstractPowerUp(PlayScreen screen, PlayerModel playerModel, TextureAtlas.AtlasRegion region) {
         super(region);
         this.world = screen.getWorld(); 
         this.screen = screen;
+        this.playerModel = playerModel;
         randomCoordinates();
         definePowerUp();
         setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
@@ -42,10 +47,19 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         startingY = rand.nextInt(32, 200);
     }
 
-    protected abstract void removePowerUp();
+    protected abstract void removePowerUpEffect();
 
-    protected abstract void applyPowerUp();
+    protected abstract void applyPowerUpEffect();
 
+    protected void removePowerUp(){
+        removePowerUpEffect();
+    }
+
+    protected void applyPowerUp(){
+        applyPowerUpEffect();
+        isActive = true;
+        dispose();
+    }
 
     private void definePowerUp(){
         BodyDef bodyDef = new BodyDef();
@@ -66,11 +80,15 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     };
 
 
+
     public void update(float dt) {
-        // this.powerUpDuration -= dt;
-        // if (this.powerUpDuration <= 0) {
-        //     removePowerUp();
-        // }
+        if(isActive){
+            powerUpDuration -= dt;
+            if(powerUpDuration <= 0){
+                removePowerUp();
+                isRemovable = true;
+            }
+        }
     }
 
     public void dispose() {

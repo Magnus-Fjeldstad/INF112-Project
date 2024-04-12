@@ -4,24 +4,33 @@ package inf112.skeleton.app.sprites.powerups;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
+import inf112.skeleton.app.sprites.player.PlayerModel;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
+import java.util.Iterator;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 
 //This class is responsible for spawning powerups in the game
 public class PowerUpManager {
     private PowerUpFactory powerUpFactory;
-    private Array<AbstractPowerUp> powerUps;
-    private Array<Body> powerUpsToRemove;
+    private PlayerModel playerModel;
+    private ArrayList<AbstractPowerUp> powerUps;
+    private ArrayList<AbstractPowerUp> activePowerUps;
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
-    private static final float SPAWN_INTERVAL = 2;
+    private static final float SPAWN_INTERVAL = 5;
+    private PlayScreen screen;
 
-    public PowerUpManager(PlayScreen screen) {
-        this.powerUps = new Array<>();
-        this.powerUpsToRemove = new Array<>();
+    public PowerUpManager(PlayScreen screen, PlayerModel playerModel) {
+        this.powerUps = new ArrayList<AbstractPowerUp>();
+        this.activePowerUps = new ArrayList<AbstractPowerUp>();
+        this.playerModel = playerModel;
+        this.screen = screen;
         this.powerUpFactory = new PowerUpFactory(screen);
         this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }
@@ -35,23 +44,32 @@ public class PowerUpManager {
             timeSinceLastPowerUp = 0;
         }
 
-        for (AbstractPowerUp powerUp : powerUps) {
+        // Count down the duration of the active power-ups. No need to update the power ups that hasn't been touched
+        Iterator<AbstractPowerUp> iterator = activePowerUps.iterator();
+        while (iterator.hasNext()) {
+            AbstractPowerUp powerUp = iterator.next();
             powerUp.update(dt);
+            if (powerUp.isRemovable) {
+                iterator.remove();
+            }
         }
+
+        System.out.println(playerModel.movementSpeed);
 
         handleCollision();
 
     }
 
     private void handleCollision() {
-        for (AbstractPowerUp powerUp : powerUps) {
+        Iterator<AbstractPowerUp> iterator = powerUps.iterator();
+        while (iterator.hasNext()) {
+            AbstractPowerUp powerUp = iterator.next();
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
-                powerUps.removeValue(powerUp, false);
-                powerUpsToRemove.add(powerUp.b2body);
-                powerUp.dispose();
+                powerUp.applyPowerUp();
+                activePowerUps.add(powerUp);
+                iterator.remove();
             }
         }
-
         powerUpCollisionHandler.clearBodiesToRemove();
     }
     
@@ -60,9 +78,9 @@ public class PowerUpManager {
         int i = rand.nextInt(2);
         switch (i) {
             case 0:
-                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST);
+                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel);
             case 1:
-                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST);
+                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel);
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }
@@ -72,7 +90,7 @@ public class PowerUpManager {
         return powerUpCollisionHandler;
     }
 
-    public Array<AbstractPowerUp> getPowerUps() {
+    public ArrayList<AbstractPowerUp> getPowerUps() {
         return powerUps;
     }
 
