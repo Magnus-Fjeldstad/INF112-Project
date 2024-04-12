@@ -87,7 +87,9 @@ Nedenfor er de samme MVP-kravene vi oppførte i begynnelsen av prosjektet. Hitti
 
 10. Når spilleren mister alle livene sine, vises en skjerm som viser at spillet er over og en mulighet for å starte spillet på nytt.
 
-Vi har hatt en stor framdrift på spillet vårt i løpet av den siste tiden og har kommet et godt stykke forbi MVP. Vi har nå en spiller som kan bevege seg rundt på skjermen, angripe fiender og ta skade. Vi har laget en startskjerm og en pausemeny, i tilleg er det blitt laget en upgradescreen, som vi kan lagge til effekter hvor man oppgraderer egenskapene til brukeren. 
+Vi har hatt en stor framdrift på spillet vårt i løpet av den siste tiden og har kommet et godt stykke forbi MVP. Vi har nå en spiller som kan bevege seg rundt på skjermen, angripe fiender og ta skade. Vi har laget en startskjerm og en pausemeny, i tilleg er det blitt laget en upgradescreen, som vi kan lagge til effekter hvor man oppgraderer egenskapene til brukeren.
+
+Power ups er blitt lagt til i spillet nå. Disse spawner vilkårlige steder på mappet, og gir spilleren en midlertidig speed boost. 
 
 VI har opprettet klasser for å håndtere kollisjoner mellom ulike komponenter i spillet. Disse kollisjonenen brukes til å håndtere år komponentene tar liv fra hverandre. Brukeren kan nå ta damage fra enemies.
 
@@ -98,15 +100,20 @@ VI har opprettet klasser for å håndtere kollisjoner mellom ulike komponenter i
 
 
 ## Bugs
-- fylle in  her
+- diagonal bevegelse går raskere en horisonatal og vertikal bevegelse. Dersom du beveger deg skått, altså trykker "w" og "d" samtidig, vil du bevege deg raskere enn om du trykker "w" eller "d" alene.
+
+- Spilleren kan bli "trappet" av enemies. Spilleren spawner i venstre nedre hjørne av spillet. Dersom ha ikke beveger seg de første sekundene vil han bli omringet av enemies og sitte fast i hjørnet. Dette vil fikses på ved å endre spawn-location, men er ikke noe vi prioterer med det første.
+
 
 
 ## Prioriteringer fremover
-- Framover ønsker vi å fokusere på hvordan spillet kan utvikle seg videre i selve spillfasen. Vi ønsker å legge til flere "waves" med enemies, med en økende vanskelighetsgrad. Vi ønsker også å legge til funksjoner for powerups til player. Powerups er vi allerede litt i gang med, vi har fått til at de spawner, men ikke gitt dem effekt på spilleren enda. 
+- Framover ønsker vi å fokusere på hvordan spillet kan utvikle seg videre i selve spillfasen. Vi ønsker å legge til flere "waves" med enemies, med en økende vanskelighetsgrad. 
 
-Vi ønsker å lage en ny screen for upgrades, hvor spilleren kan velge mellom forskjellige oppgraderinger.
+Vi har lagd en upgradescreen hvor man skla kunne oppgradere spilleren. Funksjonaliteten for å utvikle oppgraderingen 
 
-Vi har snakket om å lage en slags score for brukeren, som teller poeng ettersom vi dreper enemies. Det er mulig i ønsker å lage en animasjon mellom waves av enemies som forklarer hvilken "runde" spillerer er på. 
+Vi har snakket om å lage en slags score for brukeren, som teller poeng ettersom vi dreper enemies. Det er mulig i ønsker å lage en animasjon mellom waves av enemies som forklarer hvilken "runde" spillereren er på. 
+
+Vi ønsker å jobber mer med textures i programet. Per nå mangler blant annet powerups en egen tekstur, og bruker samme som enemies. Videre ønsker vi også å forstørre mappet vårt. Dette vil nok medføre at vi må gjøre et par endringer i de andre klassene for å tilpasse et større map.
 
 Ellers må vi fokusere på testing og endringer i kodestruktur.
 
@@ -156,15 +163,16 @@ Fremover vil det bli lagt fokus på følgende
 
 Dette har vi fisket siden sist:
 
-- Implementert en tekstur til spillerkarakteren med enkle animasjoner
+- Lydeffekter
 
-- Et rammeverk for å legge fiender til i spillet
+- Powerups som gir spilleren en midlertidig speed boost
 
-- Spillkarakteren kan angripe med en "fireball" som har enkel fysikk og kollisjoner
+- Upgradescreen
 
-- Lagt til et object-layer i levelet for å håndtere entities og kollisjoner
+- Kollisjonshåndtering som gjør at vi kan ta damage fra hverandre
+
 
 
 ## Klassediagram
-![Klassediagram](klassediagram.png)
+![Klassediagram](klassediagram3.png)
 
