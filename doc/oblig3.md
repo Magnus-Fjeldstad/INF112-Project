@@ -123,36 +123,36 @@ Fremover vil det bli lagt fokus på følgende
 
 
 
-1. Som spiller ønsker jeg at fire balls gjør skade på enemy
-- Akeptansekriterer
-    - Fireball skal gjøre skade på enemy som er satt til en bestemt integer
-    - Ved kollisjon med fiende skal tilsvarende integer som fireballen skader bli trukket fra enemy sine health points
-    - Ved enemy hit points lik null skal enemy dø, og bli fjernet fra spillbrettet
+1. Waves av enemies som representerer hver runde
+- Akseptanserkriterier
+    - Spilleren skal møte en ny wave av enemies etter at alle enemies i forrige wave er drept
+    - Antall enemies i hver wave skal øke for hver runde
+    - Enemies skal ha en økende vanskelighetsgrad for hver runde
+- Arbeidoppaver
+    - Lage en metode som teller antall drepte fiender.
+    - Når disse fiendene er drept, skal en ny wave av enemies spawne
+    - Endre enemies sine egenskaper for hver wave.
 
-- Arbeidsoppgaver
-    - Lage en metode som fjerner substraherer x antall hit points som en fire ball utgjør i skade ved kollisjon
-
-2. Som spiller ønsker jeg å ha hitpoints som minker når jeg tar skade
+2. Oppgraderingsmeny
 - Akseptanserkriterer
-    - Spiller skal ha hit points som vises i form av health-bar på skjermen
-    - Hit points oppdateres i henhold til skade spilleren tar
-    - Spilleren skal dø ved hit points lik null
+   - Spilleren skal mellom hver wave, få opp en meny som viser ulike oppgraderinger
+   - Oppgraderinsmenyen kan brukes av spilleren for å få permanente oppgraderinger
+    - Oppgraderingene skal kunne forbedre spillerens egenskaper, som for eksempel angrepskraft, helse og hastighet.
+- Arbeidsoppgaver
+    - Lage en metode som kan kalles på fra UpgradeScreen som oppgraderer spillerens egenskaper
+    - Lage en metode som oppdaterer spillerens egenskaper i henhold til oppgraderingene
+    - Lage en metode som åpner upgrademenyen basert på waves.
+
+3. Enemies skal kunne ta liv av spilleren.
+- Akseptanserkriterier
+    - Spilleren skal miste liv dersom han blir truffet av en enemy
+    - Spilleren skal kunne dø dersom han mister alle livene sine
 
 - Arbeidsoppgaver
-    - Legge inn healthbar som viser hit points til spiller
-    - Angi at hvis healt points er mindre eller lik null så dør spilleren og programmet sendes til "Game Over" skjerm
-    - Lage en metode som oppdateres i henhold til hit point
+    - Lage en metode som sjekker om spilleren har kollidert med en enemy
+    - Metoden skal trekke fra liv fra spilleren dersom han har kollidert med en enemy
+    - Metoden skal sjekke om spilleren har mistet alle livene sine
 
-3. Som spiller ønsker jeg å få opp en pausemeny ved å trykke på "ESCAPE" mens jeg spiller
-- Akseptanskriterer
-    - Ved å trykke på "ESCAPE" fra PlayScreen, skal man bli tatt til en Pause Screen
-    - Pause Screen som er interactive med knapper som "Continue" og "Exit" til å begynne med
-    - 
-
-- Arbeidsoppgaver
-    - Lage en key handler som kaller på en metode i PlayScreen
-    - Metoden i Play Screen skal kalle på at screen som viser blir PauseScreen
-    - Legge til knapper "Continue" og "Exit" som gjør at spiller enten blir sendt tilbake til PlayScreen, eller sendt ut til StartScreen
 
 
 ## Styring av spillkarakter
