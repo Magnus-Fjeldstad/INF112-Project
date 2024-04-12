@@ -54,7 +54,6 @@ public class MainMenuScreen implements Screen {
         // Adds buttons to the table
         TextButton startButton = new TextButton("Start", skin);
         TextButton upgradeButton = new TextButton("Upgrades", skin);
-        TextButton optionsButton = new TextButton("Options", skin);
         TextButton instructionsButton = new TextButton("How To Play", skin);
         TextButton creditsButton = new TextButton("Credits", skin);
         TextButton quitButton = new TextButton("Quit", skin);
@@ -76,13 +75,6 @@ public class MainMenuScreen implements Screen {
                 World world = new World(new Vector2(0, 0), true); // Example
                 PlayerModel playerModel = new PlayerModel(new PlayScreen(game));
                 game.setScreen(new UpgradeMenuScreen(game, playerModel));
-            }
-        });
-
-        optionsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // Handle option action
             }
         });
 
@@ -111,8 +103,6 @@ public class MainMenuScreen implements Screen {
         table.add(startButton).pad(10);
         table.row(); // Move to the next row
         table.add(upgradeButton).pad(10);
-        table.row();
-        table.add(optionsButton).pad(10);
         table.row();
         table.add(instructionsButton).pad(10);
         table.row();
