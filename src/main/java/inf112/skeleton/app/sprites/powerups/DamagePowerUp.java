@@ -14,11 +14,11 @@ public class DamagePowerUp extends AbstractPowerUp {
     }
 
     protected void removePowerUpEffect() {
-        // Remove the powerup from the game
+        playerModel.attackDamage -= 5;
     }
 
     protected void applyPowerUpEffect() {
-        // Apply the powerup to the player
+        playerModel.attackDamage += 5;
     }
 
 }   
