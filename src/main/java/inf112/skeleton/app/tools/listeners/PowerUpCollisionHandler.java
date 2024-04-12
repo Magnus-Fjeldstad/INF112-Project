@@ -1,13 +1,12 @@
 package inf112.skeleton.app.tools.listeners;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.utils.Array;
 import inf112.skeleton.app.GameCreate;
 
-public class PowerUpCollisionHandler extends CollisionHandler{
+public class PowerUpCollisionHandler extends CollisionHandler {
     private Array<Body> bodiesToRemove;
 
     public PowerUpCollisionHandler() {
@@ -17,7 +16,7 @@ public class PowerUpCollisionHandler extends CollisionHandler{
     public Array<Body> getBodiesToRemove() {
         return bodiesToRemove;
     }
-    
+
     public void clearBodiesToRemove() {
         bodiesToRemove.clear();
     }

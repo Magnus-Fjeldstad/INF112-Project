@@ -1,6 +1,5 @@
 package inf112.skeleton.app.tools.listeners;
 
-
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -8,12 +7,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import inf112.skeleton.app.GameCreate;
-import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
-import inf112.skeleton.app.sprites.weapons.fireball.Fireball;
-
-
-
-
 
 public class WorldContactListener implements ContactListener {
     private PowerUpCollisionHandler powerUpCollisionHandler;
@@ -21,7 +14,9 @@ public class WorldContactListener implements ContactListener {
     private EnemyCollisionHandler enemyCollisionHandler;
     private PlayerModelCollisionHandler playerCollisionHandler;
 
-    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler, FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler, PlayerModelCollisionHandler playerCollisionHandler) {
+    public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler,
+            FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler,
+            PlayerModelCollisionHandler playerCollisionHandler) {
         this.powerUpCollisionHandler = powerUpCollisionHandler;
         this.fireballCollisionHandler = fireballCollisionHandler;
         this.enemyCollisionHandler = enemyCollisionHandler;
@@ -32,24 +27,26 @@ public class WorldContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
-      
-        // Delegate to PowerUpCollisionHandler if a power-up is involved in the collision
-        if( isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP) ) {
+
+        // Delegate to PowerUpCollisionHandler if a power-up is involved in the
+        // collision
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_POWERUP)) {
             powerUpCollisionHandler.handleCollision(contact);
         }
 
-        // Delegate to FireballCollisionHandler if a fireball is involved in the collision
+        // Delegate to FireballCollisionHandler if a fireball is involved in the
+        // collision
         // Replace Fireball.class with the actual class of your fireballs
-        if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS) ) {
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_WALLS)) {
             fireballCollisionHandler.handleCollision(contact);
         }
 
-        if( isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY) ) {
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_FIREBALL, GameCreate.CATEGORY_ENEMY)) {
             enemyCollisionHandler.handleCollision(contact);
             fireballCollisionHandler.handleCollision(contact);
         }
 
-        if( isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_ENEMY) ) {
+        if (isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_ENEMY)) {
             playerCollisionHandler.handleCollision(contact);
         }
 
@@ -61,7 +58,8 @@ public class WorldContactListener implements ContactListener {
         Fixture fixB = contact.getFixtureB();
         return (fixA.getUserData() != null && fixA.getUserData().equals(category1) && fixB.getUserData() != null
                 && fixB.getUserData().equals(category2)) ||
-                (fixA.getUserData() != null && fixA.getUserData().equals(category2) && fixB.getUserData() != null && fixB.getUserData().equals(category1));
+                (fixA.getUserData() != null && fixA.getUserData().equals(category2) && fixB.getUserData() != null
+                        && fixB.getUserData().equals(category1));
     }
 
     @Override
