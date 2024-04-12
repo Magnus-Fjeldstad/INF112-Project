@@ -49,7 +49,6 @@ public class PowerUpManager {
             }
         }
 
-        System.out.println(playerModel.movementSpeed);
 
         handleCollision();
 

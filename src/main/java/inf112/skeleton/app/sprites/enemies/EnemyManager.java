@@ -1,12 +1,12 @@
 package inf112.skeleton.app.sprites.enemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl3.audio.Ogg.Sound;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.EnemyCollisionHandler;
+import inf112.skeleton.app.tools.sound.SoundManager;
 
 public class EnemyManager {
     private Array<AbstractEnemy> enemies;
@@ -17,6 +17,9 @@ public class EnemyManager {
 
     private EnemyCollisionHandler enemyCollisionHandler;
     private AbstractEnemyFactory enemyFactory;
+    private SoundManager soundManager;
+
+
 
     /**
      * Constructor for EnemyManager
@@ -26,6 +29,7 @@ public class EnemyManager {
         this.enemies = new Array<>();
         this.enemiesToRemove = new Array<>();
         this.enemyFactory = new AbstractEnemyFactory(screen);
+        this.soundManager = new SoundManager();
 
         this.screen = screen;
         
@@ -56,15 +60,13 @@ public class EnemyManager {
             if (enemyCollisionHandler.getBodiesToRemove().contains(enemy.b2body, true)) {
                 if (enemy.getHealth() > 0) {
                     enemy.setHealth(-screen.getPlayerModel().getAttackDamage());
-                    Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/fireball_hit.ogg"));
-                    sound.play();
+                    soundManager.enemy_hit.play();
                 }
                 else {
                     enemies.removeValue(enemy, false);
                     enemiesToRemove.add(enemy.b2body);
                     enemy.dispose();
-                    Sound sound = (Sound) Gdx.audio.newSound(Gdx.files.internal("sounds/death.ogg"));
-                    sound.play();
+                    soundManager.death.play();
                 }
             }
         }
