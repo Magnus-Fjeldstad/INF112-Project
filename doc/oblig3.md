@@ -172,7 +172,9 @@ Dette har vi fisket siden sist:
 - Kollisjonshåndtering som gjør at vi kan ta damage fra hverandre
 
 
+## Kodestruktur
 
+Vi har valgt å benytte oss av en MVC struktur. Hver entitet i spillet blir laget i factories untatt PlayerModel, dette fordi det er kun en instans av player'en. Vi har restrukturert koden til å benytte Managers, disse er ment for å adskille instansiering av entiteter og oppdateringer på dem ila game loopen. Hver entitet som er collideble (kan kollidere med andre entiteter) har fått en collisionhandler til seg. Dette har vi valgt for å gjøre det enklere å kontrollere kollison, samt ved brukt av SOLID prinsippet der klassene skal gjøre mest mulig singulære ting. Vi prøvde å samle alt i en klasse, men det ble rotete, dermed var SOLID den beste løsningen. De fleste av klassene samles i PlayScreen.java. Denne klassen holder styr på alle entiter, samt der main game loop blir håndert. I update() og render() blir logikken og visningen oppdatert etterhvert som tiden går. Med den nye strukturen vår har det blitt enklere å implementere nye features samt å fikse bugs som vi hadde tidligere.
 ## Klassediagram
 ![Klassediagram](klassediagram3.png)
 
