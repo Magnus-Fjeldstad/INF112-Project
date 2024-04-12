@@ -17,12 +17,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 public class Fireball extends Sprite implements IEntity {
 
-    private World world;
+    private final World world;
     public Body b2body;
-    private float x, y;
+    private final float x;
+    private final float y;
 
-    private TextureRegion fireballTexture;
-    private Texture fireballImage;
+    private final TextureRegion fireballTexture;
+    private final Texture fireballImage;
 
     public int damage = 10;
 

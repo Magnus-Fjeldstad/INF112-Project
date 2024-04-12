@@ -16,12 +16,12 @@ import inf112.skeleton.app.GameCreate;
 
 public class UpgradeMenuScreen implements Screen {
 
-    private GameCreate game;
-    private Stage stage;
-    private Skin skin;
+    private final GameCreate game;
+    private final Stage stage;
+    private final Skin skin;
 
     // Reference to the player model
-    private PlayerModel playerModel;
+    private final PlayerModel playerModel;
 
     public UpgradeMenuScreen(GameCreate game, PlayerModel playerModel) {
         this.game = game;

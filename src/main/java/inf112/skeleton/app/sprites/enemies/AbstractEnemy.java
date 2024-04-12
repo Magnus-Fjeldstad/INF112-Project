@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public abstract class AbstractEnemy extends Sprite implements IEntity{
     
     protected PlayScreen screen;
-    private World world;
+    private final World world;
     public Body b2body;
     public Vector2 velocity;
     public int health;

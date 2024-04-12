@@ -14,11 +14,11 @@ import java.util.Random;
 
 //This class is responsible for spawning powerups in the game
 public class PowerUpManager {
-    private PowerUpFactory powerUpFactory;
-    private PlayerModel playerModel;
-    private ArrayList<AbstractPowerUp> powerUps;
-    private ArrayList<AbstractPowerUp> activePowerUps;
-    private PowerUpCollisionHandler powerUpCollisionHandler;
+    private final PowerUpFactory powerUpFactory;
+    private final PlayerModel playerModel;
+    private final ArrayList<AbstractPowerUp> powerUps;
+    private final ArrayList<AbstractPowerUp> activePowerUps;
+    private final PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 5;
 

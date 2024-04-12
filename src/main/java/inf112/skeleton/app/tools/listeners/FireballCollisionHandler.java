@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import inf112.skeleton.app.GameCreate;
 
 public class FireballCollisionHandler extends CollisionHandler{
-    private Array<Body> bodiesToRemove;
+    private final Array<Body> bodiesToRemove;
 
     public FireballCollisionHandler() {
         this.bodiesToRemove = new Array<>();

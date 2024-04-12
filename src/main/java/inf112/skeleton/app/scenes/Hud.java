@@ -14,20 +14,15 @@ import inf112.skeleton.app.GameCreate;
 
 public class Hud implements Disposable{
     public Stage stage;
-    private Viewport viewport;
+    private final Viewport viewport;
     
-    private Integer worldTimer;
-    private Integer score;
+    private final Integer score;
 
-    private Label countdownLabel;
-    private Label scoreLabel;
-    private Label timeLabel;
-    private Label levelLabel;
-    private Label roundLabel;
-    private Label gameNameLabel;
+    private final Label waveRound;
+    private final Label waveLabel;
+    private final Label gameNameLabel;
 
     public Hud(SpriteBatch sb) {
-        worldTimer = 300;
         score = 0;
 
         viewport = new FitViewport(GameCreate.V_Width, GameCreate.V_Height, new OrthographicCamera());
@@ -37,20 +32,13 @@ public class Hud implements Disposable{
         table.top();
         table.setFillParent(true);
 
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        roundLabel = new Label("ROUND", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        gameNameLabel = new Label("GAME-TEST", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        waveLabel = new Label("WAVE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        waveRound = new Label("1", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        gameNameLabel = new Label("SURVIVE", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         table.add(gameNameLabel).expandX().padTop(10);
-        table.add(roundLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
-        table.row();
-        table.add(scoreLabel).expandX();
-        table.add(levelLabel).expandX();
-        table.add(countdownLabel).expandX();
+        table.add(waveLabel).expandX().padTop(10);
+        table.add(waveRound).expandX().padTop(10);
 
         stage.addActor(table);
     }
@@ -58,13 +46,5 @@ public class Hud implements Disposable{
     @Override
     public void dispose() {
         stage.dispose();
-    }
-
-    /**
-     * Returns worldtimer
-     * @return Integer worldTimer
-     */
-    public int getWorldTimer() {
-        return this.worldTimer;
     }
 }

@@ -21,7 +21,7 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
     protected PlayScreen screen;
     protected PlayerModel playerModel;
-    private World world;
+    private final World world;
     public Body b2body;
     private int startingX;
     private int startingY;
@@ -77,8 +77,7 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         fixtureDef.isSensor = true;
         b2body.createFixture(fixtureDef);
         b2body.createFixture(fixtureDef).setUserData(GameCreate.CATEGORY_POWERUP);
-    };
-
+    }
 
 
     public void update(float dt) {

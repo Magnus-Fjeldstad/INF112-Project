@@ -8,7 +8,7 @@ import inf112.skeleton.app.GameCreate;
 
 public class PlayerModelCollisionHandler extends CollisionHandler {
 
-    private Array<Body> playerHit;
+    private final Array<Body> playerHit;
 
     public PlayerModelCollisionHandler() {
         this.playerHit = new Array<>();

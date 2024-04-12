@@ -9,10 +9,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import inf112.skeleton.app.GameCreate;
 
 public class WorldContactListener implements ContactListener {
-    private PowerUpCollisionHandler powerUpCollisionHandler;
-    private FireballCollisionHandler fireballCollisionHandler;
-    private EnemyCollisionHandler enemyCollisionHandler;
-    private PlayerModelCollisionHandler playerCollisionHandler;
+    private final PowerUpCollisionHandler powerUpCollisionHandler;
+    private final FireballCollisionHandler fireballCollisionHandler;
+    private final EnemyCollisionHandler enemyCollisionHandler;
+    private final PlayerModelCollisionHandler playerCollisionHandler;
 
     public WorldContactListener(PowerUpCollisionHandler powerUpCollisionHandler,
             FireballCollisionHandler fireballCollisionHandler, EnemyCollisionHandler enemyCollisionHandler,

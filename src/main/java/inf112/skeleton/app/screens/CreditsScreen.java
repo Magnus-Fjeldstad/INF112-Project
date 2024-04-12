@@ -22,11 +22,11 @@ import inf112.skeleton.app.GameCreate;
 
 public class CreditsScreen implements Screen{
 
-    GameCreate game;
-    Stage stage;
-    private Skin skin;
-    OrthographicCamera camera;
-    Viewport viewport;
+    private final GameCreate game;
+    private final Stage stage;
+    private final Skin skin;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
     
     public CreditsScreen(GameCreate game){
         this.game = game;

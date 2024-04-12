@@ -5,7 +5,7 @@ import inf112.skeleton.app.screens.PlayScreen;
 
 public class FireballFactory {
     
-        private PlayScreen screen;
+        private final PlayScreen screen;
     
         public FireballFactory(PlayScreen screen) {
             this.screen = screen;

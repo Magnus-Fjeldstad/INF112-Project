@@ -20,20 +20,20 @@ public class PauseScreen implements Screen{
 
 
     // Reference to the main game object to switch screens.
-    private GameCreate game;
+    private final GameCreate game;
 
     // Stage for the pause screen
-    private Stage stage;
+    private final Stage stage;
 
     // Skin for the buttons
-    private Skin skin;
+    private final Skin skin;
 
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
 
-    private Viewport viewport;
+    private final Viewport viewport;
 
     // Reference to the play screen so we can switch back to current instead of creating new upon "Resume"
-    private PlayScreen playScreen;
+    private final PlayScreen playScreen;
 
   
 
