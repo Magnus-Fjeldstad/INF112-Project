@@ -6,9 +6,6 @@ import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
 
 import java.util.ArrayList;
@@ -24,13 +21,11 @@ public class PowerUpManager {
     private PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 5;
-    private PlayScreen screen;
 
     public PowerUpManager(PlayScreen screen, PlayerModel playerModel) {
         this.powerUps = new ArrayList<AbstractPowerUp>();
         this.activePowerUps = new ArrayList<AbstractPowerUp>();
         this.playerModel = playerModel;
-        this.screen = screen;
         this.powerUpFactory = new PowerUpFactory(screen);
         this.powerUpCollisionHandler = new PowerUpCollisionHandler();
     }

@@ -1,10 +1,7 @@
 package inf112.skeleton.app.sprites.weapons.fireball;
 
-
-
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.FireballCollisionHandler;
-import inf112.skeleton.app.sprites.weapons.fireball.FireballFactory;
 
 import java.util.Iterator;
 
@@ -14,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
-
 
 //This class is responsible for spawning powerups in the game
 public class FireballManager {
@@ -33,7 +29,7 @@ public class FireballManager {
         this.fireballFactory = new FireballFactory(screen);
         fireballCollisionHandler = new FireballCollisionHandler();
     }
-    
+
     public void update(float dt) {
         timeSinceLastPowerUp += dt;
 
@@ -62,10 +58,10 @@ public class FireballManager {
                 iterator.remove();
             }
         }
-    
+
         fireballCollisionHandler.clearBodiesToRemove();
     }
-    
+
     private void createConeFireball() {
         for (int i = 0; i < 3; i++) {
             Fireball coneFireball = fireballFactory.createFireball();
@@ -76,24 +72,23 @@ public class FireballManager {
         }
     }
 
-      // Firing additional fireballs in eight directions
-        // Automatic firing
-        // for (int i = 0; i < 8; i++) {
-        //     Fireball directionFireball = new Fireball(this, 50,
-        //             atlas);
-        //     Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
-        //             45).nor().scl(speedMultiplier);
-        //     // velocity
-        //     directionFireball.setLinearVelocity(directionVelocity);
-        //     fireballs.add(directionFireball);
-        // }
-
-
+    // Firing additional fireballs in eight directions
+    // Automatic firing
+    // for (int i = 0; i < 8; i++) {
+    // Fireball directionFireball = new Fireball(this, 50,
+    // atlas);
+    // Vector2 directionVelocity = direction.cpy().setAngleDeg(i *
+    // 45).nor().scl(speedMultiplier);
+    // // velocity
+    // directionFireball.setLinearVelocity(directionVelocity);
+    // fireballs.add(directionFireball);
+    // }
 
     private Vector2 calculateVector() {
         // Player position
-        Vector2 playerPosition = new Vector2(screen.getPlayerModel().b2body.getPosition().x, screen.getPlayerModel().b2body.getPosition().y);
-        
+        Vector2 playerPosition = new Vector2(screen.getPlayerModel().b2body.getPosition().x,
+                screen.getPlayerModel().b2body.getPosition().y);
+
         // Cursor position
         Vector3 cursorPosition = screen.getCursorPosition();
 
