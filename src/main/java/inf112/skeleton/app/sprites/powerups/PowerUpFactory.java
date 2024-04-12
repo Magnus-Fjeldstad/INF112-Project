@@ -7,7 +7,7 @@ import inf112.skeleton.app.sprites.player.PlayerModel;
 public class PowerUpFactory {
 
 
-    private PlayScreen screen;
+    private final PlayScreen screen;
 
     public PowerUpFactory(PlayScreen screen) {
         this.screen = screen;

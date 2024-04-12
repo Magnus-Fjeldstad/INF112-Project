@@ -7,8 +7,8 @@ import inf112.skeleton.app.screens.PlayScreen;
 
 public class AbstractEnemyFactory {
 
-    private PlayScreen screen;
-    private Random random;
+    private final PlayScreen screen;
+    private final Random random;
 
     /**
      * Constructor for AbstractEnemyFactory

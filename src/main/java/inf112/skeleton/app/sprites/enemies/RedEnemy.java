@@ -10,7 +10,7 @@ import inf112.skeleton.app.screens.PlayScreen;
 public class RedEnemy extends AbstractEnemy {
 
     public Body b2body;
-    private TextureRegion enemyStand;
+    private final TextureRegion enemyStand;
 
     /**
      * Constructor for the RedEnemy

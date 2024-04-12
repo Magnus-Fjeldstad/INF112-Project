@@ -14,9 +14,9 @@ import inf112.skeleton.app.sprites.player.PlayerModel;
  */
 public class KeyHandler {
 
-    private PlayerModel player;
-    private PlayScreen playScreen;
-    private GameCreate game;
+    private final PlayerModel player;
+    private final PlayScreen playScreen;
+    private final GameCreate game;
 
     /**
      * Constructor for KeyHandler.

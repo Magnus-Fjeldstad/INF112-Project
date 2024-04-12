@@ -21,9 +21,9 @@ import inf112.skeleton.app.GameCreate;
 
 public class MainMenuScreen implements Screen {
 
-    private GameCreate game;
-    private Stage stage;
-    private Skin skin;
+    private final GameCreate game;
+    private final Stage stage;
+    private final Skin skin;
 
     OrthographicCamera camera;
 

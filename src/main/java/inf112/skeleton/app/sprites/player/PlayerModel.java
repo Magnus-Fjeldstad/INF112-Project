@@ -23,7 +23,7 @@ public class PlayerModel extends Sprite implements IEntity {
     private float timeAccumulator = 0; // Time accumulator for health regen
     public int healthRegen = 1; // Health regeneration rate per second
 
-    private PlayerModelCollisionHandler playerCollisionHandler;
+    private final PlayerModelCollisionHandler playerCollisionHandler;
 
     public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();

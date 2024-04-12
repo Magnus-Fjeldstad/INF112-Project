@@ -20,14 +20,14 @@ import inf112.skeleton.app.GameCreate;
 
 public class InstructionScreen implements Screen {
 
-    private GameCreate game;
-    private Stage stage;
-    private Skin skin;
-    private OrthographicCamera camera;
-    private Viewport viewport;
+    private final GameCreate game;
+    private final Stage stage;
+    private final Skin skin;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
 
-    private Texture texture;
-    private Image image;
+    private final Texture texture;
+    private final Image image;
 
 
     public InstructionScreen(GameCreate game) {

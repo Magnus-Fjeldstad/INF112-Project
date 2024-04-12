@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import inf112.skeleton.app.GameCreate;
 
 public class EnemyCollisionHandler extends CollisionHandler{
-    private Array<Body> bodiesToRemove;
+    private final Array<Body> bodiesToRemove;
 
     public EnemyCollisionHandler() {
         this.bodiesToRemove = new Array<>();

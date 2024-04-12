@@ -11,7 +11,7 @@ import inf112.skeleton.app.screens.PlayScreen;
 
 public class PlayerView extends Sprite {
 
-    private PlayerModel playerModel;
+    private final PlayerModel playerModel;
 
     public PlayerEnum currentState;
     public PlayerEnum previousState;
@@ -31,9 +31,9 @@ public class PlayerView extends Sprite {
     private Animation<TextureRegion> playerRunRight;
 
     // Sets the size of the sprite
-    private int frameWidth = 32; // Width of each frame
-    private int frameHeight = 36; // Height of each frame
-    private int padding = 16; // Padding between characters
+    private final int frameWidth = 32; // Width of each frame
+    private final int frameHeight = 36; // Height of each frame
+    private final int padding = 16; // Padding between characters
 
 
 

@@ -4,8 +4,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.Gdx;
 
 public class aSound {
-    private Music sound;
-    private String fileString;
+    private final Music sound;
+    private final String fileString;
 
     public aSound(String fileString) {
         this.fileString = fileString;

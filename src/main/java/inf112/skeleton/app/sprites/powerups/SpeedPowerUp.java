@@ -5,7 +5,7 @@ import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public class SpeedPowerUp extends AbstractPowerUp {
-    private TextureRegion sprite;
+    private final TextureRegion sprite;
 
     public SpeedPowerUp(PlayScreen screen, PlayerModel playerModel) {
         super(screen, playerModel, screen.getAtlas().findRegion("SkeletonEnemy"));

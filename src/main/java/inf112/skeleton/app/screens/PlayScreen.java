@@ -34,45 +34,45 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class PlayScreen implements Screen {
-    private TextureAtlas atlas;
-    private TextureAtlas enemyAtlas;
-    private TextureAtlas fireballAtlas;
+    private final TextureAtlas atlas;
+    private final TextureAtlas enemyAtlas;
+    private final TextureAtlas fireballAtlas;
 
-    private GameCreate game;
+    private final GameCreate game;
 
     // Gamecam + HUD variables
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    private Hud hud;
+    private final Hud hud;
 
     // Map variables
-    private TmxMapLoader mapLoader;
-    private TiledMap map;
-    private OrthogonalTiledMapRenderer renderer;
+    private final TmxMapLoader mapLoader;
+    private final TiledMap map;
+    private final OrthogonalTiledMapRenderer renderer;
 
     // Box2d variabels
-    private World world;
-    private Box2DDebugRenderer b2dr;
+    private final World world;
+    private final Box2DDebugRenderer b2dr;
 
     // Sprites
-    private PlayerModel player;
-    private PlayerView playerView;
-    private ShapeRenderer shapeRenderer;
+    private final PlayerModel player;
+    private final PlayerView playerView;
+    private final ShapeRenderer shapeRenderer;
 
     // Variables for keyhandler
-    private KeyHandler keyHandler;
+    private final KeyHandler keyHandler;
 
     // Array of enemies
-    private Array<AbstractEnemy> enemies;
+    private final Array<AbstractEnemy> enemies;
 
     // Variables for powerups, weapons and enemies
-    private PowerUpManager powerUpManager;
-    private FireballManager fireballManager;
-    private EnemyManager enemyManager;
+    private final PowerUpManager powerUpManager;
+    private final FireballManager fireballManager;
+    private final EnemyManager enemyManager;
 
-    private PlayerModelCollisionHandler playerCollisionHandler;
+    private final PlayerModelCollisionHandler playerCollisionHandler;
 
-    private WorldContactListener worldContactListener;
+    private final WorldContactListener worldContactListener;
 
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
@@ -302,6 +302,4 @@ public class PlayScreen implements Screen {
         gamePort = null;
         shapeRenderer.dispose();
     }
-
-
 }

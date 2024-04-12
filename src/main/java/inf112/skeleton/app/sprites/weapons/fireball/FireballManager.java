@@ -14,14 +14,14 @@ import com.badlogic.gdx.utils.Array;
 
 //This class is responsible for spawning powerups in the game
 public class FireballManager {
-    private Array<Fireball> fireballs;
-    private FireballFactory fireballFactory;
-    private Array<Body> fireballsToRemove;
-    private FireballCollisionHandler fireballCollisionHandler;
+    private final Array<Fireball> fireballs;
+    private final FireballFactory fireballFactory;
+    private final Array<Body> fireballsToRemove;
+    private final FireballCollisionHandler fireballCollisionHandler;
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 2;
-    private PlayScreen screen;
-    private SoundManager soundManager;
+    private final PlayScreen screen;
+    private final SoundManager soundManager;
     
 
     public FireballManager(PlayScreen screen) {

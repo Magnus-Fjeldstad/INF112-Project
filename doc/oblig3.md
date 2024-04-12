@@ -32,10 +32,10 @@ Vi opplever at rollene i teamet fungerer ganske greit. Vi har satt faste rammer 
 Vi føler nå at vi har fått en god arbeidsfordeling og har ikke et umiddelbart behov for en ny rollefordeling i prosjektet. Før forrige innlevering hadde vi behov for en som tok ansvar for å oppgavetildelingen innad i gruppen. Dette ansvar tok Magnus og Henrik på seg, og det har fungert veldig bra.
 
 
-### Hvilke erfaringer har vi fått i henhold til å være et team?
+## Hvilke erfaringer har vi fått i henhold til å være et team?
 Siden sist innelvering har vi endret en god del på hvordan vi samarbeider. Vi hadde tidligere jevnlige korte møter, hvor vi delte oppgvaer og diskuterte prosjektet. Etterpå jobbet vi hovedsakelig individuelt eller i par med de tildelte oppgavene, distansert fra rsten av gruppen. Dette fungerte greit dersom alle arbeidsoppgaver var veldig tydelig tildelt. Likvel har vi nå hatt et ønske om at hele gruppe skal møtes oftere for å jobbe samlet over lengre tidsperioder. Vi prøver nå å være i nærheten av hverandre når vi jober på prosjektet.
 
-## Prosjektverktøy ////
+## Prosjektverktøy 
 Vi bruker trello til kanban. Også bruker vi Libgdx og Box2d for spillimplementasjon. Vi bruker Tiled for å lage mappet.
 
 Her er en lenke til trello boardet, vil glemte å ta den med i forrige oblig1 og så først nå at dere ville ha tilgang til det
@@ -157,7 +157,7 @@ Fremover vil det bli lagt fokus på følgende
 
 ## Styring av spillkarakter
 - Spillkarakteren styres ved bruk av 'w', 'a', 's' og 'd'
-- Angriper med 'SPACE' eller 'Mouse Button 1'
+- Spilleren skyter fireballs automatisk i retningen av crosshair
 
 ## Produkt og kode:
 

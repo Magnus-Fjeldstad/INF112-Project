@@ -9,15 +9,15 @@ import inf112.skeleton.app.tools.listeners.EnemyCollisionHandler;
 import inf112.skeleton.app.tools.sound.SoundManager;
 
 public class EnemyManager {
-    private Array<AbstractEnemy> enemies;
+    private final Array<AbstractEnemy> enemies;
 
-    private PlayScreen screen;
+    private final PlayScreen screen;
 
-    private Array<Body> enemiesToRemove;
+    private final Array<Body> enemiesToRemove;
 
-    private EnemyCollisionHandler enemyCollisionHandler;
-    private AbstractEnemyFactory enemyFactory;
-    private SoundManager soundManager;
+    private final EnemyCollisionHandler enemyCollisionHandler;
+    private final AbstractEnemyFactory enemyFactory;
+    private final SoundManager soundManager;
 
 
 
