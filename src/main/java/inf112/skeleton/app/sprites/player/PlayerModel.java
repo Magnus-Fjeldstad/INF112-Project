@@ -1,25 +1,16 @@
 package inf112.skeleton.app.sprites.player;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
 import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
 
-/**
- * Class representing the player in the game.
- */
-
-public class PlayerModel extends Sprite implements IEntity{
+public class PlayerModel extends Sprite implements IEntity {
 
     public PlayerEnum currentState;
     public PlayerEnum previousState;
-
     public Body b2body;
     public World world;
 
@@ -27,11 +18,10 @@ public class PlayerModel extends Sprite implements IEntity{
     public int maxHealth = 100;
 
     public int attackDamage = 10;
-
     public float movementSpeed = 4;
-    public int healthRegen = 0;
 
-
+    private float timeAccumulator = 0; // Time accumulator for health regen
+    public int healthRegen = 1; // Health regeneration rate per second
 
     private PlayerModelCollisionHandler playerCollisionHandler;
 
@@ -39,9 +29,8 @@ public class PlayerModel extends Sprite implements IEntity{
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
-        
+
         playerCollisionHandler = new PlayerModelCollisionHandler();
-        // Set the player's health, speed and attack damage
         definePlayer();
     }
 
@@ -92,11 +81,9 @@ public class PlayerModel extends Sprite implements IEntity{
         shape.setRadius(11 / GameCreate.PPM);
 
         fdef.shape = shape;
-
         fdef.filter.categoryBits = GameCreate.CATEGORY_PLAYER;
         fdef.filter.maskBits = GameCreate.CATEGORY_WALLS | GameCreate.CATEGORY_ENEMY | GameCreate.CATEGORY_POWERUP;
 
-        b2body.createFixture(fdef);
         b2body.createFixture(fdef).setUserData(GameCreate.CATEGORY_PLAYER);
     }
 
@@ -126,7 +113,6 @@ public class PlayerModel extends Sprite implements IEntity{
     }
 
     /**
-     * 
      * @param deltaSpeed the change in speed
      */
     public void setSpeed(float deltaSpeed) {
@@ -137,12 +123,17 @@ public class PlayerModel extends Sprite implements IEntity{
         return this.maxHealth;
     }
 
-    
-
+    /**
+     * Updates the maxHealth of the player by a given value
+     * @param deltaMaxHealth the amount the maxHealth should be changed by
+     */
     public void setMaxHealth(int deltaMaxHealth) {
         this.maxHealth += deltaMaxHealth;
     }
 
+    /**
+     * @return attackDamage
+     */
     public int getAttackDamage() {
         return this.attackDamage;
     }
@@ -151,16 +142,23 @@ public class PlayerModel extends Sprite implements IEntity{
         this.attackDamage += deltaAttackDamage;
     }
 
-    //TODO: Implement collison between player and enemy
+    // TODO: Implement collison between player and enemy
     public void handleCollision() {
-        //setHealth(-10);
+        // setHealth(-10);
 
         playerCollisionHandler.clearBodiesToRemove();
     }
 
     @Override
     public void update(float dt) {
-        //TODO
+        timeAccumulator += dt;
+        if (timeAccumulator >= 1.0) {
+            if (health < maxHealth) {
+                health += healthRegen; // Increment health by the regen rate
+            }
+            System.out.println(health);
+            timeAccumulator -= 1.0; // Reset the accumulator
+        }
     }
 
     @Override
@@ -176,4 +174,3 @@ public class PlayerModel extends Sprite implements IEntity{
         this.healthRegen = healthRegen;
     }
 }
-

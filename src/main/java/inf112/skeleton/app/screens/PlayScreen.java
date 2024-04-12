@@ -146,6 +146,7 @@ public class PlayScreen implements Screen {
 
         playerView.update(dt);
 
+        player.update(dt);
         for (AbstractEnemy enemy : enemies) {
             enemy.update(dt);
         }
