@@ -48,6 +48,7 @@ public class WorldContactListener implements ContactListener {
 
         if (isCollisionBetween(contact, GameCreate.CATEGORY_PLAYER, GameCreate.CATEGORY_ENEMY)) {
             playerCollisionHandler.handleCollision(contact);
+            System.out.println("Player collided with enemy");
         }
 
         // Add more conditions here to delegate to other handlers...

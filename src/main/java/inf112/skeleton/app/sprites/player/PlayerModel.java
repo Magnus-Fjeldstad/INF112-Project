@@ -13,6 +13,7 @@ public class PlayerModel extends Sprite implements IEntity {
     public PlayerEnum previousState;
     public Body b2body;
     public World world;
+    private PlayScreen screen;
 
     public int health = 70;
     public int maxHealth = 100;
@@ -23,14 +24,17 @@ public class PlayerModel extends Sprite implements IEntity {
     private float timeAccumulator = 0; // Time accumulator for health regen
     public int healthRegen = 1; // Health regeneration rate per second
 
-    private final PlayerModelCollisionHandler playerCollisionHandler;
+    private PlayerModelCollisionHandler playerModelCollisionHandler;
+
 
     public PlayerModel(PlayScreen screen) {
         this.world = screen.getWorld();
         currentState = PlayerEnum.STANDING;
         previousState = PlayerEnum.STANDING;
 
-        playerCollisionHandler = new PlayerModelCollisionHandler();
+        this.screen = screen;
+        playerModelCollisionHandler = new PlayerModelCollisionHandler();
+
         definePlayer();
     }
 
@@ -142,11 +146,22 @@ public class PlayerModel extends Sprite implements IEntity {
         this.attackDamage += deltaAttackDamage;
     }
 
-    // TODO: Implement collison between player and enemy
+    /**
+     * Handles the collision between the player and the enemies
+     * If the player is hit, the player's health is reduced by the enemy's attack damage
+     */
     public void handleCollision() {
-        // setHealth(-10);
+        
+        int attackDamage = 0;
+        
+        if (screen.getEnemies().notEmpty()) {
+            attackDamage = screen.getEnemies().first().attackDamage;
+        }
 
-        playerCollisionHandler.clearBodiesToRemove();
+        if (playerModelCollisionHandler.getIsHit()) {
+            setHealth(-attackDamage);
+            playerModelCollisionHandler.setIsHitFalse();
+        }
     }
 
     @Override
@@ -156,9 +171,10 @@ public class PlayerModel extends Sprite implements IEntity {
             if (health < maxHealth) {
                 health += healthRegen; // Increment health by the regen rate
             }
-            System.out.println(health);
             timeAccumulator -= 1.0; // Reset the accumulator
         }
+
+        handleCollision();
     }
 
     @Override
@@ -172,5 +188,13 @@ public class PlayerModel extends Sprite implements IEntity {
 
     public void setHealthRegen(int healthRegen) {
         this.healthRegen = healthRegen;
+    }
+
+    /**
+     * 
+     * @return the player's collision handler
+     */
+    public PlayerModelCollisionHandler getPlayerModelCollisionHandler() {
+        return playerModelCollisionHandler;
     }
 }
