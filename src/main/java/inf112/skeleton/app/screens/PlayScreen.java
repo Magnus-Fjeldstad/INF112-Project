@@ -116,7 +116,7 @@ public class PlayScreen implements Screen {
         fireballManager = new FireballManager(this);
         enemyManager = new EnemyManager(this);
 
-        playerCollisionHandler = new PlayerModelCollisionHandler();
+        playerCollisionHandler = player.getPlayerModelCollisionHandler();
 
         enemies = enemyManager.getEnemies();
 
@@ -251,6 +251,14 @@ public class PlayScreen implements Screen {
      */
     public TextureAtlas getAtlas() {
         return atlas;
+    }
+
+    /**
+     * 
+     * @return an array of the enemies
+     */
+    public Array<AbstractEnemy> getEnemies() {
+        return enemies;
     }
     
 

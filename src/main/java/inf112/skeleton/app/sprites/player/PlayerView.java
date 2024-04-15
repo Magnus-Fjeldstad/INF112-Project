@@ -171,6 +171,6 @@ public class PlayerView extends Sprite {
     public void update(float dt) {
         setPosition(playerModel.b2body.getPosition().x - getWidth() / 2, playerModel.b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
-        playerModel.handleCollision();
+        //playerModel.handleCollision();
     }
 }
