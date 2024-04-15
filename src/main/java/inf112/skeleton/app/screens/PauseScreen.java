@@ -62,7 +62,6 @@ public class PauseScreen implements Screen{
 
         // Adds buttons to the table
         TextButton resumeButton = new TextButton("Resume", skin);
-        TextButton optionsButton = new TextButton("Options", skin);
         TextButton mainMenuButton = new TextButton("Main Menu", skin);
         TextButton quitButton = new TextButton("Quit", skin);
 
@@ -75,18 +74,12 @@ public class PauseScreen implements Screen{
                 game.setScreen(playScreen);
             }
         });
-        
-        optionsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                // Handle option action
-            }
-        });
 
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MainMenuScreen(game));
+                playScreen.dispose();
             }
         });
 
@@ -101,8 +94,6 @@ public class PauseScreen implements Screen{
         // Add buttons to the table with padding
         table.add(resumeButton).pad(10);
         table.row(); // Move to the next row
-        table.add(optionsButton).pad(10);
-        table.row();
         table.add(mainMenuButton).pad(10);
         table.row();
         table.add(quitButton).pad(10);

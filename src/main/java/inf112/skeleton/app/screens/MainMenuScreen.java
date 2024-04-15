@@ -72,7 +72,6 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // Pass the required arguments to create PlayerModel
-                World world = new World(new Vector2(0, 0), true); // Example
                 PlayerModel playerModel = new PlayerModel(new PlayScreen(game));
                 game.setScreen(new UpgradeMenuScreen(game, playerModel));
             }

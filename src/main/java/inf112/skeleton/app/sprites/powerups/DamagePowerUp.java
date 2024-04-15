@@ -1,7 +1,6 @@
 package inf112.skeleton.app.sprites.powerups;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
