@@ -25,6 +25,6 @@ public class aSound {
     }
 
     public void dispose() {
-        sound.dispose();
+        sound.dispose(); 
     }
 }

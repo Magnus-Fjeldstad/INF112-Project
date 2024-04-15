@@ -1,6 +1,5 @@
 package inf112.skeleton.app.sprites.enemies;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 
@@ -19,6 +18,9 @@ public class EnemyManager {
     private final AbstractEnemyFactory enemyFactory;
     private final SoundManager soundManager;
 
+    private int waveSize = 5;
+    private int enemiesKilled;
+
 
 
     /**
@@ -32,11 +34,7 @@ public class EnemyManager {
         this.soundManager = new SoundManager();
 
         this.screen = screen;
-        
-        this.enemies.add(enemyFactory.spawnRandom());
-        this.enemies.add(enemyFactory.spawnRandom());
-        this.enemies.add(enemyFactory.spawnRandom());
-        this.enemies.add(enemyFactory.spawnRandom());
+        this.enemiesKilled = 0;
 
         enemyCollisionHandler = new EnemyCollisionHandler();
     }
@@ -50,6 +48,11 @@ public class EnemyManager {
             enemy.update(dt);
         }
         handleCollision();
+        spawnEnemies();
+        
+        if (enemiesKilled == waveSize) {
+            spawnEnemies();
+        }
     }
 
     /**
@@ -67,10 +70,24 @@ public class EnemyManager {
                     enemiesToRemove.add(enemy.b2body);
                     enemy.dispose();
                     soundManager.death.play();
+                    enemiesKilled++;
                 }
             }
         }
         enemyCollisionHandler.clearBodiesToRemove(); 
+    }
+
+
+    /**
+     * Spawns enemies if there are less than 5 enemies
+     */
+    private void spawnEnemies() {
+        if (enemies.size == 0) {
+            for (int i = 0; i < waveSize; i++) {
+                enemies.add(enemyFactory.spawnRandom());
+            }
+            waveSize += 5; // Increase the wave size for the next wave
+        }
     }
 
 
