@@ -24,7 +24,11 @@ public class AbstractEnemyFactory {
      * @return AbstractEnemy
      */
     public AbstractEnemy spawnRandom() {
-        AbstractEnemy enemy = new RedEnemy(screen, random.nextInt(32, GameCreate.V_Width), random.nextInt(32, GameCreate.V_Height), 20, 1.5f, 10);
+        AbstractEnemy enemy = spawnRedEnemy();
         return enemy;
+    }
+
+    public AbstractEnemy spawnRedEnemy() {
+        return new RedEnemy(screen, random.nextInt(32, GameCreate.V_Width), random.nextInt(32, GameCreate.V_Height), 20, 1.5f, 10);
     }
 }
