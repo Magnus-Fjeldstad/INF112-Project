@@ -42,13 +42,6 @@ public abstract class AbstractPowerUp implements IEntity  {
         definePowerUp();
     }
 
-    // //Generates random coordinates for the powerup
-    // protected void randomCoordinates() {
-    //     Random rand = new Random();
-    //     startingX = rand.nextInt(32, 450);
-    //     startingY = rand.nextInt(32, 200);
-    // }
-
     protected abstract void removePowerUpEffect();
 
     protected abstract void applyPowerUpEffect();

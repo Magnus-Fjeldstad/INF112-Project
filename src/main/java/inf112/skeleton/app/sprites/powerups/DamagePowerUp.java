@@ -9,6 +9,7 @@ public class DamagePowerUp extends AbstractPowerUp {
 
     public DamagePowerUp(PlayScreen screen, PlayerModel playerModel, int xPos, int yPos) {
         super(screen, playerModel, PowerUpEnum.DAMAGE_BOOST, xPos, yPos);
+        this.playerModel = playerModel;
     }
 
     protected void removePowerUpEffect() {

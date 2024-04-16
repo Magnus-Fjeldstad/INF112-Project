@@ -10,6 +10,7 @@ public class SpeedPowerUp extends AbstractPowerUp {
 
     public SpeedPowerUp(PlayScreen screen, PlayerModel playerModel, int xPos, int yPos) {
         super(screen, playerModel, PowerUpEnum.SPEED_BOOST, xPos, yPos);
+        this.playerModel = playerModel;
     }
 
 

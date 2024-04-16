@@ -18,7 +18,7 @@ import java.util.Random;
 //This class is responsible for spawning powerups in the game
 public class PowerUpManager {
     private final PowerUpFactory powerUpFactory;
-    private final PlayerModel playerModel;
+    private PlayerModel playerModel;
     private final ArrayList<AbstractPowerUp> powerUps;
     private final ArrayList<AbstractPowerUp> activePowerUps;
     private final ArrayList<AbstractPowerUpView> powerUpViews;
