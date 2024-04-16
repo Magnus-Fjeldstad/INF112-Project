@@ -104,6 +104,6 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
     }
 
     public int getAttackDamage() {
-        return this.health;
+        return this.attackDamage;
     }
 }   
