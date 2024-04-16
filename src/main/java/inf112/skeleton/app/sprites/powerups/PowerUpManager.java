@@ -39,13 +39,7 @@ public class PowerUpManager {
         timeSinceLastPowerUp += dt;
 
         if (timeSinceLastPowerUp >= SPAWN_INTERVAL) {
-            AbstractPowerUp powerUp = createRandomPowerUp();
-            powerUps.add(powerUp);
-            if (powerUp.getType() == PowerUpEnum.SPEED_BOOST) {
-                powerUpViews.add(new SpeedPowerUpView(powerUp));
-            } else {
-                powerUpViews.add(new DamagePowerUpView(powerUp));
-            }
+            spawnPowerUp();
             timeSinceLastPowerUp = 0;
         }
 
@@ -65,16 +59,24 @@ public class PowerUpManager {
     }
 
     private void handleCollision() {
-        Iterator<AbstractPowerUp> iterator = powerUps.iterator();
-        while (iterator.hasNext()) {
-            AbstractPowerUp powerUp = iterator.next();
+        Iterator<AbstractPowerUp> powerUpIterator = powerUps.iterator();
+        while (powerUpIterator.hasNext()) {
+            AbstractPowerUp powerUp = powerUpIterator.next();
             if (powerUpCollisionHandler.getBodiesToRemove().contains(powerUp.b2body, true)) {
                 powerUp.applyPowerUp();
                 activePowerUps.add(powerUp);
-                iterator.remove();
+                powerUpIterator.remove(); // Safely remove the powerUp from the list
+    
+                Iterator<AbstractPowerUpView> viewIterator = powerUpViews.iterator();
+                while (viewIterator.hasNext()) {
+                    AbstractPowerUpView powerUpView = viewIterator.next();
+                    if (powerUpView.getPowerUp().equals(powerUp)) {
+                        viewIterator.remove(); // Safely remove the view from the list
+                        break; // Exit the loop once the view is found and removed
+                    }
+                }
             }
         }
-        powerUpCollisionHandler.clearBodiesToRemove();
     }
     
     private AbstractPowerUp createRandomPowerUp() {
@@ -85,12 +87,23 @@ public class PowerUpManager {
         switch (i) {
             case 0:
                 AbstractPowerUp speedPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel, xPos, yPos);
+                powerUps.add(speedPowerUp);
                 return speedPowerUp;
             case 1:
                 AbstractPowerUp damagPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel, xPos, yPos);
+                powerUps.add(damagPowerUp);
                 return damagPowerUp;
             default:
                 throw new IllegalArgumentException("Invalid powerup");
+        }
+    }
+
+    public void spawnPowerUp() {
+        AbstractPowerUp powerUp = createRandomPowerUp();
+        if (powerUp.getType() == PowerUpEnum.SPEED_BOOST) {
+            powerUpViews.add(new SpeedPowerUpView(powerUp));
+        } else {
+            powerUpViews.add(new DamagePowerUpView(powerUp));
         }
     }
 

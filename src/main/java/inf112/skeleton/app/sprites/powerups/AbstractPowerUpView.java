@@ -23,4 +23,8 @@ public abstract class AbstractPowerUpView extends Sprite {
         setRegion(textureRegionPowerUp);
     }
 
+
+    public AbstractPowerUp getPowerUp() {
+        return powerUp;
+    }
 }
