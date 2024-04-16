@@ -27,6 +27,7 @@ import inf112.skeleton.app.sprites.enemies.EnemyManager;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 import inf112.skeleton.app.sprites.player.PlayerView;
 import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUpView;
 import inf112.skeleton.app.sprites.powerups.PowerUpManager;
 
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -121,7 +122,7 @@ public class PlayScreen implements Screen {
         enemies = enemyManager.getEnemies();
 
         worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(),
-                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
+        fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
         world.setContactListener(worldContactListener);
     }
 
@@ -185,8 +186,8 @@ public class PlayScreen implements Screen {
             enemy.draw(game.batch);
         }
 
-        for (AbstractPowerUp powerUp : powerUpManager.getPowerUps()) {
-            powerUp.draw(game.batch);
+        for (AbstractPowerUpView powerUpView : powerUpManager.getPowerUpViews()) {
+            powerUpView.draw(game.batch);
         }
 
         game.batch.end();
