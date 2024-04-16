@@ -102,4 +102,8 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
     public void dispose() {
         world.destroyBody(b2body);
     }
+
+    public int getAttackDamage() {
+        return this.health;
+    }
 }   
