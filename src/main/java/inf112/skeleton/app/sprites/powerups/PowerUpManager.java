@@ -5,6 +5,8 @@ package inf112.skeleton.app.sprites.powerups;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 import inf112.skeleton.app.sprites.player.PlayerModel;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
+import inf112.skeleton.app.sprites.powerups.AbstractPowerUpView;
 
 import java.util.Iterator;
 
@@ -18,12 +20,14 @@ public class PowerUpManager {
     private final PlayerModel playerModel;
     private final ArrayList<AbstractPowerUp> powerUps;
     private final ArrayList<AbstractPowerUp> activePowerUps;
+    private final ArrayList<AbstractPowerUpView> powerUpViews;
     private final PowerUpCollisionHandler powerUpCollisionHandler;
     private float timeSinceLastPowerUp;
     private static final float SPAWN_INTERVAL = 5;
 
     public PowerUpManager(PlayScreen screen, PlayerModel playerModel) {
         this.powerUps = new ArrayList<AbstractPowerUp>();
+        this.powerUpViews = new ArrayList<AbstractPowerUpView>();
         this.activePowerUps = new ArrayList<AbstractPowerUp>();
         this.playerModel = playerModel;
         this.powerUpFactory = new PowerUpFactory(screen);
@@ -36,9 +40,17 @@ public class PowerUpManager {
         if (timeSinceLastPowerUp >= SPAWN_INTERVAL) {
             AbstractPowerUp powerUp = createRandomPowerUp();
             powerUps.add(powerUp);
+            if (powerUp.getType() == PowerUpEnum.SPEED_BOOST) {
+                powerUpViews.add(new SpeedPowerUpView(powerUp));
+            } else {
+                powerUpViews.add(new DamagePowerUpView(powerUp));
+            }
             timeSinceLastPowerUp = 0;
         }
 
+        for (AbstractPowerUpView powerUpView : powerUpViews) {
+            powerUpView.update(dt);
+        }
         // Count down the duration of the active power-ups. No need to update the power ups that hasn't been touched
         Iterator<AbstractPowerUp> iterator = activePowerUps.iterator();
         while (iterator.hasNext()) {
@@ -72,9 +84,11 @@ public class PowerUpManager {
         int i = rand.nextInt(2);
         switch (i) {
             case 0:
-                return powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel);
+                AbstractPowerUp speedPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel);
+                return speedPowerUp;
             case 1:
-                return powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel);
+                AbstractPowerUp damagPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel);
+                return damagPowerUp;
             default:
                 throw new IllegalArgumentException("Invalid powerup");
         }

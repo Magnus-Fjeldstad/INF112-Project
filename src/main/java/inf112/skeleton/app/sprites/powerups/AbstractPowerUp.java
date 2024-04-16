@@ -3,7 +3,6 @@ package inf112.skeleton.app.sprites.powerups;
 
 import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -21,22 +20,28 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
     
     protected PlayScreen screen;
     protected PlayerModel playerModel;
-    private final World world;
+    private World world;
     public Body b2body;
     private int startingX;
     private int startingY;
     protected boolean isActive = false;
     protected boolean isRemovable = false;
     private float powerUpDuration = 10;
+    private PowerUpEnum type;
 
-    public AbstractPowerUp(PlayScreen screen, PlayerModel playerModel, TextureAtlas.AtlasRegion region) {
-        super(region);
+    public AbstractPowerUp(PlayScreen screen, PlayerModel playerModel, PowerUpEnum type) {
+        this.type = type;
         this.world = screen.getWorld(); 
         this.screen = screen;
         this.playerModel = playerModel;
         randomCoordinates();
         definePowerUp();
         setBounds(startingX / GameCreate.PPM, startingY/ GameCreate.PPM, 14 / GameCreate.PPM, 18 / GameCreate.PPM);
+    }
+
+    public AbstractPowerUp(PlayerModel playerModel, PowerUpEnum type){
+        this.playerModel = playerModel;
+        this.type = type;
     }
 
 
@@ -94,4 +99,7 @@ public abstract class AbstractPowerUp extends Sprite implements IEntity  {
         world.destroyBody(b2body);
     }
     
+    public PowerUpEnum getType() {
+        return type;
+    }
 }   

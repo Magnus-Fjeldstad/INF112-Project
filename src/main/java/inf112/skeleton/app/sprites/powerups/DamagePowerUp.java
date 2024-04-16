@@ -5,13 +5,13 @@ import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public class DamagePowerUp extends AbstractPowerUp {
-    private final Texture sprite;
 
-    public DamagePowerUp(PlayScreen screen, PlayerModel playerModel) {
-        super(screen,playerModel, screen.getAtlas().findRegion("SkeletonEnemy"));
+    private PowerUpEnum type = PowerUpEnum.DAMAGE_BOOST;
 
-        sprite = new Texture("powerups/muscle.png");
-        setRegion(sprite); 
+    private PlayerModel playerModel;
+
+    public DamagePowerUp(PlayerModel playerModel) {
+        super(playerModel, PowerUpEnum.DAMAGE_BOOST);
     }
 
     protected void removePowerUpEffect() {
@@ -22,4 +22,7 @@ public class DamagePowerUp extends AbstractPowerUp {
         playerModel.attackDamage += 5;
     }
 
+    public PowerUpEnum getType() {
+        return type;
+    }
 }   

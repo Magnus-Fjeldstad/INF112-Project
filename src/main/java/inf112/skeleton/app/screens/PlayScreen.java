@@ -121,7 +121,7 @@ public class PlayScreen implements Screen {
         enemies = enemyManager.getEnemies();
 
         worldContactListener = new WorldContactListener(powerUpManager.getPowerUpCollisionHandler(),
-                fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
+        fireballManager.getFireballCollisionHandler(), enemyManager.getEnemyCollisionHandler(), playerCollisionHandler);
         world.setContactListener(worldContactListener);
     }
 
