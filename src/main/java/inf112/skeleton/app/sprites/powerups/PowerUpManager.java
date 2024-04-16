@@ -2,6 +2,7 @@ package inf112.skeleton.app.sprites.powerups;
 
 
 
+import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 import inf112.skeleton.app.sprites.player.PlayerModel;
@@ -48,9 +49,6 @@ public class PowerUpManager {
             timeSinceLastPowerUp = 0;
         }
 
-        for (AbstractPowerUpView powerUpView : powerUpViews) {
-            powerUpView.update(dt);
-        }
         // Count down the duration of the active power-ups. No need to update the power ups that hasn't been touched
         Iterator<AbstractPowerUp> iterator = activePowerUps.iterator();
         while (iterator.hasNext()) {
@@ -81,13 +79,15 @@ public class PowerUpManager {
     
     private AbstractPowerUp createRandomPowerUp() {
         Random rand = new Random();
+        int xPos = rand.nextInt(32, GameCreate.V_Height);
+        int yPos = rand.nextInt(32, GameCreate.V_Width);
         int i = rand.nextInt(2);
         switch (i) {
             case 0:
-                AbstractPowerUp speedPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel);
+                AbstractPowerUp speedPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.SPEED_BOOST, playerModel, xPos, yPos);
                 return speedPowerUp;
             case 1:
-                AbstractPowerUp damagPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel);
+                AbstractPowerUp damagPowerUp = powerUpFactory.createPowerUp(PowerUpEnum.DAMAGE_BOOST, playerModel, xPos, yPos);
                 return damagPowerUp;
             default:
                 throw new IllegalArgumentException("Invalid powerup");
@@ -102,4 +102,7 @@ public class PowerUpManager {
         return powerUps;
     }
 
+    public ArrayList<AbstractPowerUpView> getPowerUpViews() {
+        return powerUpViews;
+    }
 }

@@ -12,12 +12,12 @@ public class PowerUpFactory {
         this.screen = screen;
     }
 
-    public AbstractPowerUp createPowerUp(PowerUpEnum type, PlayerModel playerModel) {
+    public AbstractPowerUp createPowerUp(PowerUpEnum type, PlayerModel playerModel, int xPos, int yPos) {
         switch (type) {
             case SPEED_BOOST:
-                return new SpeedPowerUp(playerModel);
+                return new SpeedPowerUp(screen, playerModel, xPos, yPos);
             case DAMAGE_BOOST:
-                return new DamagePowerUp(playerModel);
+                return new DamagePowerUp(screen, playerModel, xPos, yPos);
             default:
                 throw new IllegalArgumentException("Invalid power-up type: " + type);
         }

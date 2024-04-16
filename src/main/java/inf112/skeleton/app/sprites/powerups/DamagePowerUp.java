@@ -1,17 +1,14 @@
 package inf112.skeleton.app.sprites.powerups;
 
-import com.badlogic.gdx.graphics.Texture;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.player.PlayerModel;
 
 public class DamagePowerUp extends AbstractPowerUp {
 
-    private PowerUpEnum type = PowerUpEnum.DAMAGE_BOOST;
-
     private PlayerModel playerModel;
 
-    public DamagePowerUp(PlayerModel playerModel) {
-        super(playerModel, PowerUpEnum.DAMAGE_BOOST);
+    public DamagePowerUp(PlayScreen screen, PlayerModel playerModel, int xPos, int yPos) {
+        super(screen, playerModel, PowerUpEnum.DAMAGE_BOOST, xPos, yPos);
     }
 
     protected void removePowerUpEffect() {
@@ -22,7 +19,4 @@ public class DamagePowerUp extends AbstractPowerUp {
         playerModel.attackDamage += 5;
     }
 
-    public PowerUpEnum getType() {
-        return type;
-    }
 }   
