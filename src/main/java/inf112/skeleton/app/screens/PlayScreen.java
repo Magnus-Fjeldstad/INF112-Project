@@ -74,6 +74,8 @@ public class PlayScreen implements Screen {
 
     private final WorldContactListener worldContactListener;
 
+    private boolean gameOver = false;
+
     public PlayScreen(GameCreate game) {
         atlas = new TextureAtlas("Player_and_enemy.atlas");
         enemyAtlas = new TextureAtlas("enemies.atlas");
@@ -159,6 +161,8 @@ public class PlayScreen implements Screen {
 
         gamecam.update();
         renderer.setView(gamecam);
+
+        checksGameOverCondition(dt);
     }
 
     @Override
@@ -275,6 +279,32 @@ public class PlayScreen implements Screen {
     public TextureAtlas getFireballAtlas() {
         return fireballAtlas;
     }
+    
+    /**
+     * Checks if the players health is 0 or less and transitions to the GameOverScreen
+     * Uses Gdx.app.postRunnable to change the screen to ensure thread safety
+     * Is called upon in update method
+     * 
+     * @param dt Time span between the current and last frame. From update method
+     */
+    private void checksGameOverCondition(float dt) {
+        if (player.getHealth() <= 0 && !gameOver) {
+            gameOver = true;
+            Gdx.app.postRunnable(new Runnable() {
+
+                @Override
+                public void run() {
+                    game.setScreen(new GameOverScreen(game));
+                }
+                
+            });
+        }
+    }
+
+    // Method to reset the cursor to the default arrow after screen change
+    private void resetCursor() {
+        Gdx.graphics.setSystemCursor(SystemCursor.Arrow);
+    }
 
     @Override
     public void resize(int width, int height) {
@@ -293,8 +323,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void hide() {
-
+        resetCursor();
     }
+
+
 
     @Override
     public void dispose() {

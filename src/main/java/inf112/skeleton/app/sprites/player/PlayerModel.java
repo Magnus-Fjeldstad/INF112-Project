@@ -3,6 +3,7 @@ package inf112.skeleton.app.sprites.player;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 import inf112.skeleton.app.GameCreate;
+import inf112.skeleton.app.screens.GameOverScreen;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.sprites.IEntity;
 import inf112.skeleton.app.tools.listeners.PlayerModelCollisionHandler;
@@ -175,6 +176,7 @@ public class PlayerModel extends Sprite implements IEntity {
         }
 
         handleCollision();
+        
     }
 
     @Override
