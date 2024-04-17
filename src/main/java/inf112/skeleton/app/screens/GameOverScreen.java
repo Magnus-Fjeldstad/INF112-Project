@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameCreate;
 
 
-public class CreditsScreen implements Screen{
+public class GameOverScreen implements Screen{
 
     private final GameCreate game;
     private final Stage stage;
@@ -29,7 +29,7 @@ public class CreditsScreen implements Screen{
     private final Texture texture;
     private final Image image;
     
-    public CreditsScreen(GameCreate game){
+    public GameOverScreen(GameCreate game){
         this.game = game;
         
         camera = new OrthographicCamera();
@@ -43,7 +43,7 @@ public class CreditsScreen implements Screen{
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("glassy-ui.atlas"));
         skin = new Skin(Gdx.files.internal("glassy-ui.json"), atlas);
         
-        texture = new Texture(Gdx.files.internal("credits.png"));
+        texture = new Texture(Gdx.files.internal("gameover.png"));
         image = new Image(texture);
         image.setPosition(-450, 0);
         
@@ -60,17 +60,28 @@ public class CreditsScreen implements Screen{
         stage.addActor(table);
 
         // Add button to the table
-        TextButton backButton = new TextButton("Back", skin);
+        TextButton mainMenuButton = new TextButton("Main Menu", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
 
         // Back button to return to main menu
-        backButton.addListener(new ChangeListener() {
+        mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
 
-        table.add(backButton).padBottom(-800);
+        // Quit button to close the game
+        quitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
+
+        table.add(mainMenuButton).padBottom(-800).expandX().fillX().spaceRight(250);
+        table.add(quitButton).padBottom(-800).expandX().fillX().spaceLeft(250);
     }
 
 

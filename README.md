@@ -22,7 +22,7 @@ Requires Java 21 or later.
 ...
 
 ## Credits
-tileset_gutter.png er hentet fra "https://www.spriters-resource.com/fullview/52571/" og editet ned til en mindre versjon av "Magnus Fjeldstad"
+tileset_gutter.png is retrieved from "https://www.spriters-resource.com/fullview/52571/" and edited down to a smaller size by "Magnus Fjeldstad"
 Enemy graphics was created by @JoeCreates on X and are being used under a CC-BY-SA 3.0 license and can be found here: "https://opengameart.org/content/roguelike-monsters"
 Fireball fraphics was created by "Master484", it is in the public domain and can be found here: https://opengameart.org/content/explosion-set-1-m484-games
 Boots graphics was created by "Freepik", it has a license as FREE PNG and can be found here: https://www.freepik.com/icon/boots_14321652#fromView=search&page=1&position=51&uuid=c89af030-8515-489b-a158-2dd2a8094620
