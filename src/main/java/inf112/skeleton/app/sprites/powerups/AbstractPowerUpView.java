@@ -16,13 +16,23 @@ public abstract class AbstractPowerUpView extends Sprite {
         this.powerUp = powerUp;
         this.texturePowerUp = new Texture(texturePath);
         this.textureRegionPowerUp = new TextureRegion(texturePowerUp);
-        float width = 50 / GameCreate.PPM;
-        float height = 50 / GameCreate.PPM;
-        setBounds(powerUp.getPosition().x / GameCreate.PPM, powerUp.getPosition().y / GameCreate.PPM , width, height);
-        System.out.println(texturePowerUp.getWidth() + " " + texturePowerUp.getHeight() + " " + GameCreate.PPM);
-        setRegion(textureRegionPowerUp);
+
+        initializeSprite();
     }
 
+    protected void initializeSprite() {
+
+        float width = texturePowerUp.getWidth() / GameCreate.PPM;
+        float height = texturePowerUp.getHeight() / GameCreate.PPM;
+        setSize(width, height);
+
+        float x = (powerUp.getPosition().x - width / 2) /  GameCreate.PPM;
+        float y = (powerUp.getPosition().y - height / 2) / GameCreate.PPM;
+        setPosition(x, y);
+
+        setRegion(textureRegionPowerUp);
+        setScale(0.1f);
+    }
 
     public AbstractPowerUp getPowerUp() {
         return powerUp;

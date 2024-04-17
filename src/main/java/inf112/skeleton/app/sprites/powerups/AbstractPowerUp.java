@@ -64,7 +64,7 @@ public abstract class AbstractPowerUp implements IEntity  {
 
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(5 / GameCreate.PPM);
+        shape.setRadius(6 / GameCreate.PPM);
         fixtureDef.shape = shape;
 
         fixtureDef.filter.categoryBits = GameCreate.CATEGORY_POWERUP; 
