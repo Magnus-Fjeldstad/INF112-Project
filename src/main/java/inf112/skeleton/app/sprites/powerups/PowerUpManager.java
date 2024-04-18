@@ -6,8 +6,6 @@ import inf112.skeleton.app.GameCreate;
 import inf112.skeleton.app.screens.PlayScreen;
 import inf112.skeleton.app.tools.listeners.PowerUpCollisionHandler;
 import inf112.skeleton.app.sprites.player.PlayerModel;
-import inf112.skeleton.app.sprites.powerups.AbstractPowerUp;
-import inf112.skeleton.app.sprites.powerups.AbstractPowerUpView;
 
 import java.util.Iterator;
 
@@ -79,7 +77,7 @@ public class PowerUpManager {
         }
     }
     
-    private AbstractPowerUp createRandomPowerUp() {
+    AbstractPowerUp createRandomPowerUp() {
         Random rand = new Random();
         int xPos = rand.nextInt(32, GameCreate.V_Height);
         int yPos = rand.nextInt(32, GameCreate.V_Width);

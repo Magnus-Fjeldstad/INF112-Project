@@ -35,9 +35,9 @@ public class KeyHandler {
      * @param dt Delta time for frame-based movement adjustments.
      */
     public void handleInput(float dt) {
-        float force = player.getSpeed(); // Adjust the force based on your game's physics scale
-        float stopForce = 5f; // Adjust the stop force as needed
-        float maxSpeed = 2f; // Adjust the maximum speed as needed
+        float force = player.getSpeed();
+        float stopForce = 5f; 
+        float maxSpeed = player.getMaxSpeed(); 
 
         // Apply forces based on input
         if (Gdx.input.isKeyPressed(Input.Keys.W))

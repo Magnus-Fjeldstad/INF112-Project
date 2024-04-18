@@ -44,7 +44,7 @@ public class RedEnemy extends AbstractEnemy {
         direction.nor(); // Normalize the direction after adding the offset
 
         // Set the enemy's movement speed
-        float speed = movementSpeed; // You should define this properly
+        float speed = getMovementSpeed(); // You should define this properly
 
         // Apply linear velocity to move towards the player
         getBody().setLinearVelocity(direction.scl(speed));
