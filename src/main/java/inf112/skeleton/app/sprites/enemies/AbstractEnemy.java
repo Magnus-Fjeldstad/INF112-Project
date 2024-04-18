@@ -19,9 +19,9 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
     private final World world;
     public Body b2body;
     public Vector2 velocity;
-    public int health;
-    public int attackDamage;
-    public float movementSpeed;
+    private int health;
+    private int attackDamage;
+    private float movementSpeed;
 
     /**
      * Constructor for AbstractEnemy
@@ -86,6 +86,10 @@ public abstract class AbstractEnemy extends Sprite implements IEntity{
      */
     public Body getBody() {
         return this.b2body;
+    }
+
+    public float getMovementSpeed() {
+        return this.movementSpeed;
     }
 
     /**

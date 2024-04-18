@@ -15,11 +15,12 @@ public class SpeedPowerUp extends AbstractPowerUp {
 
 
     protected void removePowerUpEffect() {
-        playerModel.movementSpeed -= 4;
+        playerModel.setMaxSpeed(-.5f);
+        playerModel.setSpeed(-.5f);
     }
 
     protected void applyPowerUpEffect() {
-        playerModel.movementSpeed += 4;
+        playerModel.setMaxSpeed(+.5f);
+        playerModel.setSpeed(+.5f);
     }
-
 }   

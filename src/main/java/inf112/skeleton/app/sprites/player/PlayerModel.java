@@ -16,14 +16,16 @@ public class PlayerModel extends Sprite implements IEntity {
     public World world;
     private PlayScreen screen;
 
-    public int health = 70;
-    public int maxHealth = 100;
+    private int health = 100;
+    private int maxHealth = 100;
 
-    public int attackDamage = 10;
-    public float movementSpeed = 4;
+    private int attackDamage = 10;
+    private float movementSpeed = 4f;
+
+    private float maxSpeed = 2f;
 
     private float timeAccumulator = 0; // Time accumulator for health regen
-    public int healthRegen = 1; // Health regeneration rate per second
+    private int healthRegen = 1; // Health regeneration rate per second
 
     private PlayerModelCollisionHandler playerModelCollisionHandler;
 
@@ -128,6 +130,14 @@ public class PlayerModel extends Sprite implements IEntity {
         return this.maxHealth;
     }
 
+    public float getMaxSpeed() {
+        return this.maxSpeed;
+    }
+
+    public void setMaxSpeed(float deltaMaxSpeed) {
+        this.maxSpeed += deltaMaxSpeed;
+    }
+
     /**
      * Updates the maxHealth of the player by a given value
      * @param deltaMaxHealth the amount the maxHealth should be changed by
@@ -156,7 +166,7 @@ public class PlayerModel extends Sprite implements IEntity {
         int attackDamage = 0;
         
         if (screen.getEnemies().notEmpty()) {
-            attackDamage = screen.getEnemies().first().attackDamage;
+            attackDamage = screen.getEnemies().first().getAttackDamage();
         }
 
         if (playerModelCollisionHandler.getIsHit()) {

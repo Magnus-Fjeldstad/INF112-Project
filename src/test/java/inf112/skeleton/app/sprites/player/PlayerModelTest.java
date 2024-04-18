@@ -34,13 +34,13 @@ public class PlayerModelTest {
 
     @Test
     public void testGetHealth() {
-        assertEquals(70, playerModel.getHealth(), "Health should initially be 100.");
+        assertEquals(100, playerModel.getHealth(), "Health should initially be 100.");
     }
 
     @Test
     public void testSetHealth() {
         playerModel.setHealth(-10); // Assuming this reduces health by 10
-        assertEquals(60, playerModel.getHealth(), "Health should be 90 after reducing by 10.");
+        assertEquals(90, playerModel.getHealth(), "Health should be 90 after reducing by 10.");
     }
 
     @Test
